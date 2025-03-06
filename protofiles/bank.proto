@@ -1,0 +1,27 @@
+syntax = "proto3";
+package bank;  // Add package declaration
+
+
+service Bank {
+  rpc ProcessTransaction(TransactionRequest) returns (TransactionResponse);
+  rpc GetBalance(BalanceRequest) returns (BalanceResponse);
+}
+
+message TransactionRequest {
+  string from_account = 1;
+  string to_account = 2;
+  double amount = 3;
+}
+
+message TransactionResponse {
+  bool success = 1;
+  string message = 2;
+}
+// Missing message added
+message BalanceRequest {
+  string account_number = 1;
+}
+
+message BalanceResponse {
+  double balance = 1;
+}

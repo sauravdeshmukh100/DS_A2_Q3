@@ -1,0 +1,174 @@
+Here’s a detailed breakdown of what you need to do for 3.1 (System Components) and 3.2 (Secure Authentication, Authorization, and Logging):
+3.1 System Components
+
+The system consists of three main entities:
+1. Client (User)
+
+    Registers an account with the payment gateway.
+    Logs in to authenticate and receive an authorization token.
+    Requests transactions (e.g., sending money, checking balance).
+    Communicates with the Payment Gateway via gRPC.
+
+2. Payment Gateway
+
+    Acts as an intermediary between the Client and Bank Servers.
+    Handles user registration, authentication, authorization, and transaction processing.
+    Maintains a record of registered users and authentication tokens.
+    Communicates with Bank Servers via gRPC to execute transactions.
+
+3. Bank Server
+
+    Manages bank accounts and their balances.
+    Validates transactions and updates balances.
+    Responds to balance inquiries and payment requests from the Payment Gateway.
+    Uses in-memory data structures for faster processing and stores account details in a persistent file (JSON/DB).
+
+3.2 Secure Authentication, Authorization, and Logging
+A. Data Storage & Data Structures
+
+    Client Registration Data (Stored in a JSON file)
+        Structure:
+
+    {
+      "username": {
+        "password": "hashed_password",
+        "bank_name": "Bank1",
+        "account_number": "1234567890"
+      }
+    }
+
+    Use Python dictionaries (hash maps) in-memory for fast lookups.
+    Store user passwords in hashed format (bcrypt or SHA-256).
+
+Bank Account Data (Stored in a JSON or database)
+
+    Structure:
+
+    {
+      "account_number": {
+        "balance": 5000.75
+      }
+    }
+
+    Use Python dictionaries for account balances (faster retrieval).
+    Persist changes in JSON or SQLite.
+
+Transaction Logs (Stored in a log file)
+
+    Each transaction request should be logged with:
+
+    Timestamp, Username, From_Account, To_Account, Amount, Status (Success/Fail), Reason (if failed)
+
+    Use text-based logging (log file) or structured logs (JSON).
+
+Authentication Tokens (Stored in memory and periodically persisted in a file)
+
+    Structure:
+
+        {
+          "username": "valid-token-abc123"
+        }
+
+        Use a dictionary for fast lookups.
+
+B. Flow of Processes
+1. User Registration Process
+
+Client → Payment Gateway
+
+    The client sends a registration request with:
+        username
+        password
+        bank_name
+        account_number
+    The Payment Gateway checks if the username already exists.
+    If the username is unique:
+        Hashes the password.
+        Stores user details in a JSON file.
+        Responds with "Registration Successful".
+    If the username exists, responds with "User already exists".
+
+2. User Login Process
+
+Client → Payment Gateway
+
+    The client sends a login request with:
+        username
+        password
+    The Payment Gateway:
+        Verifies the credentials.
+        If valid, generates an authentication token.
+        Stores the token in memory and optionally persists it in a file.
+        Sends the token to the client.
+    If invalid, responds with "Invalid credentials".
+
+3. Processing a Payment
+
+Client → Payment Gateway → Bank Server
+
+    The client sends a payment request with:
+        auth_token
+        from_account
+        to_account
+        amount
+    The Payment Gateway:
+        Verifies the auth_token.
+        Checks if the sender has an account.
+        Contacts the Bank Server via gRPC with transaction details.
+    The Bank Server:
+        Checks if the from_account has sufficient balance.
+        If yes, deducts the amount from from_account and adds it to to_account.
+        Responds with "Transaction Successful".
+        If insufficient balance, responds with "Transaction Failed - Insufficient Funds".
+    The Payment Gateway forwards the response to the client.
+    The Payment Gateway logs the transaction.
+
+4. Checking Account Balance
+
+Client → Payment Gateway → Bank Server
+
+    The client sends a balance request with:
+        auth_token
+        account_number
+    The Payment Gateway verifies the auth_token.
+    It forwards the request to the Bank Server.
+    The Bank Server:
+        Looks up the account balance.
+        Returns it to the Payment Gateway.
+    The Payment Gateway sends the balance to the client.
+
+C. Security Implementation
+
+    Authentication
+        Uses password-based authentication.
+        Passwords are hashed before storage.
+        Generates session tokens upon successful login.
+
+    Authorization
+        Every request must include a valid authentication token.
+        Tokens are stored in memory (with a timeout mechanism).
+
+    Logging
+        All transactions and login attempts are logged.
+        Stores logs in a structured format (e.g., JSON or log files).
+
+D. Error Handling & Edge Cases
+Scenario	Expected Behavior
+Duplicate username during registration	Return "User already exists"
+Wrong password during login	Return "Invalid credentials"
+Invalid token in payment request	Return "Unauthorized"
+Insufficient funds	Return "Transaction Failed - Insufficient Funds"
+Invalid account number in transaction	Return "Invalid Account"
+Summary of Data Structures & Storage
+Component	Data Structure	Storage Type
+User Credentials	Dictionary {username: {password, bank_name, account_number}}	JSON file
+Authentication Tokens	Dictionary {username: token}	Memory & file
+Bank Accounts	Dictionary {account_number: balance}	JSON or DB
+Transactions Log	List of transactions {timestamp, from, to, amount, status}	Log file
+Final Steps
+
+    Define gRPC Protobuf files to implement communication between entities.
+    Implement Payment Gateway to handle authentication, authorization, and transactions.
+    Implement Bank Server to manage accounts and process transactions.
+    Ensure security with password hashing, authentication tokens, and logging.
+    Test with multiple clients to verify security, logging, and transactions.
