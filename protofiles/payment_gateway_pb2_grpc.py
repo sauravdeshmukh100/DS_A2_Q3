@@ -34,44 +34,27 @@ class PaymentGatewayStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.RegisterClient = channel.unary_unary(
-                '/PaymentGateway/RegisterClient',
-                request_serializer=payment__gateway__pb2.ClientRegistrationRequest.SerializeToString,
-                response_deserializer=payment__gateway__pb2.ClientRegistrationResponse.FromString,
-                _registered_method=True)
         self.AuthenticateClient = channel.unary_unary(
                 '/PaymentGateway/AuthenticateClient',
                 request_serializer=payment__gateway__pb2.AuthRequest.SerializeToString,
                 response_deserializer=payment__gateway__pb2.AuthResponse.FromString,
-                _registered_method=True)
-        self.ProcessPayment = channel.unary_unary(
-                '/PaymentGateway/ProcessPayment',
-                request_serializer=payment__gateway__pb2.PaymentRequest.SerializeToString,
-                response_deserializer=payment__gateway__pb2.PaymentResponse.FromString,
                 _registered_method=True)
         self.CheckBalance = channel.unary_unary(
                 '/PaymentGateway/CheckBalance',
                 request_serializer=payment__gateway__pb2.BalanceRequest.SerializeToString,
                 response_deserializer=payment__gateway__pb2.BalanceResponse.FromString,
                 _registered_method=True)
+        self.ProcessPayment = channel.unary_unary(
+                '/PaymentGateway/ProcessPayment',
+                request_serializer=payment__gateway__pb2.PaymentRequest.SerializeToString,
+                response_deserializer=payment__gateway__pb2.PaymentResponse.FromString,
+                _registered_method=True)
 
 
 class PaymentGatewayServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def RegisterClient(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def AuthenticateClient(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def ProcessPayment(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -83,28 +66,29 @@ class PaymentGatewayServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ProcessPayment(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_PaymentGatewayServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'RegisterClient': grpc.unary_unary_rpc_method_handler(
-                    servicer.RegisterClient,
-                    request_deserializer=payment__gateway__pb2.ClientRegistrationRequest.FromString,
-                    response_serializer=payment__gateway__pb2.ClientRegistrationResponse.SerializeToString,
-            ),
             'AuthenticateClient': grpc.unary_unary_rpc_method_handler(
                     servicer.AuthenticateClient,
                     request_deserializer=payment__gateway__pb2.AuthRequest.FromString,
                     response_serializer=payment__gateway__pb2.AuthResponse.SerializeToString,
             ),
-            'ProcessPayment': grpc.unary_unary_rpc_method_handler(
-                    servicer.ProcessPayment,
-                    request_deserializer=payment__gateway__pb2.PaymentRequest.FromString,
-                    response_serializer=payment__gateway__pb2.PaymentResponse.SerializeToString,
-            ),
             'CheckBalance': grpc.unary_unary_rpc_method_handler(
                     servicer.CheckBalance,
                     request_deserializer=payment__gateway__pb2.BalanceRequest.FromString,
                     response_serializer=payment__gateway__pb2.BalanceResponse.SerializeToString,
+            ),
+            'ProcessPayment': grpc.unary_unary_rpc_method_handler(
+                    servicer.ProcessPayment,
+                    request_deserializer=payment__gateway__pb2.PaymentRequest.FromString,
+                    response_serializer=payment__gateway__pb2.PaymentResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -116,33 +100,6 @@ def add_PaymentGatewayServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class PaymentGateway(object):
     """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def RegisterClient(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/PaymentGateway/RegisterClient',
-            payment__gateway__pb2.ClientRegistrationRequest.SerializeToString,
-            payment__gateway__pb2.ClientRegistrationResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
 
     @staticmethod
     def AuthenticateClient(request,
@@ -172,33 +129,6 @@ class PaymentGateway(object):
             _registered_method=True)
 
     @staticmethod
-    def ProcessPayment(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/PaymentGateway/ProcessPayment',
-            payment__gateway__pb2.PaymentRequest.SerializeToString,
-            payment__gateway__pb2.PaymentResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def CheckBalance(request,
             target,
             options=(),
@@ -215,6 +145,33 @@ class PaymentGateway(object):
             '/PaymentGateway/CheckBalance',
             payment__gateway__pb2.BalanceRequest.SerializeToString,
             payment__gateway__pb2.BalanceResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ProcessPayment(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/PaymentGateway/ProcessPayment',
+            payment__gateway__pb2.PaymentRequest.SerializeToString,
+            payment__gateway__pb2.PaymentResponse.FromString,
             options,
             channel_credentials,
             insecure,
