@@ -13,6 +13,7 @@ import payment_gateway_pb2_grpc
 
 
 
+
 # ✅ Global variable to store JWT token
 jwt_token = None
 
@@ -22,16 +23,25 @@ jwt_token = None
 
 def authenticate_client(stub, username, password):
     global jwt_token  # ✅ Ensure token is stored globally
-    request = payment_gateway_pb2.AuthRequest(username=username, password=password)
-    print("requst sent")
-    response = stub.AuthenticateClient(request)
-    print("response received")
     
-    if response.authenticated:
-        jwt_token = response.token  # ✅ Store globally
-        print(f"✅ Login successful! Token: {jwt_token}")
-    else:
-        print("❌ Login failed! Invalid username or password.")
+    request = payment_gateway_pb2.AuthRequest(username=username, password=password)
+    print("🔄 Request sent")
+
+    try:
+        response = stub.AuthenticateClient(request)
+        print("✅ Response received")
+        
+        if response.authenticated:
+            jwt_token = response.token  # ✅ Store globally
+            print(f"✅ Login successful! Token: {jwt_token}")
+        else:
+            print("❌ Login failed! Invalid username or password.")
+
+    except grpc.RpcError as e:
+        if e.code() == grpc.StatusCode.UNAVAILABLE:
+            print("❌ Authentication failed: Payment Gateway is down. Please try again later.")
+        else:
+            print(f"❌ Authentication failed: {e.code()} - {e.details()}")
 
 
 
