@@ -1,51 +1,38 @@
-import grpc
-import jwt
 import logging
-from datetime import datetime
+import grpc
 
-# Logging setup
+# Configure logging
 logging.basicConfig(filename="transactions.log", level=logging.INFO, format="%(asctime)s - %(message)s")
 
-SECRET_KEY = "supersecretkey"
-
-class AuthInterceptor(grpc.ServerInterceptor):
-    """gRPC Interceptor for centralized authentication and logging."""
-
-    def verify_jwt(self, token):
-        """Verify the JWT token and extract username."""
-        try:
-            payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-            return payload["username"]
-        except jwt.ExpiredSignatureError:
-            return "EXPIRED"  # Token expired - match the value in payment_gateway.py
-        except jwt.InvalidTokenError:
-            return None  # Invalid token
-
+class LoggingInterceptor(grpc.ServerInterceptor):
     def intercept_service(self, continuation, handler_call_details):
-        """Intercept gRPC calls to enforce authentication and log requests."""
-        
         method = handler_call_details.method
-        metadata = dict(handler_call_details.invocation_metadata)
-        token = metadata.get("authorization", None)
+        client_ip = handler_call_details.invocation_metadata[0].value if handler_call_details.invocation_metadata else "Unknown"
         
-        # Skip authentication for the AuthenticateClient method
-        if method.endswith("/AuthenticateClient"):
+        logging.info(f"✅ Request from {client_ip} - Method: {method}")
+        
+        try:
+            response = continuation(handler_call_details)
+            logging.info(f"✅ Success: {method}")
+            return response
+        except grpc.RpcError as e:
+            logging.error(f"❌ Error in {method}: {e.code()} - {e.details()}")
+            raise e
+
+# Add logging for transactions
+class TransactionLoggingInterceptor(grpc.ServerInterceptor):
+    def intercept_service(self, continuation, handler_call_details):
+        method = handler_call_details.method
+        
+        if "ProcessPayment" in method:
+            try:
+                response = continuation(handler_call_details)
+                logging.info(f"✅ Transaction processed successfully in {method}")
+                return response
+            except grpc.RpcError as e:
+                if e.code() == grpc.StatusCode.UNAVAILABLE:
+                    logging.warning(f"🔄 Retrying {method} due to network failure")
+                logging.error(f"❌ Transaction failed in {method}: {e.code()} - {e.details()}")
+                raise e
+        else:
             return continuation(handler_call_details)
-
-        username = self.verify_jwt(token) if token else None
-        
-        # Create a handler that will abort with appropriate error
-        def abort_with_error(error_code, error_message):
-            def abort_handler(request, context):
-                context.abort(error_code, error_message)
-            return grpc.unary_unary_rpc_method_handler(abort_handler)
-        
-        if username == "EXPIRED":
-            logging.warning(f"🔄 Token expired for {method}. User needs to refresh token.")
-            return abort_with_error(grpc.StatusCode.UNAUTHENTICATED, "Token expired, please re-authenticate")
-        elif not username:
-            logging.warning(f"❌ Unauthorized access to {method} (Missing or Invalid Token)")
-            return abort_with_error(grpc.StatusCode.UNAUTHENTICATED, "Invalid or missing token")
-
-        logging.info(f"✅ {username} called {method}")
-        return continuation(handler_call_details)

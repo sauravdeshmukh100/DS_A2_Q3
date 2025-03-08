@@ -15,7 +15,7 @@ import payment_gateway_pb2
 import payment_gateway_pb2_grpc
 import bank_pb2
 import bank_pb2_grpc
-from interceptor import AuthInterceptor  # ✅ Import interceptor
+from interceptor import LoggingInterceptor, TransactionLoggingInterceptor
 
 import logging
 
@@ -97,196 +97,100 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
     
 
 
-    # def ProcessPayment(self, request, context):
-    #     """Handles payment transactions securely using JWT authentication."""
     
-    #      # ✅ Step 1: Extract JWT from metadata
-    #     metadata = dict(context.invocation_metadata())
-    #     token = metadata.get("authorization", None)
-    #     print("token is " + token)
-        
-    #     # ✅ Step 2: Verify JWT
-    #     username = verify_jwt(token) if token else None
-    #     if not username or username not in clients_db:
-    #         logging.warning(f"❌ Failed payment attempt (Unauthorized) by unknown user")
-    #         context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or missing token")
 
-    #     # ✅ Step 3: Get sender & receiver details
-    #     sender_details = clients_db[username]
-    #     sender_bank = sender_details["bank_name"]
-    #     sender_account = sender_details["account_number"]
-    #     receiver_account = request.to_account
-    #     amount = request.amount
-
-    #     # ✅ Step 4: Ensure the sender has enough funds
-    #     if sender_bank not in bank_stubs:
-    #         bank_stubs[sender_bank] = bank_pb2_grpc.BankStub(
-    #             grpc.insecure_channel(f"localhost:{BANK_PORTS[sender_bank]}")
-    #         )
-    #         logging.info(f"✅ Connected to sender's bank {sender_bank} at port {BANK_PORTS[sender_bank]}")
-
-    #     if not sender_bank_stub:
-    #         context.abort(grpc.StatusCode.NOT_FOUND, "Sender bank not found")
-
-    #     balance_response = sender_bank_stub.GetBalance(
-    #         bank_pb2.BalanceRequest(account_number=sender_account)
-    #     )
-
-    #     if balance_response.balance < amount:
-    #         logging.warning(f"❌ {username} attempted ₹{amount} transfer to {receiver_account} (Failed: Insufficient Funds)")
-    #         context.abort(grpc.StatusCode.FAILED_PRECONDITION, "Insufficient funds")
-
-    #     # ✅ Step 5: Deduct funds from sender’s bank
-    #     deduct_response = sender_bank_stub.ProcessTransaction(
-    #         bank_pb2.TransactionRequest(
-    #             from_account=sender_account,
-    #             to_account=receiver_account,
-    #             amount=amount
-    #         )
-    #     )
-
-    #     if not deduct_response.success:
-    #         logging.warning(f"❌ {username} attempted ₹{amount} transfer to {receiver_account} (Failed: {deduct_response.message})")
-    #         context.abort(grpc.StatusCode.ABORTED, "Transaction failed")
-
-    #     # ✅ Step 6: Credit funds to receiver’s bank
-    #     if receiver_account not in [details["account_number"] for details in clients_db.values()]:
-    #         logging.warning(f"❌ {username} attempted transfer to non-existent account {receiver_account}")
-    #         context.abort(grpc.StatusCode.NOT_FOUND, "Receiver account not found")
-
-    #     receiver_bank = None
-    #     print("in step 6")
-    #     for user, details in clients_db.items():
-    #         if details["account_number"] == receiver_account:
-    #             receiver_bank = details["bank_name"]
-    #             print("receiver bank is " + receiver_bank)
-    #             break
-
-    #     if not receiver_bank:
-    #         logging.warning(f"❌ {username} sent ₹{amount} to {receiver_account} (Failed: Receiver bank not found)")
-    #         context.abort(grpc.StatusCode.NOT_FOUND, "Receiver bank not found")
-
-    #     receiver_bank_stub = bank_stubs.get(receiver_bank)
-    #     if not receiver_bank_stub:
-    #         context.abort(grpc.StatusCode.UNAVAILABLE, "Receiver bank unavailable")
-
-    #     credit_response = receiver_bank_stub.ProcessTransaction(
-    #         bank_pb2.TransactionRequest(
-    #             from_account="SYSTEM",
-    #             to_account=receiver_account,
-    #             amount=amount
-    #         )
-    #     )
-
-    #     if not credit_response.success:
-    #         logging.warning(f"❌ {username} sent ₹{amount} to {receiver_account} (Failed: {credit_response.message})")
-    #         context.abort(grpc.StatusCode.ABORTED, "Credit transaction failed")
-
-    #     # ✅ Step 7: Log Successful Transaction
-    #     logging.info(f"✅ {username} sent ₹{amount} to {receiver_account} (Success)")
-        
-    #     return payment_gateway_pb2.PaymentResponse(success=True, message="Transaction successful")
-
+    
     def ProcessPayment(self, request, context):
-        """Handles payment transactions securely using JWT authentication."""
-        
-        # ✅ Step 1: Extract JWT from metadata
+        """Handles payment transactions securely with enhanced logging."""
+        client_ip = context.peer()
+        username = "Unknown"
         metadata = dict(context.invocation_metadata())
         token = metadata.get("authorization", None)
-        print("token is " + str(token))
+        if token:
+            username = verify_jwt(token)  # Extract username from JWT
         
-        # ✅ Step 2: Verify JWT
-        username = verify_jwt(token) if token else None
-        if not username or username not in clients_db:
-            logging.warning(f"❌ Failed payment attempt (Unauthorized) by unknown user")
-            context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or missing token")
-
-        # ✅ Step 3: Get sender & receiver details
-        sender_details = clients_db[username]
-        sender_bank = sender_details["bank_name"]
-        sender_account = sender_details["account_number"]
-        receiver_account = request.to_account
-        amount = request.amount
-
-        # ✅ Step 4: Ensure sender's bank is connected
-        if sender_bank not in BANK_PORTS:
-            context.abort(grpc.StatusCode.NOT_FOUND, "Sender bank not found")
-
-        if sender_bank not in bank_stubs:
-            bank_stubs[sender_bank] = bank_pb2_grpc.BankStub(
-                grpc.insecure_channel(f"localhost:{BANK_PORTS[sender_bank]}")
-            )
-            logging.info(f"✅ Connected to sender's bank {sender_bank} at port {BANK_PORTS[sender_bank]}")
-
-        sender_bank_stub = bank_stubs[sender_bank]
-
-        # ✅ Step 5: Check if sender has enough funds
-        balance_response = sender_bank_stub.GetBalance(
-            bank_pb2.BalanceRequest(account_number=sender_account)
-        )
-
-        if balance_response.balance < amount:
-            logging.warning(f"❌ {username} attempted ₹{amount} transfer to {receiver_account} (Failed: Insufficient Funds)")
-            context.abort(grpc.StatusCode.FAILED_PRECONDITION, "Insufficient funds")
-
-        # ✅ Step 6: Deduct funds from sender
-        deduct_response = sender_bank_stub.ProcessTransaction(
-            bank_pb2.TransactionRequest(
-                from_account=sender_account,
-                to_account=receiver_account,
-                amount=amount
-            )
-        )
-
-        if not deduct_response.success:
-            logging.warning(f"❌ {username} attempted ₹{amount} transfer to {receiver_account} (Failed: {deduct_response.message})")
-            context.abort(grpc.StatusCode.ABORTED, "Transaction failed")
-
-        # ✅ Step 7: Find receiver's bank
-        if receiver_account not in [details["account_number"] for details in clients_db.values()]:
-            logging.warning(f"❌ {username} attempted transfer to non-existent account {receiver_account}")
-            context.abort(grpc.StatusCode.NOT_FOUND, "Receiver account not found")
-
-        receiver_bank = None
-        for user, details in clients_db.items():
-            if details["account_number"] == receiver_account:
-                receiver_bank = details["bank_name"]
-                print("receiver bank is " + receiver_bank)
-                break
-
-        if not receiver_bank:
-            logging.warning(f"❌ {username} sent ₹{amount} to {receiver_account} (Failed: Receiver bank not found)")
-            context.abort(grpc.StatusCode.NOT_FOUND, "Receiver bank not found")
-
-        # ✅ Step 8: Ensure receiver's bank is connected
-        if receiver_bank not in BANK_PORTS:
-            context.abort(grpc.StatusCode.NOT_FOUND, "Receiver bank not found")
-
-        if receiver_bank not in bank_stubs:
-            bank_stubs[receiver_bank] = bank_pb2_grpc.BankStub(
-                grpc.insecure_channel(f"localhost:{BANK_PORTS[receiver_bank]}")
-            )
-            logging.info(f"✅ Connected to receiver's bank {receiver_bank} at port {BANK_PORTS[receiver_bank]}")
-
-        receiver_bank_stub = bank_stubs[receiver_bank]
-
-        # ✅ Step 9: Credit funds to receiver
-        credit_response = receiver_bank_stub.ProcessTransaction(
-            bank_pb2.TransactionRequest(
-                from_account="SYSTEM",
-                to_account=receiver_account,
-                amount=amount
-            )
-        )
-
-        if not credit_response.success:
-            logging.warning(f"❌ {username} sent ₹{amount} to {receiver_account} (Failed: {credit_response.message})")
-            context.abort(grpc.StatusCode.ABORTED, "Credit transaction failed")
-
-        # ✅ Step 10: Log Successful Transaction
-        logging.info(f"✅ {username} sent ₹{amount} to {receiver_account} (Success)")
+        logging.info(f"✅ {username} (IP: {client_ip}) initiated payment of ₹{request.amount} to {request.to_account}")
         
-        return payment_gateway_pb2.PaymentResponse(success=True, message="Transaction successful")
+        try:
+            # Ensure sender has sufficient balance
+            sender_details = clients_db.get(username, None)
+            if not sender_details:
+                logging.warning(f"❌ {username} attempted payment, but account not found.")
+                context.abort(grpc.StatusCode.NOT_FOUND, "User account not found")
+            
+            sender_bank = sender_details["bank_name"]
+            sender_account = sender_details["account_number"]
+            receiver_account = request.to_account
+            amount = request.amount
+            
+            # Verify sender's bank connection
+            if sender_bank not in bank_stubs:
+                bank_stubs[sender_bank] = bank_pb2_grpc.BankStub(
+                    grpc.insecure_channel(f"localhost:{BANK_PORTS[sender_bank]}")
+                )
+                logging.info(f"✅ Connected to sender's bank {sender_bank}.")
+            
+            sender_bank_stub = bank_stubs[sender_bank]
+            balance_response = sender_bank_stub.GetBalance(
+                bank_pb2.BalanceRequest(account_number=sender_account)
+            )
+            
+            if balance_response.balance < amount:
+                logging.warning(f"❌ {username} attempted payment of ₹{amount} (Insufficient Funds)")
+                context.abort(grpc.StatusCode.FAILED_PRECONDITION, "Insufficient funds")
+            
+            # Deduct funds from sender
+            deduct_response = sender_bank_stub.ProcessTransaction(
+                bank_pb2.TransactionRequest(
+                    from_account=sender_account,
+                    to_account=receiver_account,
+                    amount=amount
+                )
+            )
+            
+            if not deduct_response.success:
+                logging.warning(f"❌ {username} payment of ₹{amount} failed: {deduct_response.message}")
+                context.abort(grpc.StatusCode.ABORTED, "Transaction failed")
+            
+            # Identify receiver's bank
+            receiver_bank = None
+            for user, details in clients_db.items():
+                if details["account_number"] == receiver_account:
+                    receiver_bank = details["bank_name"]
+                    break
+            
+            if not receiver_bank:
+                logging.warning(f"❌ {username} attempted payment to non-existent account {receiver_account}")
+                context.abort(grpc.StatusCode.NOT_FOUND, "Receiver account not found")
+            
+            # Verify receiver's bank connection
+            if receiver_bank not in bank_stubs:
+                bank_stubs[receiver_bank] = bank_pb2_grpc.BankStub(
+                    grpc.insecure_channel(f"localhost:{BANK_PORTS[receiver_bank]}")
+                )
+                logging.info(f"✅ Connected to receiver's bank {receiver_bank}.")
+            
+            receiver_bank_stub = bank_stubs[receiver_bank]
+            credit_response = receiver_bank_stub.ProcessTransaction(
+                bank_pb2.TransactionRequest(
+                    from_account="SYSTEM",
+                    to_account=receiver_account,
+                    amount=amount
+                )
+            )
+            
+            if not credit_response.success:
+                logging.warning(f"❌ {username} payment of ₹{amount} to {receiver_account} failed: {credit_response.message}")
+                context.abort(grpc.StatusCode.ABORTED, "Credit transaction failed")
+            
+            logging.info(f"✅ {username} sent ₹{amount} to {receiver_account} successfully")
+            return payment_gateway_pb2.PaymentResponse(success=True, message="Transaction successful")
+        
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.UNAVAILABLE:
+                logging.warning(f"🔄 Retrying payment for {username}. Gateway unavailable.")
+            logging.error(f"❌ Payment Failed: {e.code()} - {e.details()}")
+            raise e
     
     def CheckBalance(self, request, context):
         """Returns the client's account balance securely using JWT authentication."""
@@ -308,11 +212,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             logging.warning(f"❌ {username} attempted balance check (Failed: Bank not found)")
             context.abort(grpc.StatusCode.NOT_FOUND, "Bank not found")
 
-        # if bank_name not in bank_stubs:
-        #     with open("ca.crt", "rb") as f:
-        #         trusted_certs = f.read()
-        #     secure_creds = grpc.ssl_channel_credentials(root_certificates=trusted_certs)
-        #     bank_stubs[bank_name] = bank_pb2_grpc.BankStub(grpc.secure_channel(f"localhost:{BANK_PORTS[bank_name]}", secure_creds))
+        
 
         if bank_name not in bank_stubs:
             bank_stubs[bank_name] = bank_pb2_grpc.BankStub(
@@ -348,7 +248,7 @@ def serve():
     server_credentials = grpc.ssl_server_credentials([(private_key, certificate_chain)])
 
     # ✅ Start Secure gRPC Server
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10),interceptors=[AuthInterceptor()])  # ✅ Create gRPC server with interceptor
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10),interceptors=[LoggingInterceptor(), TransactionLoggingInterceptor()])  # ✅ Create gRPC server with interceptor
     payment_gateway_pb2_grpc.add_PaymentGatewayServicer_to_server(PaymentGatewayService(), server)
 
     server.add_secure_port("[::]:50052", server_credentials)
