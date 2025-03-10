@@ -12,8 +12,9 @@ message AuthRequest {
 }
 
 message AuthResponse {
-    bool authenticated = 1;
-    string token = 2;  // ✅ Ensure the server can return JWT token
+  bool authenticated = 1;
+  string token = 2;
+  string message = 3;  // Add this field for detailed responses
 }
 
 message BalanceRequest {}  // ✅ No token field inside message
