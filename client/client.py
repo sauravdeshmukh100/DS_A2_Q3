@@ -42,12 +42,17 @@ def authenticate_client(stub, username, password):
             print("✅ Response received")
 
             if response.authenticated:
-                jwt_token = response.token  # ✅ Store token globally
-                print(f"✅ Login successful! Token: {jwt_token}")
-                return True  # ✅ Successful authentication
+                print(f"✅ Login successful! Token: {response.token}")
+                return True  # ✅ Exit on successful authentication
             else:
-                print("❌ Login failed! Invalid username or password.")
-                return False  # ✅ Stop retrying on wrong credentials
+                
+                if response.message == "Already logged in. Please log out first or wait for token expiration.":
+                    
+                    print("❌ Login failed! You are already logged in with an active session.")
+                    return False  # ✅ Stop retrying on active session
+                else:
+                    print("❌ Login failed! Invalid username or password.")
+                    return False  # ✅ Stop retrying on bad credentials
 
         except grpc.RpcError as e:
             if e.code() == grpc.StatusCode.UNAVAILABLE:
