@@ -48,27 +48,36 @@ class BankService(bank_pb2_grpc.BankServicer):
         return bank_pb2.TransactionResponse(success=True, message="Amount deducted, waiting for receiver bank")
 
 
-    # def ProcessTransaction(self, request, context):
-    #     """Handles money transfers between accounts."""
-    #     if request.from_account not in self.accounts or request.to_account not in self.accounts:
-    #         return bank_pb2.TransactionResponse(success=False, message="Invalid Account")
-
-    #     if self.accounts[request.from_account] < request.amount:
-    #         return bank_pb2.TransactionResponse(success=False, message="Insufficient funds")
-
-    #     self.accounts[request.from_account] -= request.amount
-    #     self.accounts[request.to_account] += request.amount
-
-    #     return bank_pb2.TransactionResponse(success=True, message="Transaction successful")
+    # def GetBankName(self, request, context):
+    #     """Returns the name of the bank."""
+    #     return bank_pb2.BankNameResponse(name=self.bank_name)
 
 def serve(bank_name, port):
-    """Start the bank server with the specified bank name and port."""
+    """Start a secure bank server with TLS."""
+    cert_file = f"{bank_name.lower()}.crt"  # e.g., hdfc.crt
+    key_file = f"{bank_name.lower()}.key"  # e.g., hdfc.key
+    print("cert_file=" + cert_file)
+    print("key_file=" + key_file)
+    with open("bank_server.crt", "rb") as f:
+        server_cert = f.read()
+    with open("bank_server.key", "rb") as f:
+        server_key = f.read()
+
+    # Create TLS credentials
+    server_credentials = grpc.ssl_server_credentials([(server_key, server_cert)])
+
+    # Create a gRPC server
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     bank_pb2_grpc.add_BankServicer_to_server(BankService(bank_name), server)
-    server.add_insecure_port(f"[::]:{port}")
-    print(f"🚀 Bank Server '{bank_name}' started on port {port}")
+
+    # Start the secure server
+    server.add_secure_port(f"[::]:{port}", server_credentials)
+    print("port=" + port)
+    print(f"🚀 Secure Bank Server '{bank_name}' started on port {port}")
+
     server.start()
     server.wait_for_termination()
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

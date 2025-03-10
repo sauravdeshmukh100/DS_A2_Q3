@@ -1,0 +1,396 @@
+2025-03-10 16:12:37,009 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 16:20:40,655 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 16:20:40,656 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 16:20:40,657 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:54538
+2025-03-10 16:20:40,658 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:54538
+2025-03-10 16:20:45,690 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 16:20:45,690 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 16:20:45,698 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:54538
+2025-03-10 16:20:45,699 - ⚠️ alice attempted login with active session (rejected)
+2025-03-10 16:21:16,454 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 16:21:16,454 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 16:21:16,455 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:54538
+2025-03-10 16:21:16,455 - ⚠️ alice attempted login with active session (rejected)
+2025-03-10 16:23:32,250 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 16:23:43,751 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 16:23:43,751 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 16:23:43,752 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:56780
+2025-03-10 16:23:43,753 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:56780
+2025-03-10 16:23:48,914 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 16:23:48,914 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 16:23:48,915 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:56780
+2025-03-10 16:23:48,915 - ⚠️ alice attempted login with active session (rejected)
+2025-03-10 16:23:52,352 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:23:52,352 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:23:52,352 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 16:23:52,360 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-10 16:23:52,392 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 16:23:55,394 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:23:55,395 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:23:55,395 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 16:23:55,396 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 16:23:58,399 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:23:58,399 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:23:58,399 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 16:23:58,401 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 16:24:26,572 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:24:26,573 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:24:26,573 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 16:24:26,574 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 16:24:29,576 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:24:29,577 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:24:29,577 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 16:24:29,578 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 16:24:32,581 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:24:32,581 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:24:32,581 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 16:24:32,582 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 16:25:42,698 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 16:25:52,119 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 16:25:52,119 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 16:25:52,121 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:44668
+2025-03-10 16:25:52,122 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:44668
+2025-03-10 16:25:54,404 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:25:54,404 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:25:54,404 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 16:25:54,411 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-10 16:25:54,443 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 16:25:57,446 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:25:57,446 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:25:57,446 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 16:25:57,447 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 16:26:00,450 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:26:00,451 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 16:26:00,451 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 16:26:00,452 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 17:30:04,145 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 17:30:39,052 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 17:30:39,053 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 17:30:39,054 - 🔑 Authentication attempt for user: 4 from ipv6:%5B::1%5D:54520
+2025-03-10 17:30:39,054 - ❌ Failed login attempt for user: 4 from ipv6:%5B::1%5D:54520
+2025-03-10 17:30:48,418 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 17:30:48,418 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 17:30:48,419 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:54520
+2025-03-10 17:30:48,420 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:54520
+2025-03-10 17:30:51,318 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 17:30:51,318 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 17:30:51,318 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 17:30:51,326 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-10 17:30:51,335 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 17:30:54,338 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 17:30:54,339 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 17:30:54,339 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 17:30:54,340 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 17:30:57,343 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 17:30:57,344 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 17:30:57,344 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 17:30:57,345 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-10 17:45:26,345 - ❌ Failed to start server: Failed to bind to address [::]:50052; set GRPC_VERBOSITY=debug environment variable to see detailed error message.
+2025-03-10 17:45:35,185 - ❌ Failed to start server: Failed to bind to address [::]:50052; set GRPC_VERBOSITY=debug environment variable to see detailed error message.
+2025-03-10 17:50:13,018 - ❌ Failed to start server: Failed to bind to address [::]:50052; set GRPC_VERBOSITY=debug environment variable to see detailed error message.
+2025-03-10 17:55:52,102 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:21:26,663 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:23:08,550 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:23:08,551 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:23:08,552 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:41414
+2025-03-10 18:23:08,552 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:41414
+2025-03-10 18:23:11,039 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:23:11,039 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:23:11,039 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:23:11,045 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-10 18:23:11,045 - Exception calling application: 'dict' object has no attribute 'GetBalance'
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 262, in CheckBalance
+    response = bank_stubs[bank_name].GetBalance(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'GetBalance'
+2025-03-10 18:23:29,470 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-10 18:23:29,470 - ✅ alice initiated a payment.
+2025-03-10 18:23:29,471 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-10 18:23:29,471 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-10 18:23:29,471 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-10 18:23:29,472 - ✅ alice (IP: ipv6:%5B::1%5D:41414) initiated payment of ₹2001.0 to 2001
+2025-03-10 18:23:29,472 - Exception calling application: 'dict' object has no attribute 'GetBalance'
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 178, in ProcessPayment
+    balance_response = sender_bank_stub.GetBalance(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'GetBalance'
+2025-03-10 18:36:06,980 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:36:27,476 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:36:27,476 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:36:27,477 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:37938
+2025-03-10 18:36:27,478 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:37938
+2025-03-10 18:36:41,040 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:36:41,040 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:36:41,040 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:36:41,048 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-10 18:36:41,048 - Exception calling application: 'dict' object has no attribute 'GetBalance'
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 262, in CheckBalance
+    response = bank_stubs[bank_name].GetBalance(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'GetBalance'
+2025-03-10 18:38:02,673 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:38:13,612 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:38:13,612 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:38:13,613 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:38858
+2025-03-10 18:38:13,614 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:38858
+2025-03-10 18:38:16,438 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:38:16,439 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:38:16,439 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:38:16,447 - Exception calling application: can only concatenate str (not "int") to str
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 258, in CheckBalance
+    bank_stubs[bank_name] = create_bank_stub(bank_name)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 78, in create_bank_stub
+    print("bank port=" + BANK_PORTS[bank_name])
+          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+TypeError: can only concatenate str (not "int") to str
+2025-03-10 18:38:28,615 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:38:28,615 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:38:28,616 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:38:28,625 - ✅ alice from ipv6:%5B::1%5D:38858 checked balance: ₹5000.0
+2025-03-10 18:40:42,247 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:40:42,248 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:40:42,248 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:38858
+2025-03-10 18:40:42,249 - ⚠️ alice attempted login with active session (rejected)
+2025-03-10 18:42:01,160 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:42:13,333 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:42:13,333 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:42:13,334 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:53702
+2025-03-10 18:42:13,335 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:53702
+2025-03-10 18:42:20,144 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:42:20,144 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:42:20,144 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:42:20,153 - Exception calling application: can only concatenate str (not "int") to str
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 260, in CheckBalance
+    bank_stubs[bank_name] = create_bank_stub(bank_name)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 78, in create_bank_stub
+    print("bank port=" + BANK_PORTS[bank_name])
+          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+TypeError: can only concatenate str (not "int") to str
+2025-03-10 18:44:25,422 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:44:36,330 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:44:36,330 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:44:36,332 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:40878
+2025-03-10 18:44:36,333 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:40878
+2025-03-10 18:44:41,311 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:44:41,311 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:44:41,311 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:44:41,321 - Exception calling application: can only concatenate str (not "int") to str
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 262, in CheckBalance
+    bank_stubs[bank_name] = create_bank_stub(bank_name)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 79, in create_bank_stub
+    print("bank port=" + BANK_PORTS[bank_name])
+          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+TypeError: can only concatenate str (not "int") to str
+2025-03-10 18:46:04,725 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:46:10,196 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:46:10,196 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:46:10,197 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:53384
+2025-03-10 18:46:10,198 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:53384
+2025-03-10 18:46:11,504 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:46:11,504 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:46:11,504 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:46:11,505 - Exception calling application: can only concatenate str (not "int") to str
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 262, in CheckBalance
+    bank_stubs[bank_name] = create_bank_stub(bank_name)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 74, in create_bank_stub
+    print("bank port=" + BANK_PORTS[bank_name])
+          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+TypeError: can only concatenate str (not "int") to str
+2025-03-10 18:47:13,374 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:47:27,507 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:47:27,507 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:47:27,508 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:45462
+2025-03-10 18:47:27,509 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:45462
+2025-03-10 18:47:30,357 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:47:30,357 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:47:30,357 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:47:30,358 - Exception calling application: can only concatenate str (not "int") to str
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 263, in CheckBalance
+    bank_stubs[bank_name] = create_bank_stub(bank_name)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 72, in create_bank_stub
+    print("bank port=" + BANK_PORTS[bank_name])
+          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+TypeError: can only concatenate str (not "int") to str
+2025-03-10 18:49:38,313 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:49:45,546 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:49:45,546 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:49:45,547 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:35598
+2025-03-10 18:49:45,549 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:35598
+2025-03-10 18:49:50,388 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:49:50,389 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:49:50,396 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:49:50,397 - Exception calling application: can only concatenate str (not "int") to str
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 264, in CheckBalance
+    bank_stubs[bank_name] = create_bank_stub(bank_name)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 68, in create_bank_stub
+    print("bank port=" + BANK_PORTS[bank_name])
+          ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+TypeError: can only concatenate str (not "int") to str
+2025-03-10 18:50:51,896 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:50:59,932 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:50:59,933 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:50:59,934 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:40232
+2025-03-10 18:50:59,935 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:40232
+2025-03-10 18:51:01,521 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:51:01,521 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:51:01,521 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:51:01,528 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-10 18:51:01,528 - Exception calling application: 'dict' object has no attribute 'GetBalance'
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 278, in CheckBalance
+    response = bank_stubs[bank_name].GetBalance(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'GetBalance'
+2025-03-10 18:52:05,011 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:52:11,149 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:52:11,149 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:52:11,150 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:57438
+2025-03-10 18:52:11,151 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:57438
+2025-03-10 18:52:12,077 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:52:12,078 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:52:12,078 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:52:12,086 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-10 18:52:12,087 - Exception calling application: 'dict' object has no attribute 'GetBalance'
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 278, in CheckBalance
+    response = bank_stubs[bank_name].GetBalance(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'GetBalance'
+2025-03-10 18:55:49,761 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 18:55:57,703 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 18:55:57,703 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 18:55:57,704 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:44242
+2025-03-10 18:55:57,705 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:44242
+2025-03-10 18:56:03,175 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:56:03,176 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 18:56:03,176 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 18:56:03,184 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-10 18:56:03,192 - ✅ alice from ipv6:%5B::1%5D:44242 checked balance: ₹5000.0
+2025-03-10 20:02:17,444 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 20:02:34,615 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 20:02:34,615 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 20:02:34,616 - 🔑 Authentication attempt for user: bob from ipv6:%5B::1%5D:38806
+2025-03-10 20:02:34,617 - ✅ bob successfully authenticated from ipv6:%5B::1%5D:38806
+2025-03-10 20:02:36,599 - ✅ Authorized request from bob - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:02:36,599 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:02:36,599 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 20:02:36,607 - ✅ Secure connection established with sender's bank: ICICI
+2025-03-10 20:02:36,637 - ❌ bob attempted balance check (Failed: Bank service unavailable)
+2025-03-10 20:02:39,640 - ✅ Authorized request from bob - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:02:39,640 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:02:39,640 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 20:02:39,642 - ❌ bob attempted balance check (Failed: Bank service unavailable)
+2025-03-10 20:02:42,645 - ✅ Authorized request from bob - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:02:42,645 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:02:42,645 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 20:02:42,646 - ❌ bob attempted balance check (Failed: Bank service unavailable)
+2025-03-10 20:06:06,049 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-10 20:06:25,258 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-10 20:06:25,259 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-10 20:06:25,260 - 🔑 Authentication attempt for user: bob from ipv6:%5B::1%5D:35858
+2025-03-10 20:06:25,261 - ✅ bob successfully authenticated from ipv6:%5B::1%5D:35858
+2025-03-10 20:06:26,748 - ✅ Authorized request from bob - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:06:26,748 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:06:26,748 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 20:06:26,762 - ✅ Secure connection established with sender's bank: ICICI
+2025-03-10 20:06:26,792 - ❌ bob attempted balance check (Failed: Bank service unavailable)
+2025-03-10 20:06:29,795 - ✅ Authorized request from bob - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:06:29,795 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:06:29,795 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 20:06:29,797 - ❌ bob attempted balance check (Failed: Bank service unavailable)
+2025-03-10 20:06:32,799 - ✅ Authorized request from bob - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:06:32,799 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-10 20:06:32,800 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-10 20:06:32,801 - ❌ bob attempted balance check (Failed: Bank service unavailable)
+2025-03-10 23:57:50,668 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 00:01:06,017 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-11 00:01:06,017 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-11 00:01:06,018 - 🔑 Authentication attempt for user: bob from ipv6:%5B::1%5D:42776
+2025-03-11 00:01:06,019 - ✅ bob successfully authenticated from ipv6:%5B::1%5D:42776
+2025-03-11 00:01:09,518 - ✅ Authorized request from bob - Method: /PaymentGateway/CheckBalance
+2025-03-11 00:01:09,518 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 00:01:09,518 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 00:01:09,533 - ✅ Secure connection established with sender's bank: ICICI
+2025-03-11 00:01:09,562 - ❌ bob attempted balance check (Failed: Bank service unavailable)
+2025-03-11 00:01:12,565 - ✅ Authorized request from bob - Method: /PaymentGateway/CheckBalance
+2025-03-11 00:01:12,565 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 00:01:12,565 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 00:01:12,567 - ❌ bob attempted balance check (Failed: Bank service unavailable)
+2025-03-11 00:01:15,570 - ✅ Authorized request from bob - Method: /PaymentGateway/CheckBalance
+2025-03-11 00:01:15,570 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 00:01:15,570 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 00:01:15,571 - ❌ bob attempted balance check (Failed: Bank service unavailable)
+2025-03-11 00:04:45,342 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 00:05:14,567 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-11 00:05:14,567 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-11 00:05:14,569 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:39038
+2025-03-11 00:05:14,570 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:39038
+2025-03-11 00:05:16,055 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 00:05:16,056 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 00:05:16,056 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 00:05:16,063 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-11 00:05:16,072 - ✅ alice from ipv6:%5B::1%5D:39038 checked balance: ₹5000.0
+2025-03-11 00:05:35,819 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-11 00:05:35,819 - ✅ alice initiated a payment.
+2025-03-11 00:05:35,819 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-11 00:05:35,820 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-11 00:05:35,820 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-11 00:05:35,820 - ✅ alice (IP: ipv6:%5B::1%5D:39038) initiated payment of ₹2550.0 to 2001
+2025-03-11 00:05:35,825 - ✅ Secure connection established with receiver's bank: ICICI
+2025-03-11 00:05:35,833 - ✅ alice sent ₹2550.0 to 2001 successfully
+2025-03-11 00:05:39,672 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 00:05:39,672 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 00:05:39,672 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 00:05:39,675 - ✅ alice from ipv6:%5B::1%5D:39038 checked balance: ₹2450.0
+2025-03-11 00:05:50,848 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-11 00:05:50,848 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-11 00:05:50,849 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:39038
+2025-03-11 00:05:50,849 - ⚠️ alice attempted login with active session (rejected)

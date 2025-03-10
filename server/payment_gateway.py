@@ -60,6 +60,33 @@ bank_stubs = {}  # Store gRPC connections to bank servers
 # Add to payment_gateway.py at global level
 active_tokens = {}  # Dictionary to track active tokens: {username: {token: expiry_time}}
 
+def create_bank_stub(bank_name):
+    """Create a secure gRPC connection to a bank server."""
+    
+
+    # 🔍 Debugging: Check if bank_name exists in BANK_PORTS
+    if bank_name not in BANK_PORTS:
+        print(f"❌ Error: Bank '{bank_name}' not found in BANK_PORTS!")
+        return None
+    
+    print(f"✅ Bank '{bank_name}' found! Port = {BANK_PORTS[bank_name]}")  # ✅ Now printing bank port
+    
+    # ✅ Load the trusted CA certificate
+    with open("ca.crt", "rb") as f:
+        trusted_certs = f.read()
+    
+    # ✅ Create gRPC SSL/TLS credentials for connecting to banks
+    secure_creds = grpc.ssl_channel_credentials(root_certificates=trusted_certs)
+    
+    # ✅ Establish secure connection to bank servers dynamically
+    # ✅ Establish secure connection to bank servers dynamically
+    bank_stub = bank_pb2_grpc.BankStub(
+        grpc.secure_channel(f"localhost:{BANK_PORTS[bank_name]}", secure_creds)
+    )
+    print(f"🔗 Secure connection established with bank: {bank_name}")
+    return bank_stub
+
+
 def generate_jwt(username):
     """Generate a JWT token for authentication."""
     # Check if user already has an active token
@@ -86,15 +113,7 @@ def generate_jwt(username):
     
     return token
 
-# def generate_jwt(username):
-#     """Generate a JWT token for authentication."""
-#     expiration_time = datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # Token expires in 1 hour
-#     payload = {
-#         "username": username,
-#         "exp": expiration_time
-#     }
-#     token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-#     return token
+
 
 def verify_jwt(token):
     """Verify the JWT token and extract the username. Refresh if expired."""
@@ -113,6 +132,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
     # Modify AuthenticateClient method in PaymentGatewayService
     def AuthenticateClient(self, request, context):
         """Authenticates user and returns a JWT token."""
+        print("Authenticating client is called")
         logging.info(f"🔑 Authentication attempt for user: {request.username} from {context.peer()}")
         user = clients_db.get(request.username)
         if not user or user["password"] != request.password:
@@ -162,10 +182,8 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             
             # Verify sender's bank connection
             if sender_bank not in bank_stubs:
-                bank_stubs[sender_bank] = bank_pb2_grpc.BankStub(
-                    grpc.insecure_channel(f"localhost:{BANK_PORTS[sender_bank]}")
-                )
-                logging.info(f"✅ Connected to sender's bank {sender_bank}.")
+                bank_stubs[sender_bank] = create_bank_stub(sender_bank)
+                logging.info(f"✅ Secure connection established with sender's bank: {sender_bank}")
             
             sender_bank_stub = bank_stubs[sender_bank]
             balance_response = sender_bank_stub.GetBalance(
@@ -202,10 +220,8 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             
             # Verify receiver's bank connection
             if receiver_bank not in bank_stubs:
-                bank_stubs[receiver_bank] = bank_pb2_grpc.BankStub(
-                    grpc.insecure_channel(f"localhost:{BANK_PORTS[receiver_bank]}")
-                )
-                logging.info(f"✅ Connected to receiver's bank {receiver_bank}.")
+                 bank_stubs[receiver_bank] = create_bank_stub(receiver_bank)
+                 logging.info(f"✅ Secure connection established with receiver's bank: {receiver_bank}")
             
             receiver_bank_stub = bank_stubs[receiver_bank]
             credit_response = receiver_bank_stub.ProcessTransaction(
@@ -231,6 +247,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
     
     def CheckBalance(self, request, context):
         """Returns the client's account balance securely using JWT authentication."""
+        print("check balance is called")
         metadata = dict(context.invocation_metadata())
         token = metadata.get("authorization", None)
         client_ip = context.peer()
@@ -249,10 +266,10 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             context.abort(grpc.StatusCode.NOT_FOUND, "Bank not found")
 
         if bank_name not in bank_stubs:
-            bank_stubs[bank_name] = bank_pb2_grpc.BankStub(
-                grpc.insecure_channel(f"localhost:{BANK_PORTS[bank_name]}")
-            )
-            logging.info(f"✅ Connected to {bank_name} at port {BANK_PORTS[bank_name]}")
+            print("calling create bank stub")
+            bank_stubs[bank_name] = create_bank_stub(bank_name)
+            logging.info(f"✅ Secure connection established with sender's bank: {bank_name}")
+            
 
         try:
             response = bank_stubs[bank_name].GetBalance(
@@ -267,13 +284,13 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
 def serve():
     try:
         # Load SSL/TLS Credentials
-        with open("server.key", "rb") as f:
-            private_key = f.read()
-        with open("server.crt", "rb") as f:
-            certificate_chain = f.read()
+        with open("payment_gateway.crt", "rb") as f:
+            server_cert = f.read()
+        with open("payment_gateway.key", "rb") as f:
+            server_key = f.read()
 
         # Configure SSL/TLS for the gRPC Server
-        server_credentials = grpc.ssl_server_credentials([(private_key, certificate_chain)])
+        server_credentials = grpc.ssl_server_credentials([(server_key, server_cert)])
 
         # Start Secure gRPC Server with interceptors for authorization and logging
         server = grpc.server(
