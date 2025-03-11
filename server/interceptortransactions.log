@@ -394,3 +394,116 @@ AttributeError: 'dict' object has no attribute 'GetBalance'
 2025-03-11 00:05:50,848 - ✅ Success: /PaymentGateway/AuthenticateClient completed
 2025-03-11 00:05:50,849 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:39038
 2025-03-11 00:05:50,849 - ⚠️ alice attempted login with active session (rejected)
+2025-03-11 00:28:34,520 - ❌ Failed to start server: [Errno 2] No such file or directory: 'certs/payment/payment.key'
+2025-03-11 00:29:18,867 - ❌ Failed to start server: [Errno 2] No such file or directory: 'certs/payment/payment.key'
+2025-03-11 00:30:18,841 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 00:38:55,022 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 00:50:10,751 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 00:56:08,997 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 01:03:15,598 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 01:04:23,926 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 01:11:32,790 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 01:11:44,292 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-11 01:11:44,293 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-11 01:11:44,294 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:49938
+2025-03-11 01:11:44,295 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:49938
+2025-03-11 01:11:53,515 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 01:11:53,516 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 01:11:53,516 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 01:11:53,526 - Exception calling application: module 'bank_pb2_grpc' has no attribute 'BankServiceStub'
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 276, in CheckBalance
+    bank_stubs[bank_name] = create_bank_stub(bank_name)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 91, in create_bank_stub
+    bank_stub = bank_pb2_grpc.BankServiceStub(bank_channel)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'bank_pb2_grpc' has no attribute 'BankServiceStub'. Did you mean: 'BankServicer'?
+2025-03-11 09:54:06,152 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 09:54:38,618 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-11 09:54:38,618 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-11 09:54:38,619 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:35860
+2025-03-11 09:54:38,620 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:35860
+2025-03-11 09:54:45,990 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 09:54:45,990 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 09:54:45,990 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 09:54:45,999 - Exception calling application: module 'bank_pb2_grpc' has no attribute 'BankServiceStub'
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 276, in CheckBalance
+    bank_stubs[bank_name] = create_bank_stub(bank_name)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 91, in create_bank_stub
+    bank_stub = bank_pb2_grpc.BankServiceStub(bank_channel)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'bank_pb2_grpc' has no attribute 'BankServiceStub'. Did you mean: 'BankServicer'?
+2025-03-11 09:58:01,754 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 09:58:01,754 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 09:58:01,754 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 09:58:01,756 - Exception calling application: module 'bank_pb2_grpc' has no attribute 'BankServiceStub'
+Traceback (most recent call last):
+  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 276, in CheckBalance
+    bank_stubs[bank_name] = create_bank_stub(bank_name)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 91, in create_bank_stub
+    bank_stub = bank_pb2_grpc.BankStub(bank_channel)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'bank_pb2_grpc' has no attribute 'BankServiceStub'. Did you mean: 'BankServicer'?
+2025-03-11 09:58:34,192 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 09:58:41,353 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-11 09:58:41,353 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-11 09:58:41,354 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:40498
+2025-03-11 09:58:41,355 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:40498
+2025-03-11 09:58:43,291 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 09:58:43,291 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 09:58:43,291 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 09:58:43,299 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-11 09:58:43,315 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-11 09:58:46,318 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 09:58:46,319 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 09:58:46,319 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 09:58:46,320 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-11 09:58:49,323 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 09:58:49,323 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 09:58:49,323 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 09:58:49,324 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-11 10:10:15,404 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 10:25:15,928 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-11 10:25:15,928 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-11 10:25:15,928 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:42574
+2025-03-11 10:25:15,929 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:42574
+2025-03-11 10:25:19,897 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 10:25:19,897 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 10:25:19,897 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 10:25:19,902 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-11 10:25:19,908 - ✅ alice from ipv6:%5B::1%5D:42574 checked balance: ₹5000.0
+2025-03-11 10:29:20,342 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-11 10:29:54,642 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-11 10:29:54,643 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-11 10:29:54,644 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:55112
+2025-03-11 10:29:54,644 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:55112
+2025-03-11 10:29:56,659 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 10:29:56,659 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 10:29:56,659 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 10:29:56,666 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-11 10:29:56,672 - ✅ alice from ipv6:%5B::1%5D:55112 checked balance: ₹5000.0
+2025-03-11 10:30:04,187 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-11 10:30:04,188 - ✅ alice initiated a payment.
+2025-03-11 10:30:04,188 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-11 10:30:04,188 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-11 10:30:04,188 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-11 10:30:04,189 - ✅ alice (IP: ipv6:%5B::1%5D:55112) initiated payment of ₹2340.0 to 2001
+2025-03-11 10:30:04,194 - ✅ Secure connection established with receiver's bank: ICICI
+2025-03-11 10:30:04,204 - ✅ alice sent ₹2340.0 to 2001 successfully
+2025-03-11 10:30:12,219 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-11 10:30:12,219 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-11 10:30:12,219 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-11 10:30:12,222 - ✅ alice from ipv6:%5B::1%5D:55112 checked balance: ₹2660.0

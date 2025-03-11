@@ -48,23 +48,24 @@ class BankService(bank_pb2_grpc.BankServicer):
         return bank_pb2.TransactionResponse(success=True, message="Amount deducted, waiting for receiver bank")
 
 
-    # def GetBankName(self, request, context):
-    #     """Returns the name of the bank."""
-    #     return bank_pb2.BankNameResponse(name=self.bank_name)
-
 def serve(bank_name, port):
     """Start a secure bank server with TLS."""
-    cert_file = f"{bank_name.lower()}.crt"  # e.g., hdfc.crt
-    key_file = f"{bank_name.lower()}.key"  # e.g., hdfc.key
-    print("cert_file=" + cert_file)
-    print("key_file=" + key_file)
-    with open("bank_server.crt", "rb") as f:
-        server_cert = f.read()
-    with open("bank_server.key", "rb") as f:
-        server_key = f.read()
+    cert_path = f'../certs/bank/{bank_name.lower()}.crt'
+    key_path = f'../certs/bank/{bank_name.lower()}.key'
 
-    # Create TLS credentials
-    server_credentials = grpc.ssl_server_credentials([(server_key, server_cert)])
+    with open(key_path, 'rb') as f:
+        private_key = f.read()
+    with open(cert_path, 'rb') as f:
+        certificate_chain = f.read()
+    with open('../certs/ca/ca.crt', 'rb') as f:
+        root_certificates = f.read()
+
+    server_credentials = grpc.ssl_server_credentials(
+        [(private_key, certificate_chain)],
+        root_certificates=root_certificates,
+        require_client_auth=True
+    )
+
 
     # Create a gRPC server
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

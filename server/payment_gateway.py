@@ -70,19 +70,25 @@ def create_bank_stub(bank_name):
         return None
     
     print(f"✅ Bank '{bank_name}' found! Port = {BANK_PORTS[bank_name]}")  # ✅ Now printing bank port
+
+    # Load certificates for bank connection
+    with open('../certs/payment/payment.key', 'rb') as f:
+        private_key = f.read()
+    with open('../certs/payment/payment.crt', 'rb') as f:
+        certificate_chain = f.read()
+    with open('../certs/ca/ca.crt', 'rb') as f:
+        root_certificates = f.read()
     
-    # ✅ Load the trusted CA certificate
-    with open("ca.crt", "rb") as f:
-        trusted_certs = f.read()
-    
-    # ✅ Create gRPC SSL/TLS credentials for connecting to banks
-    secure_creds = grpc.ssl_channel_credentials(root_certificates=trusted_certs)
-    
-    # ✅ Establish secure connection to bank servers dynamically
-    # ✅ Establish secure connection to bank servers dynamically
-    bank_stub = bank_pb2_grpc.BankStub(
-        grpc.secure_channel(f"localhost:{BANK_PORTS[bank_name]}", secure_creds)
+    # Create client credentials for connecting to bank
+    client_credentials = grpc.ssl_channel_credentials(
+        root_certificates=root_certificates,
+        private_key=private_key,
+        certificate_chain=certificate_chain
     )
+        
+    # Create secure channel to bank
+    bank_channel = grpc.secure_channel(f"localhost:{BANK_PORTS[bank_name]}", client_credentials)
+    bank_stub = bank_pb2_grpc.BankStub(bank_channel)
     print(f"🔗 Secure connection established with bank: {bank_name}")
     return bank_stub
 
@@ -283,14 +289,20 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
 
 def serve():
     try:
-        # Load SSL/TLS Credentials
-        with open("payment_gateway.crt", "rb") as f:
-            server_cert = f.read()
-        with open("payment_gateway.key", "rb") as f:
-            server_key = f.read()
-
-        # Configure SSL/TLS for the gRPC Server
-        server_credentials = grpc.ssl_server_credentials([(server_key, server_cert)])
+         # Load server key and certificate
+        with open('../certs/payment/payment.key', 'rb') as f:
+            private_key = f.read()
+        with open('../certs/payment/payment.crt', 'rb') as f:
+            certificate_chain = f.read()
+        with open('../certs/ca/ca.crt', 'rb') as f:
+            root_certificates = f.read()
+        
+        # Create server credentials
+        server_credentials = grpc.ssl_server_credentials(
+            [(private_key, certificate_chain)],
+            root_certificates=root_certificates,
+            require_client_auth=True  # Require clients to authenticate (mutual TLS)
+        )
 
         # Start Secure gRPC Server with interceptors for authorization and logging
         server = grpc.server(
@@ -304,7 +316,6 @@ def serve():
         
         # Add the service to the server
         payment_gateway_pb2_grpc.add_PaymentGatewayServicer_to_server(PaymentGatewayService(), server)
-
         # Add secure port with TLS
         server.add_secure_port("[::]:50052", server_credentials)
         logging.info("🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)")

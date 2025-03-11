@@ -2,12 +2,6 @@ import grpc
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'protofiles')))
-
-
-
-
-
-import grpc
 import payment_gateway_pb2
 import payment_gateway_pb2_grpc
 import time
@@ -17,15 +11,9 @@ MAX_RETRIES = 3  # ✅ Define max retry attempts
 RETRY_DELAY = 3  # ✅ Wait 3 seconds before retrying
 
 
-
-
-
 # ✅ Global variable to store JWT token
 jwt_token = None
 stub = None  # ✅ Global stub for reuse
-
-
-
 
 
 def authenticate_client(stub, username, password):
@@ -43,6 +31,8 @@ def authenticate_client(stub, username, password):
 
             if response.authenticated:
                 print(f"✅ Login successful! Token: {response.token}")
+                jwt_token = response.token
+                logging.info(f"✅ Authentication successful for {username}.")
                 return True  # ✅ Exit on successful authentication
             else:
                 
@@ -168,10 +158,22 @@ def initialize_stub():
     """Creates a secure gRPC connection with TLS."""
     global stub  # ✅ Ensure stub persists across function calls
 
-    with open("ca.crt", "rb") as f:
-        trusted_certs = f.read()
+     # Load certificates
+    with open('../certs/client/client.key', 'rb') as f:
+        private_key = f.read()
+    with open('../certs/client/client.crt', 'rb') as f:
+        certificate_chain = f.read()
+    with open('../certs/ca/ca.crt', 'rb') as f:
+        root_certificates = f.read()
     
-    credentials = grpc.ssl_channel_credentials(root_certificates=trusted_certs)
+    # Create client credentials
+    credentials = grpc.ssl_channel_credentials(
+        root_certificates=root_certificates,
+        private_key=private_key,
+        certificate_chain=certificate_chain
+    )
+    
+    # credentials = grpc.ssl_channel_credentials(root_certificates=trusted_certs)
     channel = grpc.secure_channel("localhost:50052", credentials)  # ✅ Secure Connection
 
     stub = payment_gateway_pb2_grpc.PaymentGatewayStub(channel)
