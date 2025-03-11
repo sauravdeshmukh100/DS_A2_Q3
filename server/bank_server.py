@@ -7,17 +7,44 @@ from concurrent import futures
 import json
 import bank_pb2
 import bank_pb2_grpc
+import time
+import logging
+
+
+# Configure logging
+logging.basicConfig(
+    filename="banktransactions.log",
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
 
 class BankService(bank_pb2_grpc.BankServicer):
     def __init__(self, bank_name):
         self.bank_name = bank_name
         self.accounts = self.load_bank_data()
+        # Dictionary to store pending transactions
+        self.pending_transactions = {}
+        # Track account locks
+        self.account_locks = {}
 
     def load_bank_data(self):
         """Load account balances for the given bank from bank_data.json."""
         with open("bank_data.json", "r") as f:
             data = json.load(f)
         return data.get(self.bank_name, {})
+    
+    def save_bank_data(self):
+        """Save the current account balances to bank_data.json."""
+        with open("bank_data.json", "r") as f:
+            data = json.load(f)
+        
+        data[self.bank_name] = self.accounts
+        
+        with open("bank_data.json", "w") as f:
+            json.dump(data, f, indent=4)
+
 
     def GetBalance(self, request, context):
         """Returns the balance of an account."""
@@ -26,7 +53,8 @@ class BankService(bank_pb2_grpc.BankServicer):
         return bank_pb2.BalanceResponse(balance=balance)
     
     def ProcessTransaction(self, request, context):
-        """Handles money transfers for the sender's bank and credits receiver bank when applicable."""
+        """Legacy method - still supported but 2PC is recommended."""
+        logging.warning(f"⚠️ Legacy transaction processing for {request.from_account} -> {request.to_account}")
 
         # ✅ Step 1: Check if this is a credit transaction (funds coming from outside)
         if request.from_account == "SYSTEM":
@@ -34,9 +62,10 @@ class BankService(bank_pb2_grpc.BankServicer):
                 return bank_pb2.TransactionResponse(success=False, message="Invalid Receiver Account")
 
             self.accounts[request.to_account] += request.amount  # Credit the amount
+            self.save_bank_data()
             return bank_pb2.TransactionResponse(success=True, message="Funds credited successfully")
 
-        # ✅ Step 2: Deduct funds from sender’s account (existing logic)
+        # ✅ Step 2: Deduct funds from sender's account (existing logic)
         if request.from_account not in self.accounts:
             return bank_pb2.TransactionResponse(success=False, message="Invalid Sender Account")
 
@@ -44,9 +73,156 @@ class BankService(bank_pb2_grpc.BankServicer):
             return bank_pb2.TransactionResponse(success=False, message="Insufficient funds")
 
         self.accounts[request.from_account] -= request.amount  # Deduct funds
+        self.save_bank_data()
 
         return bank_pb2.TransactionResponse(success=True, message="Amount deducted, waiting for receiver bank")
 
+    def PrepareTransaction(self, request, context):
+        """Phase 1: Prepare for transaction by checking and locking funds."""
+        transaction_id = request.transaction_id
+        account_number = request.account_number
+        amount = request.amount
+        operation = request.operation  # "debit" or "credit"
+        
+        is_debit = (operation == "debit")
+        
+        logging.info(f"🔒 Preparing transaction {transaction_id}: {'debit from' if is_debit else 'credit to'} {account_number} for ${amount}")
+        
+        # Check if this is a credit transaction (receiver bank)
+        if not is_debit:
+            # For receiving bank, check if account exists
+            if account_number not in self.accounts:
+                return bank_pb2.PrepareResponse(
+                    success=False,
+                    message="Invalid receiver account"
+                )
+                
+            # Store the pending transaction
+            self.pending_transactions[transaction_id] = {
+                'type': 'credit',
+                'account': account_number,
+                'amount': amount,
+                'timestamp': time.time()
+            }
+            
+            return bank_pb2.PrepareResponse(
+                success=True,
+                message="Ready to receive funds"
+            )
+            
+        # For sending bank (debit operation), check if there are sufficient funds
+        if account_number not in self.accounts:
+            return bank_pb2.PrepareResponse(
+                success=False,
+                message="Invalid sender account"
+            )
+            
+        if self.accounts[account_number] < amount:
+            return bank_pb2.PrepareResponse(
+                success=False,
+                message="Insufficient funds"
+            )
+            
+        # Check if the account is already locked by another transaction
+        if account_number in self.account_locks and self.account_locks[account_number] != transaction_id:
+            return bank_pb2.PrepareResponse(
+                success=False,
+                message="Account locked by another transaction"
+            )
+            
+        # Lock the funds
+        self.account_locks[account_number] = transaction_id
+        
+        # Store the pending transaction
+        self.pending_transactions[transaction_id] = {
+            'type': 'debit',
+            'account': account_number,
+            'amount': amount,
+            'timestamp': time.time()
+        }
+        
+        return bank_pb2.PrepareResponse(
+            success=True,
+            message="Funds locked successfully"
+        )
+        
+    def CommitTransaction(self, request, context):
+        """Phase 2: Commit the transaction after all participants are prepared."""
+        transaction_id = request.transaction_id
+        account_number = request.account_number
+        amount = request.amount
+        operation = request.operation  # "debit" or "credit"
+        
+        logging.info(f"✅ Committing transaction {transaction_id} for {operation} operation")
+        
+        # Check if this transaction exists in our pending transactions
+        if transaction_id not in self.pending_transactions:
+            return bank_pb2.CommitResponse(
+                success=False,
+                message=f"Unknown transaction: {transaction_id}"
+            )
+            
+        transaction = self.pending_transactions[transaction_id]
+        
+        # Verify that the account number matches the one in pending transaction
+        if transaction['account'] != account_number:
+            return bank_pb2.CommitResponse(
+                success=False,
+                message=f"Account mismatch: {account_number} vs {transaction['account']}"
+            )
+            
+        # Process based on operation type
+        if operation == "debit":
+            # Actually deduct the funds
+            self.accounts[account_number] -= amount
+            
+            # Release the lock
+            if account_number in self.account_locks:
+                del self.account_locks[account_number]
+                
+        elif operation == "credit":
+            # Credit the funds
+            self.accounts[account_number] += amount
+            
+        # Save the updated account data
+        self.save_bank_data()
+            
+        # Remove from pending transactions
+        del self.pending_transactions[transaction_id]
+        
+        return bank_pb2.CommitResponse(
+            success=True,
+            message="Transaction committed successfully"
+        )
+    
+    def AbortTransaction(self, request, context):
+        """Phase 2 (Abort): Release locks and cancel the transaction."""
+        transaction_id = request.transaction_id
+        account_number = request.account_number
+        operation = request.operation  # "debit" or "credit"
+        
+        logging.info(f"❌ Aborting transaction {transaction_id} for {operation} operation")
+        
+        # Check if this transaction exists in our pending transactions
+        if transaction_id not in self.pending_transactions:
+            return bank_pb2.AbortResponse(
+                success=True,
+                message=f"Unknown transaction: {transaction_id}, nothing to abort"
+            )
+            
+        transaction = self.pending_transactions[transaction_id]
+        
+        # If it's a debit transaction, release the account lock
+        if operation == "debit" and account_number in self.account_locks:
+            del self.account_locks[account_number]
+        
+        # Remove from pending transactions
+        del self.pending_transactions[transaction_id]
+        
+        return bank_pb2.AbortResponse(
+            success=True,
+            message="Transaction aborted successfully"
+        )
 
 def serve(bank_name, port):
     """Start a secure bank server with TLS."""
@@ -73,6 +249,9 @@ def serve(bank_name, port):
 
     # Start the secure server
     server.add_secure_port(f"[::]:{port}", server_credentials)
+    logging.info(f"port={port}")
+    logging.info(f"🚀 Secure Bank Server '{bank_name}' started on port {port} with 2PC support")
+
     print("port=" + port)
     print(f"🚀 Secure Bank Server '{bank_name}' started on port {port}")
 

@@ -25,9 +25,11 @@ message BalanceResponse {
 message PaymentRequest {
     string to_account = 1;
     double amount = 2;
+    
 }
 
 message PaymentResponse {
     bool success = 1;
     string message = 2;
+    string transaction_id = 3; // adding this field
 }

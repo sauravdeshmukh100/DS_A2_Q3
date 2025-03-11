@@ -44,6 +44,21 @@ class BankStub(object):
                 request_serializer=bank__pb2.BalanceRequest.SerializeToString,
                 response_deserializer=bank__pb2.BalanceResponse.FromString,
                 _registered_method=True)
+        self.PrepareTransaction = channel.unary_unary(
+                '/bank.Bank/PrepareTransaction',
+                request_serializer=bank__pb2.PrepareRequest.SerializeToString,
+                response_deserializer=bank__pb2.PrepareResponse.FromString,
+                _registered_method=True)
+        self.CommitTransaction = channel.unary_unary(
+                '/bank.Bank/CommitTransaction',
+                request_serializer=bank__pb2.CommitRequest.SerializeToString,
+                response_deserializer=bank__pb2.CommitResponse.FromString,
+                _registered_method=True)
+        self.AbortTransaction = channel.unary_unary(
+                '/bank.Bank/AbortTransaction',
+                request_serializer=bank__pb2.AbortRequest.SerializeToString,
+                response_deserializer=bank__pb2.AbortResponse.FromString,
+                _registered_method=True)
 
 
 class BankServicer(object):
@@ -61,6 +76,25 @@ class BankServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PrepareTransaction(self, request, context):
+        """New 2PC methods aligned with payment gateway
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CommitTransaction(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AbortTransaction(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_BankServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -73,6 +107,21 @@ def add_BankServicer_to_server(servicer, server):
                     servicer.GetBalance,
                     request_deserializer=bank__pb2.BalanceRequest.FromString,
                     response_serializer=bank__pb2.BalanceResponse.SerializeToString,
+            ),
+            'PrepareTransaction': grpc.unary_unary_rpc_method_handler(
+                    servicer.PrepareTransaction,
+                    request_deserializer=bank__pb2.PrepareRequest.FromString,
+                    response_serializer=bank__pb2.PrepareResponse.SerializeToString,
+            ),
+            'CommitTransaction': grpc.unary_unary_rpc_method_handler(
+                    servicer.CommitTransaction,
+                    request_deserializer=bank__pb2.CommitRequest.FromString,
+                    response_serializer=bank__pb2.CommitResponse.SerializeToString,
+            ),
+            'AbortTransaction': grpc.unary_unary_rpc_method_handler(
+                    servicer.AbortTransaction,
+                    request_deserializer=bank__pb2.AbortRequest.FromString,
+                    response_serializer=bank__pb2.AbortResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -129,6 +178,87 @@ class Bank(object):
             '/bank.Bank/GetBalance',
             bank__pb2.BalanceRequest.SerializeToString,
             bank__pb2.BalanceResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def PrepareTransaction(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/bank.Bank/PrepareTransaction',
+            bank__pb2.PrepareRequest.SerializeToString,
+            bank__pb2.PrepareResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CommitTransaction(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/bank.Bank/CommitTransaction',
+            bank__pb2.CommitRequest.SerializeToString,
+            bank__pb2.CommitResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AbortTransaction(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/bank.Bank/AbortTransaction',
+            bank__pb2.AbortRequest.SerializeToString,
+            bank__pb2.AbortResponse.FromString,
             options,
             channel_credentials,
             insecure,

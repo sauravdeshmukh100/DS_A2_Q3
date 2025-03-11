@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nbank.proto\x12\x04\x62\x61nk\"N\n\x12TransactionRequest\x12\x14\n\x0c\x66rom_account\x18\x01 \x01(\t\x12\x12\n\nto_account\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\"7\n\x13TransactionResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"(\n\x0e\x42\x61lanceRequest\x12\x16\n\x0e\x61\x63\x63ount_number\x18\x01 \x01(\t\"\"\n\x0f\x42\x61lanceResponse\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x01\x32\x8c\x01\n\x04\x42\x61nk\x12I\n\x12ProcessTransaction\x12\x18.bank.TransactionRequest\x1a\x19.bank.TransactionResponse\x12\x39\n\nGetBalance\x12\x14.bank.BalanceRequest\x1a\x15.bank.BalanceResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nbank.proto\x12\x04\x62\x61nk\"N\n\x12TransactionRequest\x12\x14\n\x0c\x66rom_account\x18\x01 \x01(\t\x12\x12\n\nto_account\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\"7\n\x13TransactionResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"(\n\x0e\x42\x61lanceRequest\x12\x16\n\x0e\x61\x63\x63ount_number\x18\x01 \x01(\t\"\"\n\x0f\x42\x61lanceResponse\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x01\"c\n\x0ePrepareRequest\x12\x16\n\x0etransaction_id\x18\x01 \x01(\t\x12\x16\n\x0e\x61\x63\x63ount_number\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\x12\x11\n\toperation\x18\x04 \x01(\t\"3\n\x0fPrepareResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"b\n\rCommitRequest\x12\x16\n\x0etransaction_id\x18\x01 \x01(\t\x12\x16\n\x0e\x61\x63\x63ount_number\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\x12\x11\n\toperation\x18\x04 \x01(\t\"2\n\x0e\x43ommitResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"a\n\x0c\x41\x62ortRequest\x12\x16\n\x0etransaction_id\x18\x01 \x01(\t\x12\x16\n\x0e\x61\x63\x63ount_number\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x01\x12\x11\n\toperation\x18\x04 \x01(\t\"1\n\rAbortResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t2\xcc\x02\n\x04\x42\x61nk\x12I\n\x12ProcessTransaction\x12\x18.bank.TransactionRequest\x1a\x19.bank.TransactionResponse\x12\x39\n\nGetBalance\x12\x14.bank.BalanceRequest\x1a\x15.bank.BalanceResponse\x12\x41\n\x12PrepareTransaction\x12\x14.bank.PrepareRequest\x1a\x15.bank.PrepareResponse\x12>\n\x11\x43ommitTransaction\x12\x13.bank.CommitRequest\x1a\x14.bank.CommitResponse\x12;\n\x10\x41\x62ortTransaction\x12\x12.bank.AbortRequest\x1a\x13.bank.AbortResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -39,6 +39,18 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_BALANCEREQUEST']._serialized_end=197
   _globals['_BALANCERESPONSE']._serialized_start=199
   _globals['_BALANCERESPONSE']._serialized_end=233
-  _globals['_BANK']._serialized_start=236
-  _globals['_BANK']._serialized_end=376
+  _globals['_PREPAREREQUEST']._serialized_start=235
+  _globals['_PREPAREREQUEST']._serialized_end=334
+  _globals['_PREPARERESPONSE']._serialized_start=336
+  _globals['_PREPARERESPONSE']._serialized_end=387
+  _globals['_COMMITREQUEST']._serialized_start=389
+  _globals['_COMMITREQUEST']._serialized_end=487
+  _globals['_COMMITRESPONSE']._serialized_start=489
+  _globals['_COMMITRESPONSE']._serialized_end=539
+  _globals['_ABORTREQUEST']._serialized_start=541
+  _globals['_ABORTREQUEST']._serialized_end=638
+  _globals['_ABORTRESPONSE']._serialized_start=640
+  _globals['_ABORTRESPONSE']._serialized_end=689
+  _globals['_BANK']._serialized_start=692
+  _globals['_BANK']._serialized_end=1024
 # @@protoc_insertion_point(module_scope)

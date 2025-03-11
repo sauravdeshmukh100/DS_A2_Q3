@@ -1,0 +1,41 @@
+2025-03-11 19:42:56 - INFO - port=60051
+2025-03-11 19:42:56 - INFO - 🚀 Secure Bank Server 'HDFC' started on port 60051 with 2PC support
+2025-03-11 19:43:51 - INFO - port=60052
+2025-03-11 19:43:51 - INFO - 🚀 Secure Bank Server 'ICICI' started on port 60052 with 2PC support
+2025-03-11 20:34:38 - INFO - port=60051
+2025-03-11 20:34:38 - INFO - 🚀 Secure Bank Server 'HDFC' started on port 60051 with 2PC support
+2025-03-11 20:34:41 - INFO - port=60052
+2025-03-11 20:34:41 - INFO - 🚀 Secure Bank Server 'ICICI' started on port 60052 with 2PC support
+2025-03-11 20:35:03 - INFO - 🔒 Preparing transaction txn-20250311203503-1042589362791928095: debit from 1001 for $1000.0
+2025-03-11 20:35:03 - INFO - 🔒 Preparing transaction txn-20250311203503-1042589362791928095: credit to 2001 for $1000.0
+2025-03-11 20:35:03 - INFO - ✅ Committing transaction txn-20250311203503-1042589362791928095 for debit operation
+2025-03-11 20:35:03 - INFO - ✅ Committing transaction txn-20250311203503-1042589362791928095 for credit operation
+2025-03-11 20:37:00 - INFO - port=60051
+2025-03-11 20:37:00 - INFO - 🚀 Secure Bank Server 'HDFC' started on port 60051 with 2PC support
+2025-03-11 20:37:07 - INFO - port=60052
+2025-03-11 20:37:07 - INFO - 🚀 Secure Bank Server 'ICICI' started on port 60052 with 2PC support
+2025-03-11 20:37:29 - INFO - 🔒 Preparing transaction txn-20250311203729-1402313833272332721: debit from 1001 for $1000.0
+2025-03-11 20:37:29 - INFO - 🔒 Preparing transaction txn-20250311203729-1402313833272332721: credit to 2001 for $1000.0
+2025-03-11 20:37:29 - INFO - ✅ Committing transaction txn-20250311203729-1402313833272332721 for debit operation
+2025-03-11 20:37:29 - INFO - ✅ Committing transaction txn-20250311203729-1402313833272332721 for credit operation
+2025-03-11 20:37:29 - INFO - ❌ Aborting transaction txn-20250311203729-1402313833272332721 for debit operation
+2025-03-11 20:37:29 - INFO - ❌ Aborting transaction txn-20250311203729-1402313833272332721 for credit operation
+2025-03-11 20:47:48 - INFO - port=60051
+2025-03-11 20:47:48 - INFO - 🚀 Secure Bank Server 'HDFC' started on port 60051 with 2PC support
+2025-03-11 20:47:49 - INFO - port=60052
+2025-03-11 20:47:49 - INFO - 🚀 Secure Bank Server 'ICICI' started on port 60052 with 2PC support
+2025-03-11 20:48:16 - INFO - ❌ Aborting transaction txn-20250311204816-638750286781895736 for debit operation
+2025-03-11 20:50:49 - INFO - 🔒 Preparing transaction txn-20250311205049-282095103010428113: debit from 1001 for $1000.0
+2025-03-11 20:50:49 - INFO - 🔒 Preparing transaction txn-20250311205049-282095103010428113: credit to 2001 for $1000.0
+2025-03-11 20:50:49 - INFO - ✅ Committing transaction txn-20250311205049-282095103010428113 for debit operation
+2025-03-11 20:50:49 - INFO - ✅ Committing transaction txn-20250311205049-282095103010428113 for credit operation
+2025-03-11 20:50:49 - INFO - ❌ Aborting transaction txn-20250311205049-282095103010428113 for debit operation
+2025-03-11 20:50:49 - INFO - ❌ Aborting transaction txn-20250311205049-282095103010428113 for credit operation
+2025-03-11 20:52:36 - INFO - port=60051
+2025-03-11 20:52:36 - INFO - 🚀 Secure Bank Server 'HDFC' started on port 60051 with 2PC support
+2025-03-11 20:52:38 - INFO - port=60052
+2025-03-11 20:52:38 - INFO - 🚀 Secure Bank Server 'ICICI' started on port 60052 with 2PC support
+2025-03-11 20:53:04 - INFO - 🔒 Preparing transaction txn-20250311205304-987315813752001880: debit from 1001 for $500.0
+2025-03-11 20:53:04 - INFO - 🔒 Preparing transaction txn-20250311205304-987315813752001880: credit to 2001 for $500.0
+2025-03-11 20:53:04 - INFO - ✅ Committing transaction txn-20250311205304-987315813752001880 for debit operation
+2025-03-11 20:53:04 - INFO - ✅ Committing transaction txn-20250311205304-987315813752001880 for credit operation
