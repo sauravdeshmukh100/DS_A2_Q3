@@ -17,7 +17,7 @@ class AuthorizationInterceptor(grpc.ServerInterceptor):
         # Extract JWT from metadata
         metadata = dict(handler_call_details.invocation_metadata)
         token = metadata.get("authorization")
-        
+        print(f"Token: {token}")
         # Skip auth check for the authentication method itself
         if "/PaymentGateway/AuthenticateClient" in method:
             return continuation(handler_call_details)

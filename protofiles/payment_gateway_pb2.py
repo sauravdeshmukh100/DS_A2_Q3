@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15payment_gateway.proto\"1\n\x0b\x41uthRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"E\n\x0c\x41uthResponse\x12\x15\n\rauthenticated\x18\x01 \x01(\x08\x12\r\n\x05token\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\"\x10\n\x0e\x42\x61lanceRequest\"\"\n\x0f\x42\x61lanceResponse\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x01\"L\n\x0ePaymentRequest\x12\x12\n\nto_account\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x01\x12\x16\n\x0etransaction_id\x18\x03 \x01(\t\"K\n\x0fPaymentResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x16\n\x0etransaction_id\x18\x03 \x01(\t2\xab\x01\n\x0ePaymentGateway\x12\x31\n\x12\x41uthenticateClient\x12\x0c.AuthRequest\x1a\r.AuthResponse\x12\x31\n\x0c\x43heckBalance\x12\x0f.BalanceRequest\x1a\x10.BalanceResponse\x12\x33\n\x0eProcessPayment\x12\x0f.PaymentRequest\x1a\x10.PaymentResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15payment_gateway.proto\"1\n\x0b\x41uthRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"E\n\x0c\x41uthResponse\x12\x15\n\rauthenticated\x18\x01 \x01(\x08\x12\r\n\x05token\x18\x02 \x01(\t\x12\x0f\n\x07message\x18\x03 \x01(\t\"\x10\n\x0e\x42\x61lanceRequest\"\"\n\x0f\x42\x61lanceResponse\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x01\"L\n\x0ePaymentRequest\x12\x12\n\nto_account\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x01\x12\x16\n\x0etransaction_id\x18\x03 \x01(\t\"K\n\x0fPaymentResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x16\n\x0etransaction_id\x18\x03 \x01(\t\"\x0f\n\rLogoutRequest\"2\n\x0eLogoutResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x82\x01\n\x0bTransaction\x12\x16\n\x0etransaction_id\x18\x01 \x01(\t\x12\x14\n\x0c\x66rom_account\x18\x02 \x01(\t\x12\x12\n\nto_account\x18\x03 \x01(\t\x12\x0e\n\x06\x61mount\x18\x04 \x01(\x01\x12\x11\n\ttimestamp\x18\x05 \x01(\t\x12\x0e\n\x06status\x18\x06 \x01(\t\"\x1b\n\x19TransactionHistoryRequest\"@\n\x1aTransactionHistoryResponse\x12\"\n\x0ctransactions\x18\x01 \x03(\x0b\x32\x0c.Transaction2\xaf\x02\n\x0ePaymentGateway\x12\x31\n\x12\x41uthenticateClient\x12\x0c.AuthRequest\x1a\r.AuthResponse\x12\x31\n\x0c\x43heckBalance\x12\x0f.BalanceRequest\x1a\x10.BalanceResponse\x12\x33\n\x0eProcessPayment\x12\x0f.PaymentRequest\x1a\x10.PaymentResponse\x12Q\n\x16ViewTransactionHistory\x12\x1a.TransactionHistoryRequest\x1a\x1b.TransactionHistoryResponse\x12/\n\x0cLogoutClient\x12\x0e.LogoutRequest\x1a\x0f.LogoutResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -43,6 +43,16 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_PAYMENTREQUEST']._serialized_end=277
   _globals['_PAYMENTRESPONSE']._serialized_start=279
   _globals['_PAYMENTRESPONSE']._serialized_end=354
-  _globals['_PAYMENTGATEWAY']._serialized_start=357
-  _globals['_PAYMENTGATEWAY']._serialized_end=528
+  _globals['_LOGOUTREQUEST']._serialized_start=356
+  _globals['_LOGOUTREQUEST']._serialized_end=371
+  _globals['_LOGOUTRESPONSE']._serialized_start=373
+  _globals['_LOGOUTRESPONSE']._serialized_end=423
+  _globals['_TRANSACTION']._serialized_start=426
+  _globals['_TRANSACTION']._serialized_end=556
+  _globals['_TRANSACTIONHISTORYREQUEST']._serialized_start=558
+  _globals['_TRANSACTIONHISTORYREQUEST']._serialized_end=585
+  _globals['_TRANSACTIONHISTORYRESPONSE']._serialized_start=587
+  _globals['_TRANSACTIONHISTORYRESPONSE']._serialized_end=651
+  _globals['_PAYMENTGATEWAY']._serialized_start=654
+  _globals['_PAYMENTGATEWAY']._serialized_end=957
 # @@protoc_insertion_point(module_scope)

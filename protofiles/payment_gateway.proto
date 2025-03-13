@@ -4,6 +4,8 @@ service PaymentGateway {
     rpc AuthenticateClient (AuthRequest) returns (AuthResponse);
     rpc CheckBalance (BalanceRequest) returns (BalanceResponse);
     rpc ProcessPayment (PaymentRequest) returns (PaymentResponse);
+    rpc ViewTransactionHistory (TransactionHistoryRequest) returns (TransactionHistoryResponse);
+    rpc LogoutClient (LogoutRequest) returns (LogoutResponse);
 }
 
 message AuthRequest {
@@ -33,4 +35,29 @@ message PaymentResponse {
     bool success = 1;
     string message = 2;
     string transaction_id = 3; // adding this field
+}
+
+message LogoutRequest {}
+
+message LogoutResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+
+// Define response for transaction history
+message Transaction {
+    string transaction_id = 1;
+    string from_account = 2;  // ✅ Rename "from" to "from_account"
+    string to_account = 3;
+    double amount = 4;
+    string timestamp = 5;
+    string status = 6;
+}
+
+
+message TransactionHistoryRequest {}
+
+message TransactionHistoryResponse {
+    repeated Transaction transactions = 1;
 }

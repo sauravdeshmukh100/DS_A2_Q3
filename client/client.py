@@ -61,6 +61,11 @@ def save_offline_queue():
 def authenticate_client(stub, username, password):
     """Authenticates a client using JWT and retries if the Payment Gateway is down."""
     global jwt_token, is_online
+   
+   
+        
+    metadata = [("authorization", jwt_token)] if jwt_token else []  # Attach token if available
+    # request = payment_gateway_pb2.AuthRequest(username=username, password=password,metadata=metadata)
     
     request = payment_gateway_pb2.AuthRequest(username=username, password=password)
     print("🔄 Request sent")
@@ -68,7 +73,7 @@ def authenticate_client(stub, username, password):
     attempt = 0
     while attempt < MAX_RETRIES:
         try:
-            response = stub.AuthenticateClient(request)
+            response = stub.AuthenticateClient(request,metadata=metadata)
             print("✅ Response received")
             is_online = True  # Mark system as online
 
@@ -227,6 +232,30 @@ def process_payment(stub, to_account, amount):
 
 
 
+def logout_client(stub):
+    """Logs out the user by sending a logout request with the current token."""
+    global jwt_token  # Ensure token is globally updated
+
+    if not jwt_token:
+        print("❌ You are not logged in.")
+        return
+
+    metadata = [("authorization", jwt_token)]
+    request = payment_gateway_pb2.LogoutRequest()
+
+    try:
+        response = stub.LogoutClient(request, metadata=metadata)
+        if response.success:
+            jwt_token = None  # Invalidate locally
+            print("✅ Logout successful!")
+        else:
+            print(f"❌ Logout failed: {response.message}")
+
+    except grpc.RpcError as e:
+        print(f"❌ Logout error: {e.code()} - {e.details()}")    
+
+
+
 def process_offline_queue():
     """Process all pending offline payments automatically."""
     global offline_queue
@@ -331,16 +360,6 @@ def connection_monitor():
             time.sleep(RECONNECT_INTERVAL)
 
 
-
-
-def register_client(stub, username, password, bank_name, account_number):
-    """Registers a new client."""
-    request = payment_gateway_pb2.ClientRegistrationRequest(
-        username=username, password=password, bank_name=bank_name, account_number=account_number
-    )
-    response = stub.RegisterClient(request)
-    print(f"📌 Registration Status: {response.message}")
-
 def initialize_stub():
     """Creates a secure gRPC connection with TLS."""
     global stub
@@ -374,6 +393,36 @@ def initialize_stub():
         print(f"❌ Failed to initialize connection: {str(e)}")
         logging.error(f"Failed to initialize connection: {str(e)}")
 
+
+def view_transaction_history(stub):
+    """Request and display the user's transaction history."""
+    if jwt_token is None:
+        print("❌ Please authenticate first.")
+        return
+
+    metadata = [("authorization", jwt_token)]
+    request = payment_gateway_pb2.TransactionHistoryRequest()
+    print("🔄 Request sent")
+    try:
+        response = stub.ViewTransactionHistory(request, metadata=metadata)
+        print("✅ Response received")
+        transactions = response.transactions  # ✅ Directly use the list from gRPC response
+        # print(f"DEBUG: transactions: {transactions}")
+        print("after transactions")
+
+        if not transactions:
+            print("📜 No transaction history available.")
+            return
+
+        print("\n📜 Transaction History:")
+        print("🆔 Transaction ID | 💰 Amount | 📌 Status | 📅 Timestamp")
+        print("-" * 80)
+        for txn in transactions:
+            print(f"🆔 {txn.transaction_id} | ₹{txn.amount} | {txn.status} | 📅 {txn.timestamp}")
+    except grpc.RpcError as e:
+        print(f"❌ Error fetching transaction history: {e.code()} - {e.details()}")
+        logging.error(f"❌ Error fetching transaction history: {e.code()} - {e.details()}")
+
 def main():
     initialize_stub()  # ✅ Initialize stub at startup# Load any pending offline payments
     load_offline_queue() # Load any pending offline payments
@@ -386,34 +435,44 @@ def main():
 
     while True:
         print("\nOptions:")
-        print("1. Register Client")
-        print("2. Authenticate")
-        print("3. Process Payment")
-        print("4. Check Balance")
-        print("5. Exit")
+        # print("1. Register Client")
+        print("1. Authenticate")
+        print("2. Process Payment")
+        print("3. Check Balance")
+        print("4. View Transaction History")
+        print("5. Logout")
+        print("6. Exit")
         option = input("Select an option: ")
 
         if option == "1":
             username = input("Enter username: ")
             password = input("Enter password: ")
-            bank_name = input("Enter bank name: ")
-            account_number = input("Enter account number: ")
-            register_client(stub, username, password, bank_name, account_number)
-
-        elif option == "2":
-            username = input("Enter username: ")
-            password = input("Enter password: ")
             authenticate_client( stub , username, password)
 
-        elif option == "3":
+        elif option == "2":
             to_account = input("Enter recipient account number: ")
-            amount = float(input("Enter amount: "))
+             # ✅ Validate amount input
+            while True:
+                try:
+                    amount = float(input("Enter amount: "))
+                    if amount <= 0:
+                        print("❌ Amount must be greater than zero. Please enter a valid amount.")
+                        continue
+                    break  # ✅ Valid input, exit loop
+                except ValueError:
+                    print("❌ Invalid amount! Please enter a numeric value.")
             process_payment(stub, to_account, amount)
 
-        elif option == "4":
+        elif option == "3":
             check_balance(stub)
 
+        elif option == "4":
+            view_transaction_history(stub) 
+
         elif option == "5":
+            logout_client(stub)   
+
+        elif option == "6":
             print("🚀 Exiting...")
             break
 

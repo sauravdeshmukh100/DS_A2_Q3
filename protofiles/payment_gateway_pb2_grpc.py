@@ -49,6 +49,16 @@ class PaymentGatewayStub(object):
                 request_serializer=payment__gateway__pb2.PaymentRequest.SerializeToString,
                 response_deserializer=payment__gateway__pb2.PaymentResponse.FromString,
                 _registered_method=True)
+        self.ViewTransactionHistory = channel.unary_unary(
+                '/PaymentGateway/ViewTransactionHistory',
+                request_serializer=payment__gateway__pb2.TransactionHistoryRequest.SerializeToString,
+                response_deserializer=payment__gateway__pb2.TransactionHistoryResponse.FromString,
+                _registered_method=True)
+        self.LogoutClient = channel.unary_unary(
+                '/PaymentGateway/LogoutClient',
+                request_serializer=payment__gateway__pb2.LogoutRequest.SerializeToString,
+                response_deserializer=payment__gateway__pb2.LogoutResponse.FromString,
+                _registered_method=True)
 
 
 class PaymentGatewayServicer(object):
@@ -72,6 +82,18 @@ class PaymentGatewayServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ViewTransactionHistory(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def LogoutClient(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_PaymentGatewayServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -89,6 +111,16 @@ def add_PaymentGatewayServicer_to_server(servicer, server):
                     servicer.ProcessPayment,
                     request_deserializer=payment__gateway__pb2.PaymentRequest.FromString,
                     response_serializer=payment__gateway__pb2.PaymentResponse.SerializeToString,
+            ),
+            'ViewTransactionHistory': grpc.unary_unary_rpc_method_handler(
+                    servicer.ViewTransactionHistory,
+                    request_deserializer=payment__gateway__pb2.TransactionHistoryRequest.FromString,
+                    response_serializer=payment__gateway__pb2.TransactionHistoryResponse.SerializeToString,
+            ),
+            'LogoutClient': grpc.unary_unary_rpc_method_handler(
+                    servicer.LogoutClient,
+                    request_deserializer=payment__gateway__pb2.LogoutRequest.FromString,
+                    response_serializer=payment__gateway__pb2.LogoutResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -172,6 +204,60 @@ class PaymentGateway(object):
             '/PaymentGateway/ProcessPayment',
             payment__gateway__pb2.PaymentRequest.SerializeToString,
             payment__gateway__pb2.PaymentResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ViewTransactionHistory(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/PaymentGateway/ViewTransactionHistory',
+            payment__gateway__pb2.TransactionHistoryRequest.SerializeToString,
+            payment__gateway__pb2.TransactionHistoryResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def LogoutClient(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/PaymentGateway/LogoutClient',
+            payment__gateway__pb2.LogoutRequest.SerializeToString,
+            payment__gateway__pb2.LogoutResponse.FromString,
             options,
             channel_credentials,
             insecure,

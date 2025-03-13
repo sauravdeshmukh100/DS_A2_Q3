@@ -8,6 +8,7 @@ import jwt
 import datetime
 import uuid
 import time
+import threading
 from concurrent import futures
 import payment_gateway_pb2
 import payment_gateway_pb2_grpc
@@ -24,14 +25,32 @@ logging.basicConfig(
     format="%(asctime)s - %(message)s"
 )
 
+
+# this at the global level so transactions persist across runs.
+TRANSACTION_FILE = "transactions.json"  # JSON file to store transaction history
+#transaction_lock = threading.Lock()  # Ensure thread-safe access to the file
+
+# Store transaction states for 2PC
+transaction_states = {}  # {transaction_id: {status, sender_prepared, receiver_prepared, etc.}}
+# ✅ Load past transactions from file
+try:
+    with open(TRANSACTION_FILE, "r") as file:
+        print("Loading transaction states")
+        transaction_states = json.load(file)
+        print(f"✅ Loaded {len(transaction_states)} previous transactions from {TRANSACTION_FILE}")
+except (FileNotFoundError, json.JSONDecodeError):
+    transaction_states = {}  # Initialize if file is missing or corrupted
+
+# ✅ Function to persist transactions
+def save_transaction_state():
+    with open(TRANSACTION_FILE, "w") as file:
+        json.dump(transaction_states, file, indent=4)
+
 # Secret key for signing JWT tokens (keep this secure!)
 SECRET_KEY = "supersecretkey"
 
 # Timeout for 2PC operations (in seconds)
 TRANSACTION_TIMEOUT = 5
-
-# Global dictionary to simulate persistent storage for processed transactions.
-processed_transactions = {}
 
 # Load bank-port mappings from JSON file
 def load_bank_ports():
@@ -69,9 +88,18 @@ bank_stubs = {}  # Store gRPC connections to bank servers
 active_tokens = {}  # Dictionary to track active tokens: {username: {token: expiry_time}}
 
 
-# Store transaction states for 2PC
-transaction_states = {}  # {transaction_id: {status, sender_prepared, receiver_prepared, etc.}}
 
+
+def load_transaction_states():
+    """Loads transaction states from a JSON file to restore previous transactions."""
+    global transaction_states
+    try:
+        with open(TRANSACTION_FILE, "r") as file:
+            transaction_states = json.load(file)  # Load JSON data
+            logging.info(f"✅ Loaded {len(transaction_states)} previous transactions from {TRANSACTION_FILE}")
+    except (FileNotFoundError, json.JSONDecodeError):
+        logging.warning(f"⚠️ No previous transactions found. Starting fresh.")
+        transaction_states = {}  # Initialize with an empty dictionary  
 
 def create_bank_stub(bank_name):
     """Create a secure gRPC connection to a bank server."""
@@ -151,6 +179,7 @@ def verify_jwt(token):
         return "EXPIRED"
     except jwt.InvalidTokenError:
         return None
+    
 
 class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
    
@@ -166,6 +195,27 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             return payment_gateway_pb2.AuthResponse(authenticated=False, token="")
         
         # Check if user already has a valid token
+
+        # Extract token from metadata (if provided)
+        metadata = dict(context.invocation_metadata())
+        existing_token = metadata.get("authorization", None)
+        if existing_token:
+            print("Existing token found in metadata")
+            username = verify_jwt(existing_token)
+        if verify_jwt(existing_token):   
+            print("User already has a valid token")
+            
+        # If the user already has a valid token, deny new login
+        if existing_token and verify_jwt(existing_token):
+            print("User already has a valid token")
+            logging.warning(f"⚠️ {request.username} attempted login with active session (rejected)")
+            return payment_gateway_pb2.AuthResponse(
+                authenticated=False, 
+                token="", 
+                message="Already logged in. Please log out first or wait for token expiration."
+            )
+        print("User does not have a valid token")
+
         username = request.username
         current_time = datetime.datetime.utcnow()
         if username in active_tokens:
@@ -182,6 +232,29 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
         token = generate_jwt(username)
         logging.info(f"✅ {username} successfully authenticated from {context.peer()}")
         return payment_gateway_pb2.AuthResponse(authenticated=True, token=token)
+    
+
+
+    def LogoutClient(self, request, context):
+        """Logs out the user by invalidating their active token."""
+        metadata = dict(context.invocation_metadata())
+        token = metadata.get("authorization", None)
+
+        if not token or not verify_jwt(token):
+            logging.warning(f"❌ Logout attempt with invalid token from {context.peer()}")
+            context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or expired token.")
+
+        # Extract username from token
+        username = verify_jwt(token)
+        
+        if username in active_tokens and token in active_tokens[username]:
+            del active_tokens[username][token]  # Invalidate token
+            logging.info(f"✅ {username} logged out successfully.")
+            return payment_gateway_pb2.LogoutResponse(success=True, message="Logout successful.")
+
+        logging.warning(f"⚠️ {username} attempted to log out but was already logged out.")
+        return payment_gateway_pb2.LogoutResponse(success=False, message="Already logged out.")
+
     
 
 
@@ -290,24 +363,21 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
         token = metadata.get("authorization", None)
         if token:
             username = verify_jwt(token)  # Extract username from JWT
-        
-        # Generate a unique transaction ID
-        # transaction_id = generate_transaction_id()
-        # logging.info(f"🔄 [TXN: {transaction_id}] {username} (IP: {client_ip}) initiated payment of ₹{request.amount} to {request.to_account}")
+
+
+        if not username or username not in clients_db:
+            logging.warning(f"❌ Unauthorized payment attempt by unknown user")
+            context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or missing token")
 
         transaction_id = request.transaction_id if request.transaction_id else str(uuid.uuid4())
         logging.info(f"🔄 [TXN: {transaction_id}] {username} (IP: {client_ip}) initiated payment of ₹{request.amount} to {request.to_account}")
-        # logging.info(f"[TXN: {transaction_id}] Payment attempt for ₹{request.amount} to {request.to_account}")
+        
         
         # Step 2: Check if the transaction has already been processed.
-        if transaction_id in processed_transactions:
-            logging.info(f"[TXN: {transaction_id}] Duplicate detected. Skipping duplicate processing.")
+        # ✅ Check for duplicate transactions
+        if transaction_id in transaction_states:
+            logging.info(f"⚠️ [TXN: {transaction_id}] Duplicate transaction detected. Skipping processing.")
             context.abort(grpc.StatusCode.ALREADY_EXISTS, "Transaction already processed")
-            # return payment_gateway_pb2.PaymentResponse(
-            #     success=True,
-            #     message="Transaction already processed",
-            #     transaction_id=transaction_id
-            # )
         
         # Initialize transaction state
         transaction_states[transaction_id] = {
@@ -321,17 +391,22 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             "sender_account": None,
             "receiver_account": None,
             "amount": request.amount,
-            "timestamp": datetime.datetime.now(),
+            "timestamp": datetime.datetime.utcnow().isoformat(),  # ✅ Convert datetime to string
             "username": username
         }
+
+        save_transaction_state()  # ✅ Persist state    
         
         try:
-            # Get sender details
+            # ✅ Retrieve sender details
             sender_details = clients_db.get(username, None)
             if not sender_details:
                 logging.warning(f"❌ [TXN: {transaction_id}] {username} attempted payment, but account not found.")
+                transaction_states[transaction_id]["status"] = "failed_sender_not_found"
+                save_transaction_state()
                 context.abort(grpc.StatusCode.NOT_FOUND, "User account not found")
-            
+                    
+                    
             sender_bank = sender_details["bank_name"]
             sender_account = sender_details["account_number"]
             receiver_account = request.to_account
@@ -356,6 +431,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             
             if balance_response.balance < amount:
                 transaction_states[transaction_id]["status"] = "failed_insufficient_funds"
+                save_transaction_state()
                 logging.warning(f"❌ [TXN: {transaction_id}] {username} attempted payment of ₹{amount} (Insufficient Funds)")
                 context.abort(grpc.StatusCode.FAILED_PRECONDITION, "Insufficient funds")
             
@@ -368,6 +444,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             
             if not receiver_bank:
                 transaction_states[transaction_id]["status"] = "failed_receiver_not_found"
+                save_transaction_state()
                 logging.warning(f"❌ [TXN: {transaction_id}] {username} attempted payment to non-existent account {receiver_account}")
                 context.abort(grpc.StatusCode.NOT_FOUND, "Receiver account not found")
             
@@ -396,6 +473,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             if not sender_prepared:
                 # If sender bank cannot prepare, abort the transaction
                 transaction_states[transaction_id]["status"] = "aborted_sender_prepare_failed"
+                save_transaction_state()
                 logging.warning(f"❌ [TXN: {transaction_id}] Sender bank prepare failed: {sender_message}")
                 return payment_gateway_pb2.PaymentResponse(
                     success=False, 
@@ -414,6 +492,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             if not receiver_prepared:
                 # If receiver bank cannot prepare, abort both transactions
                 transaction_states[transaction_id]["status"] = "aborted_receiver_prepare_failed"
+                save_transaction_state()
                 logging.warning(f"❌ [TXN: {transaction_id}] Receiver bank prepare failed: {receiver_message}")
                 
                 # Abort the sender transaction
@@ -444,6 +523,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             if not sender_committed:
                 # If sender commit fails, abort both transactions
                 transaction_states[transaction_id]["status"] = "aborted_sender_commit_failed"
+                save_transaction_state()
                 logging.warning(f"❌ [TXN: {transaction_id}] Sender bank commit failed: {sender_commit_message}")
                 
                 # Abort both transactions
@@ -471,6 +551,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             if not receiver_committed:
                 # If receiver commit fails, we have a serious problem - need to try recovery
                 transaction_states[transaction_id]["status"] = "partial_commit_recovery_needed"
+                save_transaction_state()
                 logging.error(f"❌ [TXN: {transaction_id}] CRITICAL: Receiver bank commit failed but sender committed: {receiver_commit_message}")
                 
                 # Try to abort the receiver transaction (may not work if bank is down)
@@ -487,10 +568,10 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             
             # Both transactions committed successfully!
             transaction_states[transaction_id]["status"] = "completed"
+            save_transaction_state()
             logging.info(f"✅ [TXN: {transaction_id}] Receiver bank committed successfully")
             logging.info(f"✅ [TXN: {transaction_id}] COMMIT PHASE completed successfully")
             logging.info(f"✅ [TXN: {transaction_id}] {username} sent ₹{amount} to {receiver_account} successfully")
-            
             return payment_gateway_pb2.PaymentResponse(
                 success=True, 
                 message="Transaction successfully completed",
@@ -501,6 +582,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             # Handle gRPC errors
             if e.code() == grpc.StatusCode.DEADLINE_EXCEEDED:
                 transaction_states[transaction_id]["status"] = "aborted_timeout"
+                save_transaction_state()
                 logging.error(f"❌ [TXN: {transaction_id}] Transaction timed out after {TRANSACTION_TIMEOUT}s")
                 
                 # Try to abort both transactions
@@ -520,7 +602,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
                         transaction_states[transaction_id]["receiver_account"], 
                         transaction_states[transaction_id]["amount"], 
                         is_sender=False
-                    )
+                    )  
                 
                 return payment_gateway_pb2.PaymentResponse(
                     success=False, 
@@ -528,6 +610,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
                 )
             else:
                 transaction_states[transaction_id]["status"] = "aborted_error"
+                save_transaction_state()
                 logging.error(f"❌ [TXN: {transaction_id}] Payment Failed: {e.code()} - {e.details()}")
                 
                 # Try to abort both transactions
@@ -548,6 +631,8 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
                         transaction_states[transaction_id]["amount"], 
                         is_sender=False
                     )
+                transaction_states[transaction_id]["status"] = "failed_error1"
+                save_transaction_state()  
                 
                 return payment_gateway_pb2.PaymentResponse(
                     success=False, 
@@ -556,6 +641,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
         except Exception as ex:
             # Handle general exceptions
             transaction_states[transaction_id]["status"] = "aborted_exception"
+            save_transaction_state()
             logging.error(f"❌ [TXN: {transaction_id}] Unexpected error: {str(ex)}")
             
             # Try to abort both transactions
@@ -576,7 +662,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
                     transaction_states[transaction_id]["amount"], 
                     is_sender=False
                 )
-            
+                
             return payment_gateway_pb2.PaymentResponse(
                 success=False, 
                 message=f"Transaction aborted due to an unexpected error"
@@ -617,6 +703,33 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
         except grpc.RpcError as e:
             logging.warning(f"❌ {username} attempted balance check (Failed: Bank service unavailable)")
             context.abort(grpc.StatusCode.UNAVAILABLE, "Bank service unavailable")
+
+
+    def ViewTransactionHistory(self, request, context):
+       """Returns all past transactions for an authenticated user."""
+       print("view transaction history is called")
+       metadata = dict(context.invocation_metadata())
+       token = metadata.get("authorization", None)
+       username = verify_jwt(token) if token else None
+
+       if not username:
+        context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or missing token")
+
+       # ✅ Fetch transactions belonging to the user
+       user_transactions = [txn for txn in transaction_states.values() if txn["username"] == username]
+       print
+       return payment_gateway_pb2.TransactionHistoryResponse(
+    transactions=[payment_gateway_pb2.Transaction(  # ✅ Use correct message name
+        transaction_id=txn_id,
+        from_account=txn["sender_account"],  # ✅ Ensure the correct field names match the proto file
+        to_account=txn["receiver_account"],
+        amount=txn["amount"],
+        status=txn["status"],
+        timestamp=txn["timestamp"]
+    ) for txn_id, txn in transaction_states.items() if txn["username"] == username]
+)
+
+        
 
 def serve():
     try:
