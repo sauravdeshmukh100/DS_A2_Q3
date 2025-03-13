@@ -6,6 +6,7 @@ import grpc
 import json
 import jwt
 import datetime
+import uuid
 import time
 from concurrent import futures
 import payment_gateway_pb2
@@ -28,6 +29,9 @@ SECRET_KEY = "supersecretkey"
 
 # Timeout for 2PC operations (in seconds)
 TRANSACTION_TIMEOUT = 5
+
+# Global dictionary to simulate persistent storage for processed transactions.
+processed_transactions = {}
 
 # Load bank-port mappings from JSON file
 def load_bank_ports():
@@ -288,8 +292,22 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             username = verify_jwt(token)  # Extract username from JWT
         
         # Generate a unique transaction ID
-        transaction_id = generate_transaction_id()
+        # transaction_id = generate_transaction_id()
+        # logging.info(f"🔄 [TXN: {transaction_id}] {username} (IP: {client_ip}) initiated payment of ₹{request.amount} to {request.to_account}")
+
+        transaction_id = request.transaction_id if request.transaction_id else str(uuid.uuid4())
         logging.info(f"🔄 [TXN: {transaction_id}] {username} (IP: {client_ip}) initiated payment of ₹{request.amount} to {request.to_account}")
+        # logging.info(f"[TXN: {transaction_id}] Payment attempt for ₹{request.amount} to {request.to_account}")
+        
+        # Step 2: Check if the transaction has already been processed.
+        if transaction_id in processed_transactions:
+            logging.info(f"[TXN: {transaction_id}] Duplicate detected. Skipping duplicate processing.")
+            context.abort(grpc.StatusCode.ALREADY_EXISTS, "Transaction already processed")
+            # return payment_gateway_pb2.PaymentResponse(
+            #     success=True,
+            #     message="Transaction already processed",
+            #     transaction_id=transaction_id
+            # )
         
         # Initialize transaction state
         transaction_states[transaction_id] = {

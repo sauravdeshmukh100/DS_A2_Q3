@@ -25,6 +25,7 @@ message BalanceResponse {
 message PaymentRequest {
     string to_account = 1;
     double amount = 2;
+    string transaction_id=3;
     
 }
 

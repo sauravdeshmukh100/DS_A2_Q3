@@ -98,7 +98,7 @@ class BankService(bank_pb2_grpc.BankServicer):
                 )
                 
             # Store the pending transaction
-            self.pending_transactions[transaction_id] = {
+            self.pending_transactions[(transaction_id, operation)] = {
                 'type': 'credit',
                 'account': account_number,
                 'amount': amount,
@@ -134,7 +134,7 @@ class BankService(bank_pb2_grpc.BankServicer):
         self.account_locks[account_number] = transaction_id
         
         # Store the pending transaction
-        self.pending_transactions[transaction_id] = {
+        self.pending_transactions[(transaction_id, operation)] = {
             'type': 'debit',
             'account': account_number,
             'amount': amount,
@@ -156,13 +156,13 @@ class BankService(bank_pb2_grpc.BankServicer):
         logging.info(f"✅ Committing transaction {transaction_id} for {operation} operation")
         
         # Check if this transaction exists in our pending transactions
-        if transaction_id not in self.pending_transactions:
+        if (transaction_id, operation) not in self.pending_transactions:
             return bank_pb2.CommitResponse(
                 success=False,
                 message=f"Unknown transaction: {transaction_id}"
             )
             
-        transaction = self.pending_transactions[transaction_id]
+        transaction = self.pending_transactions[(transaction_id, operation)]
         
         # Verify that the account number matches the one in pending transaction
         if transaction['account'] != account_number:
@@ -188,7 +188,7 @@ class BankService(bank_pb2_grpc.BankServicer):
         self.save_bank_data()
             
         # Remove from pending transactions
-        del self.pending_transactions[transaction_id]
+        del self.pending_transactions[(transaction_id, operation)]
         
         return bank_pb2.CommitResponse(
             success=True,
@@ -204,20 +204,20 @@ class BankService(bank_pb2_grpc.BankServicer):
         logging.info(f"❌ Aborting transaction {transaction_id} for {operation} operation")
         
         # Check if this transaction exists in our pending transactions
-        if transaction_id not in self.pending_transactions:
+        if (transaction_id, operation) not in self.pending_transactions:
             return bank_pb2.AbortResponse(
                 success=True,
                 message=f"Unknown transaction: {transaction_id}, nothing to abort"
             )
             
-        transaction = self.pending_transactions[transaction_id]
+        transaction = self.pending_transactions[(transaction_id, operation)]
         
         # If it's a debit transaction, release the account lock
         if operation == "debit" and account_number in self.account_locks:
             del self.account_locks[account_number]
         
         # Remove from pending transactions
-        del self.pending_transactions[transaction_id]
+        del self.pending_transactions[(transaction_id, operation)]
         
         return bank_pb2.AbortResponse(
             success=True,

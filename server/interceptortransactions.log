@@ -1,142 +1,1887 @@
-2025-03-11 20:34:13,830 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
-2025-03-11 20:34:13,830 - ✅ Success: /PaymentGateway/AuthenticateClient completed
-2025-03-11 20:34:13,831 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:46240
-2025-03-11 20:34:13,831 - ⚠️ alice attempted login with active session (rejected)
-2025-03-11 20:34:34,211 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
-2025-03-11 20:34:50,743 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
-2025-03-11 20:34:50,743 - ✅ Success: /PaymentGateway/AuthenticateClient completed
-2025-03-11 20:34:50,744 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:40740
-2025-03-11 20:34:50,745 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:40740
-2025-03-11 20:34:53,882 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
-2025-03-11 20:34:53,883 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
-2025-03-11 20:34:53,883 - ✅ Success: /PaymentGateway/CheckBalance completed
-2025-03-11 20:34:53,890 - ✅ Secure connection established with sender's bank: HDFC
-2025-03-11 20:34:53,897 - ✅ alice from ipv6:%5B::1%5D:40740 checked balance: ₹5000.0
-2025-03-11 20:35:03,450 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
-2025-03-11 20:35:03,450 - ✅ alice initiated a payment.
-2025-03-11 20:35:03,450 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
-2025-03-11 20:35:03,451 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
-2025-03-11 20:35:03,451 - ✅ Success: /PaymentGateway/ProcessPayment completed
-2025-03-11 20:35:03,452 - 🔄 [TXN: txn-20250311203503-1042589362791928095] alice (IP: ipv6:%5B::1%5D:40740) initiated payment of ₹1000.0 to 2001
-2025-03-11 20:35:03,455 - ✅ Secure connection established with receiver's bank: ICICI
-2025-03-11 20:35:03,455 - 🔄 [TXN: txn-20250311203503-1042589362791928095] PREPARE PHASE started
-2025-03-11 20:35:03,456 - ✅ [TXN: txn-20250311203503-1042589362791928095] Sender bank prepared successfully
-2025-03-11 20:35:03,467 - ✅ [TXN: txn-20250311203503-1042589362791928095] Receiver bank prepared successfully
-2025-03-11 20:35:03,468 - ✅ [TXN: txn-20250311203503-1042589362791928095] PREPARE PHASE completed successfully
-2025-03-11 20:35:03,468 - 🔄 [TXN: txn-20250311203503-1042589362791928095] COMMIT PHASE started
-2025-03-11 20:35:03,477 - ✅ [TXN: txn-20250311203503-1042589362791928095] Sender bank committed successfully
-2025-03-11 20:35:03,479 - ✅ [TXN: txn-20250311203503-1042589362791928095] Receiver bank committed successfully
-2025-03-11 20:35:03,480 - ✅ [TXN: txn-20250311203503-1042589362791928095] COMMIT PHASE completed successfully
-2025-03-11 20:35:03,480 - ✅ [TXN: txn-20250311203503-1042589362791928095] alice sent ₹1000.0 to 2001 successfully
-2025-03-11 20:35:03,480 - ❌ [TXN: txn-20250311203503-1042589362791928095] Unexpected error: Protocol message PaymentResponse has no "transaction_id" field.
-2025-03-11 20:35:03,480 - Exception calling application: Protocol message AbortRequest has no "amount" field.
-Traceback (most recent call last):
-  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 476, in ProcessPayment
-    return payment_gateway_pb2.PaymentResponse(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: Protocol message PaymentResponse has no "transaction_id" field.
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/home/saurav-deshmukh/grpc_env/lib/python3.12/site-packages/grpc/_server.py", line 610, in _call_behavior
-    response_or_iterator = behavior(argument, context)
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 545, in ProcessPayment
-    self.abort_transaction(
-  File "/home/saurav-deshmukh/DS/A2/Q3/server/payment_gateway.py", line 254, in abort_transaction
-    abort_request = bank_pb2.AbortRequest(
-                    ^^^^^^^^^^^^^^^^^^^^^^
-ValueError: Protocol message AbortRequest has no "amount" field.
-2025-03-11 20:36:56,615 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
-2025-03-11 20:37:16,523 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
-2025-03-11 20:37:16,524 - ✅ Success: /PaymentGateway/AuthenticateClient completed
-2025-03-11 20:37:16,525 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:53362
-2025-03-11 20:37:16,526 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:53362
-2025-03-11 20:37:17,488 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
-2025-03-11 20:37:17,488 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
-2025-03-11 20:37:17,488 - ✅ Success: /PaymentGateway/CheckBalance completed
-2025-03-11 20:37:17,494 - ✅ Secure connection established with sender's bank: HDFC
-2025-03-11 20:37:17,499 - ✅ alice from ipv6:%5B::1%5D:53362 checked balance: ₹4000.0
-2025-03-11 20:37:29,606 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
-2025-03-11 20:37:29,606 - ✅ alice initiated a payment.
-2025-03-11 20:37:29,606 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
-2025-03-11 20:37:29,607 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
-2025-03-11 20:37:29,607 - ✅ Success: /PaymentGateway/ProcessPayment completed
-2025-03-11 20:37:29,608 - 🔄 [TXN: txn-20250311203729-1402313833272332721] alice (IP: ipv6:%5B::1%5D:53362) initiated payment of ₹1000.0 to 2001
-2025-03-11 20:37:29,611 - ✅ Secure connection established with receiver's bank: ICICI
-2025-03-11 20:37:29,611 - 🔄 [TXN: txn-20250311203729-1402313833272332721] PREPARE PHASE started
-2025-03-11 20:37:29,613 - ✅ [TXN: txn-20250311203729-1402313833272332721] Sender bank prepared successfully
-2025-03-11 20:37:29,620 - ✅ [TXN: txn-20250311203729-1402313833272332721] Receiver bank prepared successfully
-2025-03-11 20:37:29,621 - ✅ [TXN: txn-20250311203729-1402313833272332721] PREPARE PHASE completed successfully
-2025-03-11 20:37:29,621 - 🔄 [TXN: txn-20250311203729-1402313833272332721] COMMIT PHASE started
-2025-03-11 20:37:29,621 - ✅ [TXN: txn-20250311203729-1402313833272332721] Sender bank committed successfully
-2025-03-11 20:37:29,630 - ✅ [TXN: txn-20250311203729-1402313833272332721] Receiver bank committed successfully
-2025-03-11 20:37:29,630 - ✅ [TXN: txn-20250311203729-1402313833272332721] COMMIT PHASE completed successfully
-2025-03-11 20:37:29,630 - ✅ [TXN: txn-20250311203729-1402313833272332721] alice sent ₹1000.0 to 2001 successfully
-2025-03-11 20:37:29,630 - ❌ [TXN: txn-20250311203729-1402313833272332721] Unexpected error: Protocol message PaymentResponse has no "transaction_id" field.
-2025-03-11 20:47:46,327 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
-2025-03-11 20:48:04,949 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
-2025-03-11 20:48:04,949 - ✅ Success: /PaymentGateway/AuthenticateClient completed
-2025-03-11 20:48:04,950 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:34206
-2025-03-11 20:48:04,951 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:34206
-2025-03-11 20:48:07,186 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
-2025-03-11 20:48:07,187 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
-2025-03-11 20:48:07,187 - ✅ Success: /PaymentGateway/CheckBalance completed
-2025-03-11 20:48:07,193 - ✅ Secure connection established with sender's bank: HDFC
-2025-03-11 20:48:07,198 - ✅ alice from ipv6:%5B::1%5D:34206 checked balance: ₹3000.0
-2025-03-11 20:48:16,275 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
-2025-03-11 20:48:16,275 - ✅ alice initiated a payment.
-2025-03-11 20:48:16,275 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
-2025-03-11 20:48:16,276 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
-2025-03-11 20:48:16,276 - ✅ Success: /PaymentGateway/ProcessPayment completed
-2025-03-11 20:48:16,277 - 🔄 [TXN: txn-20250311204816-638750286781895736] alice (IP: ipv6:%5B::1%5D:34206) initiated payment of ₹2001.0 to 1000
-2025-03-11 20:48:16,278 - ❌ [TXN: txn-20250311204816-638750286781895736] alice attempted payment to non-existent account 1000
-2025-03-11 20:48:16,278 - ❌ [TXN: txn-20250311204816-638750286781895736] Unexpected error: 
-2025-03-11 20:50:49,120 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
-2025-03-11 20:50:49,121 - ✅ alice initiated a payment.
-2025-03-11 20:50:49,121 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
-2025-03-11 20:50:49,121 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
-2025-03-11 20:50:49,121 - ✅ Success: /PaymentGateway/ProcessPayment completed
-2025-03-11 20:50:49,122 - 🔄 [TXN: txn-20250311205049-282095103010428113] alice (IP: ipv6:%5B::1%5D:34206) initiated payment of ₹1000.0 to 2001
-2025-03-11 20:50:49,125 - ✅ Secure connection established with receiver's bank: ICICI
-2025-03-11 20:50:49,125 - 🔄 [TXN: txn-20250311205049-282095103010428113] PREPARE PHASE started
-2025-03-11 20:50:49,127 - ✅ [TXN: txn-20250311205049-282095103010428113] Sender bank prepared successfully
-2025-03-11 20:50:49,136 - ✅ [TXN: txn-20250311205049-282095103010428113] Receiver bank prepared successfully
-2025-03-11 20:50:49,136 - ✅ [TXN: txn-20250311205049-282095103010428113] PREPARE PHASE completed successfully
-2025-03-11 20:50:49,136 - 🔄 [TXN: txn-20250311205049-282095103010428113] COMMIT PHASE started
-2025-03-11 20:50:49,137 - ✅ [TXN: txn-20250311205049-282095103010428113] Sender bank committed successfully
-2025-03-11 20:50:49,145 - ✅ [TXN: txn-20250311205049-282095103010428113] Receiver bank committed successfully
-2025-03-11 20:50:49,145 - ✅ [TXN: txn-20250311205049-282095103010428113] COMMIT PHASE completed successfully
-2025-03-11 20:50:49,145 - ✅ [TXN: txn-20250311205049-282095103010428113] alice sent ₹1000.0 to 2001 successfully
-2025-03-11 20:50:49,145 - ❌ [TXN: txn-20250311205049-282095103010428113] Unexpected error: Protocol message PaymentResponse has no "transaction_id" field.
-2025-03-11 20:52:34,663 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
-2025-03-11 20:52:46,841 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
-2025-03-11 20:52:46,842 - ✅ Success: /PaymentGateway/AuthenticateClient completed
-2025-03-11 20:52:46,842 - 🔑 Authentication attempt for user: alicw from ipv6:%5B::1%5D:32920
-2025-03-11 20:52:46,842 - ❌ Failed login attempt for user: alicw from ipv6:%5B::1%5D:32920
-2025-03-11 20:52:56,262 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
-2025-03-11 20:52:56,263 - ✅ Success: /PaymentGateway/AuthenticateClient completed
-2025-03-11 20:52:56,263 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:32920
-2025-03-11 20:52:56,265 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:32920
-2025-03-11 20:52:57,688 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
-2025-03-11 20:52:57,688 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
-2025-03-11 20:52:57,689 - ✅ Success: /PaymentGateway/CheckBalance completed
-2025-03-11 20:52:57,696 - ✅ Secure connection established with sender's bank: HDFC
-2025-03-11 20:52:57,702 - ✅ alice from ipv6:%5B::1%5D:32920 checked balance: ₹2000.0
-2025-03-11 20:53:04,426 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
-2025-03-11 20:53:04,426 - ✅ alice initiated a payment.
-2025-03-11 20:53:04,427 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
-2025-03-11 20:53:04,427 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
-2025-03-11 20:53:04,427 - ✅ Success: /PaymentGateway/ProcessPayment completed
-2025-03-11 20:53:04,428 - 🔄 [TXN: txn-20250311205304-987315813752001880] alice (IP: ipv6:%5B::1%5D:32920) initiated payment of ₹500.0 to 2001
-2025-03-11 20:53:04,431 - ✅ Secure connection established with receiver's bank: ICICI
-2025-03-11 20:53:04,431 - 🔄 [TXN: txn-20250311205304-987315813752001880] PREPARE PHASE started
-2025-03-11 20:53:04,433 - ✅ [TXN: txn-20250311205304-987315813752001880] Sender bank prepared successfully
-2025-03-11 20:53:04,441 - ✅ [TXN: txn-20250311205304-987315813752001880] Receiver bank prepared successfully
-2025-03-11 20:53:04,441 - ✅ [TXN: txn-20250311205304-987315813752001880] PREPARE PHASE completed successfully
-2025-03-11 20:53:04,441 - 🔄 [TXN: txn-20250311205304-987315813752001880] COMMIT PHASE started
-2025-03-11 20:53:04,442 - ✅ [TXN: txn-20250311205304-987315813752001880] Sender bank committed successfully
-2025-03-11 20:53:04,450 - ✅ [TXN: txn-20250311205304-987315813752001880] Receiver bank committed successfully
-2025-03-11 20:53:04,450 - ✅ [TXN: txn-20250311205304-987315813752001880] COMMIT PHASE completed successfully
-2025-03-11 20:53:04,450 - ✅ [TXN: txn-20250311205304-987315813752001880] alice sent ₹500.0 to 2001 successfully
+2025-03-12 15:30:20,088 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 15:30:45,687 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 15:30:45,687 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 15:30:45,688 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:37610
+2025-03-12 15:30:45,689 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:37610
+2025-03-12 15:30:48,278 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:30:48,278 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:30:48,278 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:30:48,286 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 15:30:48,298 - ✅ alice from ipv6:%5B::1%5D:37610 checked balance: ₹1000.0
+2025-03-12 15:31:06,906 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 15:31:08,337 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:31:08,337 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:31:08,337 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:31:08,345 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 15:31:08,355 - ✅ alice from ipv6:%5B::1%5D:55288 checked balance: ₹1000.0
+2025-03-12 15:31:50,138 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-12 15:31:50,138 - ✅ alice initiated a payment.
+2025-03-12 15:31:50,138 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-12 15:31:50,138 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-12 15:31:50,138 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-12 15:31:50,139 - 🔄 [TXN: 84916099-1e03-4672-b0b3-6c777cd15be6] alice (IP: ipv6:%5B::1%5D:35112) initiated payment of ₹10.0 to 2001
+2025-03-12 15:31:50,142 - ✅ Secure connection established with receiver's bank: ICICI
+2025-03-12 15:31:50,142 - 🔄 [TXN: 84916099-1e03-4672-b0b3-6c777cd15be6] PREPARE PHASE started
+2025-03-12 15:31:50,144 - ✅ [TXN: 84916099-1e03-4672-b0b3-6c777cd15be6] Sender bank prepared successfully
+2025-03-12 15:31:50,155 - ✅ [TXN: 84916099-1e03-4672-b0b3-6c777cd15be6] Receiver bank prepared successfully
+2025-03-12 15:31:50,155 - ✅ [TXN: 84916099-1e03-4672-b0b3-6c777cd15be6] PREPARE PHASE completed successfully
+2025-03-12 15:31:50,155 - 🔄 [TXN: 84916099-1e03-4672-b0b3-6c777cd15be6] COMMIT PHASE started
+2025-03-12 15:31:50,157 - ✅ [TXN: 84916099-1e03-4672-b0b3-6c777cd15be6] Sender bank committed successfully
+2025-03-12 15:31:50,165 - ✅ [TXN: 84916099-1e03-4672-b0b3-6c777cd15be6] Receiver bank committed successfully
+2025-03-12 15:31:50,165 - ✅ [TXN: 84916099-1e03-4672-b0b3-6c777cd15be6] COMMIT PHASE completed successfully
+2025-03-12 15:31:50,165 - ✅ [TXN: 84916099-1e03-4672-b0b3-6c777cd15be6] alice sent ₹10.0 to 2001 successfully
+2025-03-12 15:31:51,628 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:31:51,628 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:31:51,628 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:31:51,630 - ✅ alice from ipv6:%5B::1%5D:35112 checked balance: ₹990.0
+2025-03-12 15:32:11,361 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 15:32:22,706 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:32:22,707 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:32:22,707 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:32:22,715 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 15:32:22,725 - ✅ alice from ipv6:%5B::1%5D:38362 checked balance: ₹990.0
+2025-03-12 15:32:41,598 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:32:41,598 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:32:41,599 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:32:41,602 - ✅ alice from ipv6:%5B::1%5D:38362 checked balance: ₹990.0
+2025-03-12 15:32:42,757 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:32:42,758 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:32:42,758 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:32:42,761 - ✅ alice from ipv6:%5B::1%5D:38362 checked balance: ₹990.0
+2025-03-12 15:35:57,639 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 15:36:08,597 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 15:36:08,597 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 15:36:08,598 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:33356
+2025-03-12 15:36:08,599 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:33356
+2025-03-12 15:36:10,219 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:36:10,219 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:36:10,220 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:36:10,230 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 15:36:10,239 - ✅ alice from ipv6:%5B::1%5D:33356 checked balance: ₹990.0
+2025-03-12 15:38:47,164 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 15:38:55,946 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:38:55,946 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:38:55,946 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:38:55,954 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 15:38:55,964 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:02,680 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:02,680 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:02,680 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:02,683 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:03,771 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:03,771 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:03,771 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:03,774 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:04,767 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:04,767 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:04,767 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:04,769 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:05,201 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:05,201 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:05,201 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:05,204 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:05,514 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:05,514 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:05,514 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:05,517 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:05,806 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:05,806 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:05,806 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:05,808 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:06,892 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:06,893 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:06,893 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:06,895 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:07,192 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:07,192 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:07,192 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:07,195 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:07,502 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:07,502 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:07,502 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:07,504 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:07,756 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:07,756 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:07,756 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:07,759 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:08,879 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:08,879 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:08,879 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:08,882 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:09,198 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:09,198 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:09,198 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:09,201 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:09,558 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:09,558 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:09,558 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:09,561 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:09,832 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:09,833 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:09,833 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:09,835 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:10,729 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:10,729 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:10,729 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:10,731 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:11,089 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:11,089 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:11,097 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:11,099 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:11,444 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:11,445 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:11,445 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:11,447 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:11,693 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:11,693 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:11,694 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:11,696 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:14,160 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:14,160 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:14,160 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:14,163 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:14,457 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:14,457 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:14,458 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:14,460 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:14,769 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:14,769 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:14,769 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:14,771 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 15:39:15,037 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:15,037 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 15:39:15,037 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 15:39:15,039 - ✅ alice from ipv6:%5B::1%5D:36946 checked balance: ₹990.0
+2025-03-12 16:04:54,008 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:04:57,470 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:04:57,470 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:04:57,471 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:04:57,471 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:07,472 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:05:07,473 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:05:07,473 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:07,473 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:17,476 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:05:17,476 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:05:17,477 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:17,477 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:27,478 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:05:27,479 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:05:27,479 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:27,479 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:37,481 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:05:37,482 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:05:37,482 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:37,483 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:46,962 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:05:46,963 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:05:46,963 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:46,964 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:47,484 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:05:47,485 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:05:47,485 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:47,485 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:46606
+2025-03-12 16:05:47,487 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:05:47,488 - ✅ alice initiated a payment.
+2025-03-12 16:05:47,488 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:05:47,488 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-12 16:05:47,488 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-12 16:05:47,489 - 🔄 [TXN: 3e2fc23f-a41f-4d4a-a718-58699a691738] alice (IP: ipv6:%5B::1%5D:46606) initiated payment of ₹90.0 to 2001
+2025-03-12 16:05:47,496 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:05:47,499 - ❌ [TXN: 3e2fc23f-a41f-4d4a-a718-58699a691738] Payment Failed: StatusCode.UNAVAILABLE - failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:60051: Failed to connect to remote host: connect: Connection refused (111)
+2025-03-12 16:05:47,500 - ❌ [TXN: 3e2fc23f-a41f-4d4a-a718-58699a691738] Bank abort failed: StatusCode.UNAVAILABLE - failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:60051: Failed to connect to remote host: connect: Connection refused (111)
+2025-03-12 16:05:52,611 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:05:52,611 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:05:52,611 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:05:52,613 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-12 16:05:55,617 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:05:55,617 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:05:55,617 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:05:55,619 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-12 16:05:57,511 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:05:57,511 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:05:57,511 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:41940
+2025-03-12 16:05:57,512 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:41940
+2025-03-12 16:05:58,622 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:05:58,623 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:05:58,623 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:05:58,624 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-12 16:06:03,554 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:06:03,554 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:06:03,554 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:06:03,555 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-12 16:06:06,559 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:06:06,559 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:06:06,559 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:06:06,560 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-12 16:06:07,521 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:06:07,522 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:06:07,522 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:57292
+2025-03-12 16:06:07,522 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:57292
+2025-03-12 16:06:09,564 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:06:09,564 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:06:09,564 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:06:09,566 - ❌ alice attempted balance check (Failed: Bank service unavailable)
+2025-03-12 16:08:28,865 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:08:42,888 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:08:42,888 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:08:42,889 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:49268
+2025-03-12 16:08:42,891 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:49268
+2025-03-12 16:11:51,505 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:11:51,505 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:11:51,505 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:11:51,513 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:11:51,524 - ✅ alice from ipv6:%5B::1%5D:60476 checked balance: ₹990.0
+2025-03-12 16:13:44,701 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:13:47,197 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:13:47,197 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:13:47,198 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:13:47,198 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:13:55,405 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:13:55,405 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:13:55,405 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:33442
+2025-03-12 16:13:55,407 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:33442
+2025-03-12 16:13:57,199 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:13:57,200 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:13:57,200 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:13:57,201 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:13:57,202 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:13:57,203 - ✅ alice initiated a payment.
+2025-03-12 16:13:57,203 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:13:57,203 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-12 16:13:57,203 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-12 16:13:57,203 - 🔄 [TXN: c123112a-7a23-40db-8eff-94b737a076fe] alice (IP: ipv6:%5B::1%5D:33442) initiated payment of ₹90.0 to 2001
+2025-03-12 16:13:57,211 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:13:57,223 - ✅ Secure connection established with receiver's bank: ICICI
+2025-03-12 16:13:57,223 - 🔄 [TXN: c123112a-7a23-40db-8eff-94b737a076fe] PREPARE PHASE started
+2025-03-12 16:13:57,225 - ✅ [TXN: c123112a-7a23-40db-8eff-94b737a076fe] Sender bank prepared successfully
+2025-03-12 16:13:57,236 - ✅ [TXN: c123112a-7a23-40db-8eff-94b737a076fe] Receiver bank prepared successfully
+2025-03-12 16:13:57,236 - ✅ [TXN: c123112a-7a23-40db-8eff-94b737a076fe] PREPARE PHASE completed successfully
+2025-03-12 16:13:57,236 - 🔄 [TXN: c123112a-7a23-40db-8eff-94b737a076fe] COMMIT PHASE started
+2025-03-12 16:13:57,238 - ✅ [TXN: c123112a-7a23-40db-8eff-94b737a076fe] Sender bank committed successfully
+2025-03-12 16:13:57,246 - ✅ [TXN: c123112a-7a23-40db-8eff-94b737a076fe] Receiver bank committed successfully
+2025-03-12 16:13:57,246 - ✅ [TXN: c123112a-7a23-40db-8eff-94b737a076fe] COMMIT PHASE completed successfully
+2025-03-12 16:13:57,246 - ✅ [TXN: c123112a-7a23-40db-8eff-94b737a076fe] alice sent ₹90.0 to 2001 successfully
+2025-03-12 16:14:07,249 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:14:07,249 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:14:07,249 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:07,250 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:14,153 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:14:14,153 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:14:14,153 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:14:14,156 - ✅ alice from ipv6:%5B::1%5D:33442 checked balance: ₹900.0
+2025-03-12 16:14:17,222 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:14:17,222 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:14:17,222 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:14:17,224 - ✅ alice from ipv6:%5B::1%5D:33442 checked balance: ₹900.0
+2025-03-12 16:14:17,252 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:14:17,252 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:14:17,252 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:17,253 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:25,177 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:14:25,177 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:14:25,177 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:14:25,180 - ✅ alice from ipv6:%5B::1%5D:33442 checked balance: ₹900.0
+2025-03-12 16:14:27,254 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:14:27,255 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:14:27,255 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:27,255 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:37,257 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:14:37,257 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:14:37,258 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:37,258 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:47,260 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:14:47,260 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:14:47,261 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:47,261 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:57,263 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:14:57,263 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:14:57,264 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:14:57,264 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:07,266 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:15:07,267 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:15:07,267 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:07,267 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:17,270 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:15:17,270 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:15:17,271 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:17,271 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:27,273 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:15:27,273 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:15:27,274 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:27,274 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:37,276 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:15:37,276 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:15:37,277 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:37,277 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:47,279 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:15:47,279 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:15:47,280 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:47,280 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:57,282 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:15:57,283 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:15:57,283 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:15:57,283 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:07,286 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:16:07,286 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:16:07,287 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:07,287 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:17,289 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:16:17,289 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:16:17,290 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:17,290 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:27,292 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:16:27,292 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:16:27,293 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:27,293 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:37,295 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:16:37,296 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:16:37,296 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:37,296 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:47,298 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:16:47,298 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:16:47,299 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:47,299 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:57,301 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:16:57,301 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:16:57,302 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:16:57,302 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:07,304 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:17:07,304 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:17:07,305 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:07,305 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:17,307 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:17:17,307 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:17:17,308 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:17,308 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:27,310 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:17:27,310 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:17:27,311 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:27,311 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:37,314 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:17:37,314 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:17:37,315 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:37,315 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:47,317 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:17:47,317 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:17:47,318 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:47,318 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:57,320 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:17:57,320 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:17:57,321 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:17:57,321 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:07,323 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:18:07,323 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:18:07,324 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:07,324 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:17,326 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:18:17,326 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:18:17,327 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:17,327 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:27,329 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:18:27,329 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:18:27,330 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:27,330 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:37,332 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:18:37,332 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:18:37,333 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:37,333 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:47,335 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:18:47,336 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:18:47,336 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:47,337 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:57,338 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:18:57,339 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:18:57,340 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:18:57,340 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:07,342 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:19:07,342 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:19:07,343 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:07,343 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:17,345 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:19:17,345 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:19:17,347 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:17,347 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:27,349 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:19:27,349 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:19:27,350 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:27,350 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:37,352 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:19:37,352 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:19:37,353 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:37,353 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:47,355 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:19:47,355 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:19:47,355 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:47,356 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:57,358 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:19:57,358 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:19:57,359 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:19:57,359 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:07,361 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:20:07,361 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:20:07,362 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:07,362 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:17,363 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:20:17,364 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:20:17,364 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:17,364 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:27,366 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:20:27,367 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:20:27,375 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:27,375 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:37,377 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:20:37,377 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:20:37,378 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:37,378 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:47,380 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:20:47,380 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:20:47,381 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:47,381 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:57,383 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:20:57,383 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:20:57,384 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:20:57,384 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:07,386 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:21:07,386 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:21:07,386 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:07,387 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:17,389 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:21:17,389 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:21:17,389 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:17,390 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:27,392 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:21:27,392 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:21:27,393 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:27,393 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:37,395 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:21:37,395 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:21:37,396 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:37,396 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:47,398 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:21:47,398 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:21:47,399 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:47,399 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:57,401 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:21:57,402 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:21:57,402 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:21:57,402 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:07,404 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:22:07,404 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:22:07,405 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:07,405 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:17,406 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:22:17,406 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:22:17,407 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:17,407 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:27,409 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:22:27,409 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:22:27,410 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:27,410 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:37,412 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:22:37,412 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:22:37,413 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:37,413 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:47,415 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:22:47,415 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:22:47,416 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:47,416 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:57,418 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:22:57,418 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:22:57,419 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:22:57,419 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:07,421 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:23:07,421 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:23:07,422 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:07,422 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:17,424 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:23:17,424 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:23:17,425 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:17,425 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:27,427 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:23:27,427 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:23:27,428 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:27,428 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:37,430 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:23:37,430 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:23:37,431 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:37,431 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:47,433 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:23:47,433 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:23:47,434 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:47,434 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:57,436 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:23:57,436 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:23:57,437 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:23:57,437 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:07,439 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:24:07,439 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:24:07,439 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:07,439 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:17,441 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:24:17,442 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:24:17,443 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:17,443 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:27,445 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:24:27,445 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:24:27,453 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:27,454 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:37,455 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:24:37,455 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:24:37,456 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:37,456 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:47,458 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:24:47,458 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:24:47,459 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:47,459 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:57,461 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:24:57,461 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:24:57,462 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:24:57,462 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:07,464 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:25:07,464 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:25:07,464 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:07,465 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:17,467 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:25:17,467 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:25:17,467 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:17,468 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:27,470 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:25:27,470 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:25:27,470 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:27,471 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:37,473 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:25:37,473 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:25:37,473 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:37,474 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:47,475 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:25:47,476 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:25:47,476 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:47,477 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:57,479 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:25:57,479 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:25:57,480 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:25:57,480 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:07,482 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:26:07,482 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:26:07,483 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:07,483 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:17,485 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:26:17,485 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:26:17,485 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:17,486 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:27,488 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:26:27,488 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:26:27,489 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:27,489 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:37,491 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:26:37,491 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:26:37,492 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:37,492 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:47,494 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:26:47,494 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:26:47,495 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:47,495 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:57,497 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:26:57,498 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:26:57,499 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:26:57,499 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:07,501 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:27:07,501 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:27:07,502 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:07,502 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:17,505 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:27:17,505 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:27:17,505 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:17,506 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:27,507 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:27:27,508 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:27:27,508 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:27,509 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:37,510 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:27:37,511 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:27:37,511 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:37,511 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:47,513 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:27:47,514 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:27:47,514 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:47,514 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:57,516 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:27:57,516 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:27:57,517 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:27:57,517 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:07,519 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:28:07,519 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:28:07,520 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:07,520 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:17,523 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:28:17,523 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:28:17,524 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:17,524 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:27,526 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:28:27,526 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:28:27,527 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:27,527 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:37,529 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:28:37,529 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:28:37,530 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:37,530 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:47,532 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:28:47,532 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:28:47,533 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:47,533 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:57,534 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:28:57,535 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:28:57,535 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:28:57,535 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:07,538 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:29:07,538 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:29:07,539 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:07,539 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:17,540 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:29:17,541 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:29:17,541 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:17,542 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:27,544 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:29:27,544 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:29:27,545 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:27,545 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:37,546 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:29:37,547 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:29:37,547 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:37,548 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:47,550 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:29:47,550 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:29:47,551 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:47,551 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:57,553 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:29:57,553 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:29:57,554 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:29:57,554 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:07,556 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:30:07,556 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:30:07,557 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:07,557 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:17,559 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:30:17,560 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:30:17,560 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:17,561 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:27,563 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:30:27,563 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:30:27,563 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:27,564 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:37,565 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:30:37,566 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:30:37,567 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:37,567 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:47,569 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:30:47,569 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:30:47,570 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:47,570 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:57,572 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:30:57,572 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:30:57,573 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:30:57,573 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:07,575 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:31:07,575 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:31:07,575 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:07,575 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:17,577 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:31:17,578 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:31:17,579 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:17,579 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:27,581 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:31:27,581 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:31:27,582 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:27,582 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:37,585 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:31:37,585 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:31:37,585 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:37,586 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:47,587 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:31:47,588 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:31:47,588 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:47,588 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:57,590 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:31:57,590 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:31:57,591 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:31:57,591 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:07,593 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:32:07,593 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:32:07,594 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:07,594 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:17,596 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:32:17,596 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:32:17,597 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:17,597 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:27,599 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:32:27,600 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:32:27,600 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:27,600 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:37,602 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:32:37,603 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:32:37,603 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:37,604 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:47,605 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:32:47,606 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:32:47,606 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:47,606 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:57,608 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:32:57,609 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:32:57,609 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:32:57,610 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:07,612 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:33:07,612 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:33:07,613 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:07,613 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:17,615 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:33:17,615 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:33:17,616 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:17,616 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:27,618 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:33:27,618 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:33:27,619 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:27,619 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:37,621 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:33:37,621 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:33:37,622 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:37,622 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:47,624 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:33:47,624 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:33:47,625 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:47,625 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:57,627 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:33:57,627 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:33:57,628 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:33:57,628 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:07,630 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:34:07,630 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:34:07,631 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:07,631 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:17,633 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:34:17,633 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:34:17,634 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:17,634 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:27,636 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:34:27,636 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:34:27,637 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:27,637 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:37,639 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:34:37,639 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:34:37,640 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:37,640 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:47,642 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:34:47,642 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:34:47,643 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:47,643 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:57,645 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:34:57,645 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:34:57,646 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:34:57,646 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:07,648 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:35:07,648 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:35:07,657 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:07,657 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:17,659 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:35:17,659 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:35:17,660 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:17,660 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:27,662 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:35:27,662 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:35:27,663 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:27,663 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:37,665 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:35:37,665 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:35:37,666 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:37,666 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:47,668 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:35:47,668 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:35:47,669 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:47,669 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:57,671 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:35:57,672 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:35:57,672 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:35:57,672 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:07,674 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:36:07,675 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:36:07,675 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:07,675 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:17,677 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:36:17,677 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:36:17,678 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:17,678 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:27,681 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:36:27,681 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:36:27,689 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:27,689 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:37,691 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:36:37,691 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:36:37,692 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:37,692 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:47,694 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:36:47,694 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:36:47,695 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:47,695 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:57,697 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:36:57,697 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:36:57,698 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:36:57,698 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:07,700 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:37:07,700 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:37:07,701 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:07,701 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:17,703 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:37:17,703 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:37:17,703 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:17,704 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:27,705 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:37:27,705 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:37:27,706 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:27,706 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:37,708 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:37:37,709 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:37:37,717 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:37,717 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:47,719 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:37:47,719 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:37:47,727 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:47,727 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:57,728 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:37:57,728 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:37:57,729 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:37:57,729 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:07,731 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:38:07,731 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:38:07,732 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:07,732 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:17,734 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:38:17,734 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:38:17,735 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:17,735 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:27,737 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:38:27,737 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:38:27,738 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:27,738 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:37,740 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:38:37,740 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:38:37,741 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:37,741 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:47,743 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:38:47,743 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:38:47,744 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:47,744 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:57,746 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:38:57,746 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:38:57,747 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:38:57,747 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:39:07,749 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:39:07,749 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:39:07,750 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:39:07,750 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:39:17,752 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:39:17,752 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:39:17,753 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:39:17,753 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:39:27,755 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:39:27,755 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:39:27,756 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:39:27,756 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:39:37,758 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:39:37,758 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:39:37,759 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:39:37,759 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33442
+2025-03-12 16:39:46,281 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:39:48,348 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:39:48,348 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:39:48,348 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:59214
+2025-03-12 16:39:48,348 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:59214
+2025-03-12 16:39:52,747 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:39:52,748 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:39:52,748 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:59214
+2025-03-12 16:39:52,750 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:59214
+2025-03-12 16:39:54,538 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:39:54,538 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:39:54,538 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:39:54,546 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:39:54,555 - ✅ alice from ipv6:%5B::1%5D:59214 checked balance: ₹900.0
+2025-03-12 16:39:58,350 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:39:58,350 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:39:58,351 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:59214
+2025-03-12 16:39:58,351 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:59214
+2025-03-12 16:40:08,352 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:40:08,353 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:40:08,353 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:59214
+2025-03-12 16:40:08,354 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:59214
+2025-03-12 16:40:18,355 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:40:18,356 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:40:18,356 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:59214
+2025-03-12 16:40:18,356 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:59214
+2025-03-12 16:40:28,358 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:40:28,358 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:40:28,359 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:59214
+2025-03-12 16:40:28,359 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:59214
+2025-03-12 16:40:58,764 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:41:38,377 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:41:38,377 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:41:38,378 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:41:38,379 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:41:38,381 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:41:38,381 - ✅ alice initiated a payment.
+2025-03-12 16:41:38,381 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:41:38,381 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-12 16:41:38,381 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-12 16:41:38,382 - 🔄 [TXN: d371d664-426d-4461-9a21-33e2e421277e] alice (IP: ipv6:%5B::1%5D:36054) initiated payment of ₹20.0 to 2001
+2025-03-12 16:41:38,389 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:41:38,400 - ✅ Secure connection established with receiver's bank: ICICI
+2025-03-12 16:41:38,400 - 🔄 [TXN: d371d664-426d-4461-9a21-33e2e421277e] PREPARE PHASE started
+2025-03-12 16:41:38,402 - ✅ [TXN: d371d664-426d-4461-9a21-33e2e421277e] Sender bank prepared successfully
+2025-03-12 16:41:38,411 - ✅ [TXN: d371d664-426d-4461-9a21-33e2e421277e] Receiver bank prepared successfully
+2025-03-12 16:41:38,411 - ✅ [TXN: d371d664-426d-4461-9a21-33e2e421277e] PREPARE PHASE completed successfully
+2025-03-12 16:41:38,412 - 🔄 [TXN: d371d664-426d-4461-9a21-33e2e421277e] COMMIT PHASE started
+2025-03-12 16:41:38,414 - ✅ [TXN: d371d664-426d-4461-9a21-33e2e421277e] Sender bank committed successfully
+2025-03-12 16:41:38,422 - ✅ [TXN: d371d664-426d-4461-9a21-33e2e421277e] Receiver bank committed successfully
+2025-03-12 16:41:38,422 - ✅ [TXN: d371d664-426d-4461-9a21-33e2e421277e] COMMIT PHASE completed successfully
+2025-03-12 16:41:38,422 - ✅ [TXN: d371d664-426d-4461-9a21-33e2e421277e] alice sent ₹20.0 to 2001 successfully
+2025-03-12 16:41:45,985 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:41:45,986 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:41:45,986 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:41:45,988 - ✅ alice from ipv6:%5B::1%5D:36054 checked balance: ₹880.0
+2025-03-12 16:41:48,424 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:41:48,424 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:41:48,432 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:41:48,432 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:41:58,434 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:41:58,434 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:41:58,435 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:41:58,435 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:42:08,437 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:42:08,437 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:42:08,438 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:42:08,438 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:42:18,439 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:42:18,440 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:42:18,440 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:42:18,441 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:42:28,442 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:42:28,442 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:42:28,443 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:42:28,443 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:36054
+2025-03-12 16:42:44,383 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:42:48,457 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:42:48,457 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:42:48,458 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:36502
+2025-03-12 16:42:48,459 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:36502
+2025-03-12 16:42:53,535 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:42:53,536 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:42:53,536 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:42:53,543 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:42:53,552 - ✅ alice from ipv6:%5B::1%5D:36510 checked balance: ₹880.0
+2025-03-12 16:42:58,460 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:42:58,460 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:42:58,461 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:36510
+2025-03-12 16:42:58,461 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:36510
+2025-03-12 16:43:29,239 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:44:08,482 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:44:08,482 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:44:08,483 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48730
+2025-03-12 16:44:08,483 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48730
+2025-03-12 16:44:08,485 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:44:08,485 - ✅ alice initiated a payment.
+2025-03-12 16:44:08,486 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:44:08,486 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-12 16:44:08,486 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-12 16:44:08,487 - 🔄 [TXN: a3bf7810-ea38-4403-8bbc-a23f362e5068] alice (IP: ipv6:%5B::1%5D:48730) initiated payment of ₹20.0 to 2001
+2025-03-12 16:44:08,494 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:44:08,504 - ✅ Secure connection established with receiver's bank: ICICI
+2025-03-12 16:44:08,504 - 🔄 [TXN: a3bf7810-ea38-4403-8bbc-a23f362e5068] PREPARE PHASE started
+2025-03-12 16:44:08,506 - ✅ [TXN: a3bf7810-ea38-4403-8bbc-a23f362e5068] Sender bank prepared successfully
+2025-03-12 16:44:08,515 - ✅ [TXN: a3bf7810-ea38-4403-8bbc-a23f362e5068] Receiver bank prepared successfully
+2025-03-12 16:44:08,515 - ✅ [TXN: a3bf7810-ea38-4403-8bbc-a23f362e5068] PREPARE PHASE completed successfully
+2025-03-12 16:44:08,516 - 🔄 [TXN: a3bf7810-ea38-4403-8bbc-a23f362e5068] COMMIT PHASE started
+2025-03-12 16:44:08,518 - ✅ [TXN: a3bf7810-ea38-4403-8bbc-a23f362e5068] Sender bank committed successfully
+2025-03-12 16:44:08,526 - ✅ [TXN: a3bf7810-ea38-4403-8bbc-a23f362e5068] Receiver bank committed successfully
+2025-03-12 16:44:08,526 - ✅ [TXN: a3bf7810-ea38-4403-8bbc-a23f362e5068] COMMIT PHASE completed successfully
+2025-03-12 16:44:08,526 - ✅ [TXN: a3bf7810-ea38-4403-8bbc-a23f362e5068] alice sent ₹20.0 to 2001 successfully
+2025-03-12 16:44:12,319 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:44:12,319 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:44:12,319 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:44:12,321 - ✅ alice from ipv6:%5B::1%5D:48744 checked balance: ₹860.0
+2025-03-12 16:44:18,528 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:44:18,528 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:44:18,529 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:44:18,529 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:44:28,530 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:44:28,531 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:44:28,539 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:44:28,539 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:44:38,541 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:44:38,541 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:44:38,542 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:44:38,542 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:44:48,543 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:44:48,544 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:44:48,544 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:44:48,545 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:44:58,546 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:44:58,546 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:44:58,547 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:44:58,547 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:08,549 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:45:08,549 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:45:08,550 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:08,550 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:18,552 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:45:18,552 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:45:18,553 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:18,553 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:28,554 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:45:28,555 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:45:28,555 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:28,555 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:38,557 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:45:38,557 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:45:38,558 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:38,558 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:48,560 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:45:48,560 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:45:48,561 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:48,561 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:58,562 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:45:58,563 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:45:58,563 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:45:58,564 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:08,565 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:46:08,565 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:46:08,566 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:08,566 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:18,568 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:46:18,568 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:46:18,568 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:18,569 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:28,570 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:46:28,571 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:46:28,571 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:28,572 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:38,573 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:46:38,574 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:46:38,574 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:38,574 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:48,576 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:46:48,576 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:46:48,577 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:48,577 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:58,579 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:46:58,579 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:46:58,579 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:46:58,580 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:48744
+2025-03-12 16:47:16,818 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:47:19,322 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:47:19,323 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:47:19,324 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:44218
+2025-03-12 16:47:19,324 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:44218
+2025-03-12 16:47:19,490 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:47:19,490 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:47:19,491 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:44202
+2025-03-12 16:47:19,493 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:44202
+2025-03-12 16:47:25,096 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:47:25,096 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:47:25,096 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:47:25,104 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:47:25,114 - ✅ alice from ipv6:%5B::1%5D:44234 checked balance: ₹860.0
+2025-03-12 16:47:29,326 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:47:29,326 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:47:29,327 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:44234
+2025-03-12 16:47:29,327 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:44234
+2025-03-12 16:47:48,990 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:47:49,339 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:47:49,339 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:47:49,340 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:38674
+2025-03-12 16:47:49,340 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:38674
+2025-03-12 16:47:49,342 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:47:49,342 - ✅ alice initiated a payment.
+2025-03-12 16:47:49,342 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:47:49,342 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-12 16:47:49,342 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-12 16:47:49,343 - 🔄 [TXN: 1c512ddc-220f-4516-a0d3-9078f616b5f5] alice (IP: ipv6:%5B::1%5D:38674) initiated payment of ₹20.0 to 2001
+2025-03-12 16:47:49,349 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:47:49,360 - ✅ Secure connection established with receiver's bank: ICICI
+2025-03-12 16:47:49,360 - 🔄 [TXN: 1c512ddc-220f-4516-a0d3-9078f616b5f5] PREPARE PHASE started
+2025-03-12 16:47:49,361 - ✅ [TXN: 1c512ddc-220f-4516-a0d3-9078f616b5f5] Sender bank prepared successfully
+2025-03-12 16:47:49,372 - ✅ [TXN: 1c512ddc-220f-4516-a0d3-9078f616b5f5] Receiver bank prepared successfully
+2025-03-12 16:47:49,372 - ✅ [TXN: 1c512ddc-220f-4516-a0d3-9078f616b5f5] PREPARE PHASE completed successfully
+2025-03-12 16:47:49,372 - 🔄 [TXN: 1c512ddc-220f-4516-a0d3-9078f616b5f5] COMMIT PHASE started
+2025-03-12 16:47:49,374 - ✅ [TXN: 1c512ddc-220f-4516-a0d3-9078f616b5f5] Sender bank committed successfully
+2025-03-12 16:47:49,376 - ✅ [TXN: 1c512ddc-220f-4516-a0d3-9078f616b5f5] Receiver bank committed successfully
+2025-03-12 16:47:49,376 - ✅ [TXN: 1c512ddc-220f-4516-a0d3-9078f616b5f5] COMMIT PHASE completed successfully
+2025-03-12 16:47:49,376 - ✅ [TXN: 1c512ddc-220f-4516-a0d3-9078f616b5f5] alice sent ₹20.0 to 2001 successfully
+2025-03-12 16:47:59,379 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:47:59,379 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:47:59,380 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:38674
+2025-03-12 16:47:59,380 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:38674
+2025-03-12 16:48:09,382 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:48:09,382 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:48:09,383 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:38674
+2025-03-12 16:48:09,383 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:38674
+2025-03-12 16:48:19,385 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:48:19,385 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:48:19,386 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:38674
+2025-03-12 16:48:19,386 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:38674
+2025-03-12 16:48:29,388 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:48:29,388 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:48:29,389 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:38674
+2025-03-12 16:48:29,389 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:38674
+2025-03-12 16:48:38,272 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:48:40,476 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:48:40,476 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:48:40,476 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:46836
+2025-03-12 16:48:40,477 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:46836
+2025-03-12 16:48:44,851 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:48:44,851 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:48:44,852 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:46836
+2025-03-12 16:48:44,854 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:46836
+2025-03-12 16:48:50,478 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:48:50,479 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:48:50,479 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:46836
+2025-03-12 16:48:50,480 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:46836
+2025-03-12 16:48:52,948 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:48:52,948 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:48:52,948 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:48:52,956 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:48:52,965 - ✅ alice from ipv6:%5B::1%5D:46836 checked balance: ₹840.0
+2025-03-12 16:49:40,788 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 16:50:50,507 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:50:50,507 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:50:50,508 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:33858
+2025-03-12 16:50:50,509 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:33858
+2025-03-12 16:50:50,511 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:50:50,511 - ✅ alice initiated a payment.
+2025-03-12 16:50:50,511 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-12 16:50:50,511 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-12 16:50:50,511 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-12 16:50:50,512 - 🔄 [TXN: fa2cf701-ebb0-4739-a059-118721a76a66] alice (IP: ipv6:%5B::1%5D:33858) initiated payment of ₹40.0 to 2001
+2025-03-12 16:50:50,519 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 16:50:50,529 - ✅ Secure connection established with receiver's bank: ICICI
+2025-03-12 16:50:50,530 - 🔄 [TXN: fa2cf701-ebb0-4739-a059-118721a76a66] PREPARE PHASE started
+2025-03-12 16:50:50,531 - ✅ [TXN: fa2cf701-ebb0-4739-a059-118721a76a66] Sender bank prepared successfully
+2025-03-12 16:50:50,540 - ✅ [TXN: fa2cf701-ebb0-4739-a059-118721a76a66] Receiver bank prepared successfully
+2025-03-12 16:50:50,540 - ✅ [TXN: fa2cf701-ebb0-4739-a059-118721a76a66] PREPARE PHASE completed successfully
+2025-03-12 16:50:50,540 - 🔄 [TXN: fa2cf701-ebb0-4739-a059-118721a76a66] COMMIT PHASE started
+2025-03-12 16:50:50,542 - ✅ [TXN: fa2cf701-ebb0-4739-a059-118721a76a66] Sender bank committed successfully
+2025-03-12 16:50:50,550 - ✅ [TXN: fa2cf701-ebb0-4739-a059-118721a76a66] Receiver bank committed successfully
+2025-03-12 16:50:50,550 - ✅ [TXN: fa2cf701-ebb0-4739-a059-118721a76a66] COMMIT PHASE completed successfully
+2025-03-12 16:50:50,550 - ✅ [TXN: fa2cf701-ebb0-4739-a059-118721a76a66] alice sent ₹40.0 to 2001 successfully
+2025-03-12 16:50:52,580 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:50:52,587 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 16:50:52,587 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 16:50:52,590 - ✅ alice from ipv6:%5B::1%5D:50116 checked balance: ₹800.0
+2025-03-12 16:51:00,561 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:51:00,561 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:51:00,562 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:00,562 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:10,564 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:51:10,564 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:51:10,565 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:10,565 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:20,567 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:51:20,567 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:51:20,568 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:20,568 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:30,570 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:51:30,570 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:51:30,571 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:30,571 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:40,573 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:51:40,573 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:51:40,573 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:40,574 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:50,575 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:51:50,575 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:51:50,576 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:51:50,576 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:00,577 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:52:00,578 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:52:00,578 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:00,578 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:10,580 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:52:10,581 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:52:10,581 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:10,582 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:20,584 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:52:20,584 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:52:20,585 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:20,585 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:30,587 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:52:30,588 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:52:30,588 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:30,588 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:40,590 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:52:40,591 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:52:40,592 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:40,592 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:50,594 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:52:50,594 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:52:50,594 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:52:50,595 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:00,597 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:53:00,597 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:53:00,597 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:00,598 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:10,600 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:53:10,600 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:53:10,601 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:10,601 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:20,602 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:53:20,603 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:53:20,603 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:20,603 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:30,606 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:53:30,606 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:53:30,607 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:30,607 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:40,609 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:53:40,609 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:53:40,609 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:40,610 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:50,611 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:53:50,611 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:53:50,612 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:53:50,612 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:00,615 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:54:00,615 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:54:00,615 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:00,616 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:10,618 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:54:10,618 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:54:10,619 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:10,619 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:20,621 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:54:20,621 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:54:20,622 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:20,622 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:30,624 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:54:30,624 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:54:30,625 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:30,625 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:40,627 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:54:40,627 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:54:40,628 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:40,628 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:50,630 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:54:50,630 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:54:50,631 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:54:50,631 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:00,633 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:55:00,633 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:55:00,634 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:00,634 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:10,636 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:55:10,636 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:55:10,637 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:10,637 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:20,639 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:55:20,639 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:55:20,640 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:20,640 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:30,642 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:55:30,642 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:55:30,643 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:30,643 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:40,645 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:55:40,645 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:55:40,646 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:40,646 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:50,648 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:55:50,648 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:55:50,648 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:55:50,648 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:00,650 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:56:00,650 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:56:00,651 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:00,651 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:10,653 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:56:10,653 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:56:10,654 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:10,654 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:20,656 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:56:20,656 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:56:20,657 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:20,657 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:30,659 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:56:30,659 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:56:30,660 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:30,660 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:40,662 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:56:40,663 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:56:40,663 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:40,664 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:50,665 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:56:50,666 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:56:50,666 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:56:50,667 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:00,669 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:57:00,669 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:57:00,670 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:00,670 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:10,672 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:57:10,672 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:57:10,673 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:10,673 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:20,675 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:57:20,675 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:57:20,676 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:20,676 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:30,678 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:57:30,678 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:57:30,679 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:30,679 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:40,681 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:57:40,681 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:57:40,682 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:40,682 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:50,684 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:57:50,684 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:57:50,685 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:57:50,685 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:00,687 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:58:00,687 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:58:00,688 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:00,688 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:10,690 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:58:10,690 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:58:10,691 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:10,691 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:20,693 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:58:20,693 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:58:20,694 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:20,694 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:30,696 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:58:30,696 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:58:30,697 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:30,697 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:40,699 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:58:40,700 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:58:40,700 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:40,701 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:50,703 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:58:50,703 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:58:50,704 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:58:50,704 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:00,706 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:59:00,706 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:59:00,707 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:00,707 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:10,709 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:59:10,709 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:59:10,710 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:10,710 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:20,712 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:59:20,712 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:59:20,713 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:20,713 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:30,715 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:59:30,715 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:59:30,716 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:30,716 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:40,718 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:59:40,718 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:59:40,718 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:40,719 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:50,721 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 16:59:50,721 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 16:59:50,722 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 16:59:50,722 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 17:00:00,724 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:00:00,724 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:00:00,725 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 17:00:00,725 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 17:00:10,727 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:00:10,727 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:00:10,728 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 17:00:10,728 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 17:00:20,730 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:00:20,730 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:00:20,731 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 17:00:20,731 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:47528
+2025-03-12 17:00:35,126 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 17:00:46,556 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:00:46,556 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:00:46,556 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:56290
+2025-03-12 17:00:46,556 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:56290
+2025-03-12 17:00:52,531 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:00:52,531 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:00:52,532 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:56290
+2025-03-12 17:00:52,533 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:56290
+2025-03-12 17:00:54,184 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 17:00:54,184 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 17:00:54,184 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 17:00:54,192 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 17:00:54,202 - ✅ alice from ipv6:%5B::1%5D:56290 checked balance: ₹800.0
+2025-03-12 17:00:56,558 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:00:56,558 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:00:56,559 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:56290
+2025-03-12 17:00:56,559 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:56290
+2025-03-12 17:01:22,102 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 17:18:34,340 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 17:18:37,768 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:18:37,768 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:18:37,768 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:54662
+2025-03-12 17:18:37,768 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:54662
+2025-03-12 17:19:13,569 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 17:19:17,801 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:19:17,801 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:19:17,802 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:32814
+2025-03-12 17:19:17,802 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:32814
+2025-03-12 17:19:27,012 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:19:27,012 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:19:27,020 - 🔑 Authentication attempt for user: alice from ipv6:%5B::1%5D:32814
+2025-03-12 17:19:27,021 - ✅ alice successfully authenticated from ipv6:%5B::1%5D:32814
+2025-03-12 17:19:55,778 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 17:20:17,811 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:20:17,811 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:20:17,811 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:53706
+2025-03-12 17:20:17,811 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:53706
+2025-03-12 17:20:17,813 - ✅ Authorized request from alice - Method: /PaymentGateway/ProcessPayment
+2025-03-12 17:20:17,813 - ✅ alice initiated a payment.
+2025-03-12 17:20:17,813 - ✅ Request from Unknown - Method: /PaymentGateway/ProcessPayment
+2025-03-12 17:20:17,813 - ✅ Transaction processed successfully by alice in /PaymentGateway/ProcessPayment
+2025-03-12 17:20:17,813 - ✅ Success: /PaymentGateway/ProcessPayment completed
+2025-03-12 17:20:17,813 - 🔄 [TXN: e42bb618-2d98-4a7e-a88e-5101ea6f7e63] alice (IP: ipv6:%5B::1%5D:53706) initiated payment of ₹400.0 to 2001
+2025-03-12 17:20:17,817 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 17:20:17,823 - ✅ Secure connection established with receiver's bank: ICICI
+2025-03-12 17:20:17,823 - 🔄 [TXN: e42bb618-2d98-4a7e-a88e-5101ea6f7e63] PREPARE PHASE started
+2025-03-12 17:20:17,824 - ✅ [TXN: e42bb618-2d98-4a7e-a88e-5101ea6f7e63] Sender bank prepared successfully
+2025-03-12 17:20:17,829 - ✅ [TXN: e42bb618-2d98-4a7e-a88e-5101ea6f7e63] Receiver bank prepared successfully
+2025-03-12 17:20:17,829 - ✅ [TXN: e42bb618-2d98-4a7e-a88e-5101ea6f7e63] PREPARE PHASE completed successfully
+2025-03-12 17:20:17,829 - 🔄 [TXN: e42bb618-2d98-4a7e-a88e-5101ea6f7e63] COMMIT PHASE started
+2025-03-12 17:20:17,830 - ✅ [TXN: e42bb618-2d98-4a7e-a88e-5101ea6f7e63] Sender bank committed successfully
+2025-03-12 17:20:17,838 - ✅ [TXN: e42bb618-2d98-4a7e-a88e-5101ea6f7e63] Receiver bank committed successfully
+2025-03-12 17:20:17,838 - ✅ [TXN: e42bb618-2d98-4a7e-a88e-5101ea6f7e63] COMMIT PHASE completed successfully
+2025-03-12 17:20:17,838 - ✅ [TXN: e42bb618-2d98-4a7e-a88e-5101ea6f7e63] alice sent ₹400.0 to 2001 successfully
+2025-03-12 17:20:47,840 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:20:47,840 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:20:47,841 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:53706
+2025-03-12 17:20:47,841 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:53706
+2025-03-12 17:21:17,843 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:21:17,844 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:21:17,844 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:53706
+2025-03-12 17:21:17,844 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:53706
+2025-03-12 17:21:24,465 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 17:21:24,465 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 17:21:24,465 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 17:21:24,468 - ✅ alice from ipv6:%5B::1%5D:53706 checked balance: ₹400.0
+2025-03-12 17:21:49,579 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 17:22:01,338 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 17:22:01,338 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 17:22:01,338 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 17:22:01,346 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 17:22:01,356 - ✅ alice from ipv6:%5B::1%5D:44744 checked balance: ₹400.0
+2025-03-12 17:22:11,071 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
+2025-03-12 17:22:12,334 - ✅ Authorized request from alice - Method: /PaymentGateway/CheckBalance
+2025-03-12 17:22:12,334 - ✅ Request from Unknown - Method: /PaymentGateway/CheckBalance
+2025-03-12 17:22:12,334 - ✅ Success: /PaymentGateway/CheckBalance completed
+2025-03-12 17:22:12,342 - ✅ Secure connection established with sender's bank: HDFC
+2025-03-12 17:22:12,351 - ✅ alice from ipv6:%5B::1%5D:54436 checked balance: ₹400.0
+2025-03-12 17:22:17,856 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:22:17,856 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:22:17,857 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:22:17,857 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:22:47,859 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:22:47,859 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:22:47,860 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:22:47,860 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:23:17,862 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:23:17,862 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:23:17,863 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:23:17,863 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:23:47,865 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:23:47,865 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:23:47,866 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:23:47,866 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:24:17,868 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:24:17,868 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:24:17,869 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:24:17,869 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:24:47,871 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:24:47,871 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:24:47,872 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:24:47,872 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:25:17,874 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:25:17,874 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:25:17,875 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:25:17,875 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:25:47,877 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:25:47,878 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:25:47,878 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:25:47,879 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:26:17,881 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:26:17,881 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:26:17,882 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:26:17,882 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:26:47,884 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:26:47,884 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:26:47,885 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:26:47,885 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:27:17,887 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:27:17,887 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:27:17,888 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:27:17,888 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:27:47,890 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:27:47,890 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:27:47,891 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:27:47,891 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:28:17,893 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:28:17,894 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:28:17,894 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:28:17,894 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:28:47,896 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:28:47,896 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:28:47,897 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:28:47,897 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:29:17,899 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:29:17,900 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:29:17,900 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:29:17,900 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:29:47,902 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:29:47,902 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:29:47,902 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:29:47,903 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:30:17,904 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:30:17,904 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:30:17,905 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:30:17,905 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:30:47,907 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:30:47,907 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:30:47,908 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:30:47,908 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:31:17,912 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:31:17,913 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:31:17,917 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:31:17,918 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:31:47,920 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:31:47,920 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:31:47,921 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:31:47,921 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:32:17,923 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:32:17,923 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:32:17,924 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:32:17,924 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:32:47,926 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:32:47,926 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:32:47,927 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:32:47,927 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:33:17,929 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:33:17,929 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:33:17,930 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:33:17,930 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:33:47,938 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:33:47,938 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:33:47,943 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:33:47,943 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:34:17,950 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:34:17,950 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:34:17,950 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:34:17,951 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:34:47,952 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:34:47,953 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:34:47,953 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:34:47,954 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:35:17,956 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:35:17,956 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:35:17,956 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:35:17,956 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:35:47,958 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:35:47,958 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:35:47,959 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:35:47,959 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:36:17,961 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:36:17,962 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:36:17,962 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:36:17,962 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:36:47,964 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:36:47,965 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:36:47,966 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:36:47,966 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:37:17,968 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:37:17,969 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:37:17,969 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:37:17,970 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:37:47,972 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:37:47,972 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:37:47,973 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:37:47,973 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:38:17,975 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:38:17,975 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:38:17,976 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:38:17,976 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:38:47,978 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:38:47,978 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:38:47,978 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:38:47,979 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:39:17,981 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:39:17,981 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:39:17,982 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:39:17,982 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:39:47,984 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:39:47,984 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:39:47,985 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:39:47,985 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:40:17,987 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:40:17,987 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:40:17,988 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:40:17,988 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:40:47,990 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:40:47,990 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:40:47,991 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:40:47,991 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:41:17,993 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:41:17,993 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:41:17,994 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:41:17,994 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:41:47,996 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:41:47,996 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:41:47,997 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:41:47,997 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:42:17,999 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:42:17,999 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:42:18,000 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:42:18,000 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:42:48,002 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:42:48,002 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:42:48,003 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:42:48,003 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:43:18,005 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:43:18,005 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:43:18,006 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:43:18,006 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:43:48,008 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:43:48,008 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:43:48,009 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:43:48,009 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:44:18,011 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:44:18,011 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:44:18,012 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:44:18,012 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:44:48,014 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:44:48,014 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:44:48,015 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:44:48,015 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:45:18,017 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-12 17:45:18,017 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-12 17:45:18,018 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-12 17:45:18,018 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:57:06,207 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 01:57:06,207 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 01:57:06,208 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:57:06,208 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:57:36,591 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 01:57:36,591 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 01:57:36,592 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:57:36,592 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:58:07,356 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 01:58:07,356 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 01:58:07,357 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:58:07,357 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:58:37,359 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 01:58:37,360 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 01:58:37,360 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:58:37,360 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:59:07,465 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 01:59:07,465 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 01:59:07,466 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:59:07,466 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:59:37,468 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 01:59:37,468 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 01:59:37,469 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 01:59:37,469 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:00:07,471 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:00:07,471 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:00:07,472 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:00:07,472 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:00:37,955 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:00:37,955 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:00:37,956 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:00:37,956 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:01:07,958 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:01:07,958 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:01:07,959 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:01:07,959 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:01:37,989 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:01:37,989 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:01:37,989 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:01:37,990 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:02:07,992 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:02:07,992 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:02:07,993 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:02:07,993 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:02:37,995 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:02:37,995 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:02:37,996 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:02:37,996 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:03:08,475 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:03:08,475 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:03:08,476 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:03:08,476 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:03:38,478 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:03:38,478 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:03:38,479 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:03:38,479 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:04:08,488 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:04:08,488 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:04:08,488 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:04:08,489 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:04:38,943 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:04:38,944 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:04:38,944 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:04:38,945 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:05:08,947 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:05:08,947 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:05:08,948 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:05:08,948 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:05:39,012 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:05:39,013 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:05:39,013 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:05:39,013 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:06:09,015 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:06:09,016 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:06:09,016 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:06:09,016 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:06:39,034 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:06:39,034 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:06:39,035 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:06:39,035 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:07:09,520 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:07:09,520 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:07:09,521 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:07:09,521 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:07:39,523 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:07:39,523 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:07:39,524 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:07:39,524 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:08:09,526 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:08:09,526 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:08:09,527 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:08:09,527 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:08:39,991 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:08:39,992 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:08:39,992 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:08:39,992 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:09:09,994 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:09:09,995 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:09:09,995 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:09:09,996 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:09:40,036 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:09:40,036 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:09:40,037 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:09:40,037 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:10:10,039 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:10:10,039 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:10:10,040 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:10:10,040 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:10:40,042 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:10:40,043 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:10:40,043 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:10:40,043 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:11:10,536 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:11:10,536 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:11:10,537 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:11:10,537 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:11:40,539 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:11:40,539 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:11:40,540 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:11:40,540 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:12:10,566 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:12:10,566 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:12:10,567 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:12:10,567 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:12:41,045 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:12:41,045 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:12:41,046 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:12:41,046 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:13:11,048 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:13:11,048 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:13:11,049 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:13:11,049 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:13:41,052 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:13:41,053 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:13:41,053 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:13:41,053 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:14:11,555 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:14:11,555 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:14:11,556 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:14:11,556 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:14:41,558 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:14:41,558 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:14:41,559 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:14:41,559 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:15:11,561 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:15:11,561 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:15:11,562 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:15:11,562 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:15:41,564 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:15:41,565 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:15:41,565 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:15:41,566 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:16:11,568 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:16:11,568 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:16:11,569 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:16:11,569 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:16:42,074 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:16:42,075 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:16:42,075 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:16:42,076 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:17:12,078 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:17:12,078 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:17:12,079 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:17:12,079 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:17:42,082 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:17:42,082 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:17:42,082 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:17:42,083 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:18:12,566 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:18:12,566 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:18:12,567 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:18:12,567 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:18:42,570 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:18:42,570 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:18:42,570 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:18:42,571 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:19:12,572 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:19:12,573 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:19:12,573 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:19:12,573 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:19:43,087 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:19:43,088 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:19:43,088 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:19:43,088 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:20:13,090 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:20:13,090 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:20:13,091 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:20:13,091 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:20:43,339 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:20:43,339 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:20:43,340 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:20:43,340 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:21:13,846 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:21:13,846 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:21:13,847 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:21:13,847 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:21:43,849 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:21:43,849 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:21:43,850 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:21:43,850 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:22:13,852 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:22:13,852 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:22:13,853 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:22:13,853 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:22:44,331 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:22:44,331 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:22:44,332 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:22:44,332 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:23:14,334 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:23:14,334 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:23:14,335 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:23:14,335 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:23:44,377 - ✅ Request from Unknown - Method: /PaymentGateway/AuthenticateClient
+2025-03-13 02:23:44,377 - ✅ Success: /PaymentGateway/AuthenticateClient completed
+2025-03-13 02:23:44,378 - 🔑 Authentication attempt for user: ping from ipv6:%5B::1%5D:35252
+2025-03-13 02:23:44,378 - ❌ Failed login attempt for user: ping from ipv6:%5B::1%5D:35252
