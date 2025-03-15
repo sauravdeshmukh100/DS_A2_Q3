@@ -19,16 +19,20 @@ message AuthResponse {
   string message = 3;  // Add this field for detailed responses
 }
 
-message BalanceRequest {}  // ✅ No token field inside message
+// Balance Request & Response
+message BalanceRequest {
+    string bank_name = 1;  // New field to specify which bank's balance to check
+}
 message BalanceResponse {
     double balance = 1;
 }
 
 message PaymentRequest {
-    string to_account = 1;
-    double amount = 2;
-    string transaction_id=3;
-    
+    string transaction_id = 1;
+    string sender_bank_name=2;
+    string receiver_username=3;
+    string receiver_bank_name = 4;  // ✅ Sender's bank name (required)
+    double amount = 5;
 }
 
 message PaymentResponse {
@@ -45,18 +49,21 @@ message LogoutResponse {
 }
 
 
-// Define response for transaction history
-message Transaction {
-    string transaction_id = 1;
-    string from_account = 2;  // ✅ Rename "from" to "from_account"
-    string to_account = 3;
-    double amount = 4;
-    string timestamp = 5;
-    string status = 6;
+message TransactionHistoryRequest {
+    // The request doesn't need parameters since the server extracts user info from metadata.
 }
 
-
-message TransactionHistoryRequest {}
+message Transaction {
+    string transaction_id = 1;
+    string from_bank = 2;
+    string to_bank = 3;
+    string from_account_no = 4;  // Will be included only for sender
+    string from_user_id = 5;      // Will be included only for receiver
+    string to_user_id = 6;        // Will be included only for sender
+    double amount = 7;
+    string timestamp = 8;
+    string status = 9;
+}
 
 message TransactionHistoryResponse {
     repeated Transaction transactions = 1;

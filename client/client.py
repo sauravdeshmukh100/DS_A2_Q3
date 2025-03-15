@@ -114,17 +114,16 @@ def authenticate_client(stub, username, password):
 
 
 
-def check_balance(stub):
+def check_balance(stub,bank_name):
     """Checks balance with retries if Payment Gateway is down."""
     global is_online
     
     if jwt_token is None:
         print("❌ Please authenticate first.")
         return
-    
+    print("bank_name",bank_name)
     metadata = [("authorization", jwt_token)]
-    request = payment_gateway_pb2.BalanceRequest()
-
+    request = payment_gateway_pb2.BalanceRequest(bank_name=bank_name)
     attempt = 0
     while attempt < MAX_RETRIES:
         try:
@@ -154,38 +153,42 @@ def check_balance(stub):
 
 
 
-def process_payment(stub, to_account, amount):
+def process_payment(stub, sender_bank_name, receiver_username, receiver_bank_name, amount):
     """Processes a payment using JWT authentication with automatic offline queuing."""
     global is_online, offline_queue
-    
+
     if jwt_token is None:
         print("❌ Please authenticate first.")
         return
-    
+
     # Generate a unique transaction ID for idempotency
     transaction_id = str(uuid.uuid4())
     timestamp = datetime.now().isoformat()
-    
-    # Create payment data structure
+
+    # Create payment data structure for offline queueing
     payment_data = {
-        "to_account": to_account,
-        "amount": amount,
         "transaction_id": transaction_id,
-        "timestamp": timestamp
+        "sender_bank_name": sender_bank_name,
+        "receiver_username": receiver_username,
+        "receiver_bank_name": receiver_bank_name,
+        "amount": amount,
+        "timestamp": timestamp,
     }
-    
+
     # If offline, queue the payment automatically
     if not is_online:
         with queue_lock:
             offline_queue.append(payment_data)
             save_offline_queue()
         print(f"📝 Payment queued for offline processing (Transaction ID: {transaction_id})")
-        logging.info(f"Payment of ₹{amount} to {to_account} queued for offline processing.")
+        logging.info(f"💳 Payment of ₹{amount} to {receiver_username}@{receiver_bank_name} queued for offline processing.")
         return
-    
+
     metadata = [("authorization", jwt_token)]
     request = payment_gateway_pb2.PaymentRequest(
-        to_account=to_account,
+        sender_bank_name=sender_bank_name,  # ✅ Only sender_bank_name (no account number)
+        receiver_username=receiver_username,
+        receiver_bank_name=receiver_bank_name,
         amount=amount,
         transaction_id=transaction_id
     )
@@ -195,7 +198,7 @@ def process_payment(stub, to_account, amount):
         try:
             response = stub.ProcessPayment(request, metadata=metadata)
             print(f"📌 Payment Status: {response.message}")
-            logging.info(f"✅ Payment of ₹{amount} to {to_account} succeeded.")
+            logging.info(f"✅ Payment of ₹{amount} from {sender_bank_name} to {receiver_username}@{receiver_bank_name} succeeded.")
             is_online = True  # Mark system as online
             return
         except grpc.RpcError as e:
@@ -210,12 +213,12 @@ def process_payment(stub, to_account, amount):
                         offline_queue.append(payment_data)
                         save_offline_queue()
                     print(f"📝 Payment queued for offline processing after failed retries (Transaction ID: {transaction_id})")
-                    logging.info(f"Payment of ₹{amount} to {to_account} queued for offline processing after failed retries.")
+                    logging.info(f"💳 Payment of ₹{amount} to {receiver_username}@{receiver_bank_name} queued for offline processing after failed retries.")
                     is_online = False  # Mark system as offline
                     return
             elif e.code() == grpc.StatusCode.FAILED_PRECONDITION:
                 print("❌ Transaction failed: Insufficient funds.")
-                logging.warning(f"❌ Payment of ₹{amount} to {to_account} failed due to insufficient funds.")
+                logging.warning(f"❌ Payment of ₹{amount} from {sender_bank_name} to {receiver_username}@{receiver_bank_name} failed due to insufficient funds.")
                 return
             elif e.code() == grpc.StatusCode.ALREADY_EXISTS:
                 print("❌ Transaction with this ID already processed.")
@@ -232,6 +235,7 @@ def process_payment(stub, to_account, amount):
 
 
 
+
 def logout_client(stub):
     """Logs out the user by sending a logout request with the current token."""
     global jwt_token  # Ensure token is globally updated
@@ -242,17 +246,32 @@ def logout_client(stub):
 
     metadata = [("authorization", jwt_token)]
     request = payment_gateway_pb2.LogoutRequest()
+    attempt = 0
+    while attempt < MAX_RETRIES:
 
-    try:
-        response = stub.LogoutClient(request, metadata=metadata)
-        if response.success:
-            jwt_token = None  # Invalidate locally
-            print("✅ Logout successful!")
-        else:
-            print(f"❌ Logout failed: {response.message}")
+        try:
+            response = stub.LogoutClient(request, metadata=metadata)
+            if response.success:
+                jwt_token = None  # Invalidate locally
+                print("✅ Logout successful!")
+                is_online = True  # Mark system as online
+                return
+            else:
+                print(f"❌ Logout failed: {response.message}")
+                is_online = True  # Mark system as online
+                return
 
-    except grpc.RpcError as e:
-        print(f"❌ Logout error: {e.code()} - {e.details()}")    
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.UNAVAILABLE:
+                attempt += 1
+                logging.warning(f"🔄 Retrying logout... Attempt {attempt}/{MAX_RETRIES}")
+                print(f"🔄 Retrying logout... Attempt {attempt}/{MAX_RETRIES}")
+                time.sleep(RETRY_DELAY)
+                initialize_stub()
+                is_online = False  # Mark system as offline
+            else:    
+                print(f"❌ Logout error: {e.code()} - {e.details()}")
+                return     
 
 
 
@@ -280,9 +299,12 @@ def process_offline_queue():
         
         metadata = [("authorization", jwt_token)]
         request = payment_gateway_pb2.PaymentRequest(
-            to_account=payment['to_account'],
-            amount=payment['amount'],
-            transaction_id=payment['transaction_id']
+             sender_bank_name=payment["sender_bank_name"],  # ✅ Only sender_bank_name (no account number)
+            receiver_username=payment["receiver_username"],
+            receiver_bank_name=payment["receiver_bank_name"],
+            amount=payment["amount"],
+            transaction_id=payment["transaction_id"]
+            
         )
         
         try:
@@ -300,6 +322,9 @@ def process_offline_queue():
                 print(f"❌ Offline payment failed: Insufficient funds (Transaction ID: {payment['transaction_id']})")
                 logging.warning(f"❌ Offline payment failed: Insufficient funds (Transaction ID: {payment['transaction_id']})")
                 successful_payments.append(payment)
+            elif e.code() == grpc.StatusCode.INVALID_ARGUMENT:  
+                print("Cannot transfer money to your own account within the same bank.")
+                logging.error("Cannot transfer money to your own account within the same bank.")  
             else:
                 print(f"❌ Failed to process offline payment: {e.code()} - {e.details()}")
                 logging.error(f"❌ Failed to process offline payment (ID: {payment['transaction_id']}): {e.code()} - {e.details()}")
@@ -320,7 +345,7 @@ def check_connection():
     try:
         if stub is None:
             initialize_stub()
-        logging.info("🔄 Checking connection...")
+        # logging.info("🔄 Checking connection...")
         dummy_request = payment_gateway_pb2.AuthRequest(username="ping", password="ping")
         stub.AuthenticateClient(dummy_request, timeout=2)
         
@@ -387,15 +412,21 @@ def initialize_stub():
         
         channel = grpc.secure_channel("localhost:50052", credentials, options=options)
         stub = payment_gateway_pb2_grpc.PaymentGatewayStub(channel)
-        print("🔄 Secure gRPC connection established.")
-        logging.info("Secure gRPC connection established.")
+          # ✅ Verify the connection by making a lightweight test call
+        try:
+            grpc.channel_ready_future(channel).result(timeout=3)  # Wait for connection
+            print("🔄 Secure gRPC connection established.")
+            logging.info("Secure gRPC connection established.")
+        except grpc.FutureTimeoutError:
+            print("❌ Failed to connect: Payment Gateway is down.")
+            logging.error("Failed to connect: Payment Gateway is down.")
     except Exception as e:
         print(f"❌ Failed to initialize connection: {str(e)}")
         logging.error(f"Failed to initialize connection: {str(e)}")
 
 
 def view_transaction_history(stub):
-    """Request and display the user's transaction history."""
+    """Request and display the user's transaction history with updated fields."""
     if jwt_token is None:
         print("❌ Please authenticate first.")
         return
@@ -403,25 +434,52 @@ def view_transaction_history(stub):
     metadata = [("authorization", jwt_token)]
     request = payment_gateway_pb2.TransactionHistoryRequest()
     print("🔄 Request sent")
-    try:
-        response = stub.ViewTransactionHistory(request, metadata=metadata)
-        print("✅ Response received")
-        transactions = response.transactions  # ✅ Directly use the list from gRPC response
-        # print(f"DEBUG: transactions: {transactions}")
-        print("after transactions")
 
-        if not transactions:
-            print("📜 No transaction history available.")
-            return
+    attempt = 0
+    while attempt < MAX_RETRIES:
+        try:
+            response = stub.ViewTransactionHistory(request, metadata=metadata)
+            print("✅ Response received")
+            transactions = response.transactions  # ✅ Fetch transactions from gRPC response
+            
+            if not transactions:
+                print("📜 No transaction history available.")
+                is_online = True  # Mark system as online
+                return
 
-        print("\n📜 Transaction History:")
-        print("🆔 Transaction ID | 💰 Amount | 📌 Status | 📅 Timestamp")
-        print("-" * 80)
-        for txn in transactions:
-            print(f"🆔 {txn.transaction_id} | ₹{txn.amount} | {txn.status} | 📅 {txn.timestamp}")
-    except grpc.RpcError as e:
-        print(f"❌ Error fetching transaction history: {e.code()} - {e.details()}")
-        logging.error(f"❌ Error fetching transaction history: {e.code()} - {e.details()}")
+            print("\n📜 Transaction History:")
+            print("🆔 Transaction ID | 🏦 From Bank | 🏦 To Bank | 💰 Amount | 📌 Status | 📅 Timestamp")
+            print("-" * 120)
+            
+            for txn in transactions:
+                from_account_display = txn.from_account_no if txn.from_account_no else "N/A"
+                to_user_display = txn.to_user_id if txn.to_user_id else "N/A"
+                from_user_display = txn.from_user_id if txn.from_user_id else "N/A"
+                
+                print(f"🆔 {txn.transaction_id} | 🏦 {txn.from_bank} | 🏦 {txn.to_bank} | ₹{txn.amount} | {txn.status} | 📅 {txn.timestamp}")
+
+                if from_account_display != "N/A":
+                    print(f"   🔹 From Account No: {from_account_display}")
+                if to_user_display != "N/A":
+                    print(f"   🔹 To User ID: {to_user_display}")
+                if from_user_display != "N/A":
+                    print(f"   🔹 From User ID: {from_user_display}")
+                
+                print("-" * 120)
+
+            return     
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.UNAVAILABLE:
+                attempt += 1
+                logging.warning(f"🔄 Retrying Transaction History... Attempt {attempt}/{MAX_RETRIES}")
+                print(f"🔄 Retrying Transaction History... Attempt {attempt}/{MAX_RETRIES}")
+                time.sleep(RETRY_DELAY)
+                initialize_stub()
+                is_online = False  # Mark system as offline
+            else:       
+                print(f"❌ Error fetching transaction history: {e.code()} - {e.details()}")
+                logging.error(f"❌ Error fetching transaction history: {e.code()} - {e.details()}")
+                return
 
 def main():
     initialize_stub()  # ✅ Initialize stub at startup# Load any pending offline payments
@@ -450,21 +508,24 @@ def main():
             authenticate_client( stub , username, password)
 
         elif option == "2":
-            to_account = input("Enter recipient account number: ")
+            sender_bank_name= input("Enter sender bank name: ")
+            receiver_username = input("Enter recipient username: ")
+            receiver_bank_name = input("Enter recipient bank name: ")
              # ✅ Validate amount input
-            while True:
-                try:
-                    amount = float(input("Enter amount: "))
-                    if amount <= 0:
-                        print("❌ Amount must be greater than zero. Please enter a valid amount.")
-                        continue
-                    break  # ✅ Valid input, exit loop
-                except ValueError:
-                    print("❌ Invalid amount! Please enter a numeric value.")
-            process_payment(stub, to_account, amount)
+
+            try:
+                amount = float(input("Enter amount: "))
+                if amount <= 0:
+                    print("❌ Amount must be greater than zero. Please enter a valid amount.")
+                    continue  # Go back to the menu without calling process_payment
+            except ValueError:
+                print("❌ Invalid amount! Please enter a numeric value.")
+                continue  # Go back to the menu without calling process_payment
+            process_payment(stub, sender_bank_name,receiver_username, receiver_bank_name, amount)
 
         elif option == "3":
-            check_balance(stub)
+            bank_name = input("Enter your bank name: ") 
+            check_balance(stub,bank_name)
 
         elif option == "4":
             view_transaction_history(stub) 

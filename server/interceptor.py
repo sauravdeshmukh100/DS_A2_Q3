@@ -47,6 +47,7 @@ class AuthorizationInterceptor(grpc.ServerInterceptor):
             requested_user = metadata.get("username")
             if requested_user and requested_user != username:
                 logging.warning(f"❌ Unauthorized access attempt by {username} to check balance of {requested_user}.")
+                print("mdnkmn,mdndkndmndm,ndlmndm")
                 context = self._create_abortion_context(StatusCode.PERMISSION_DENIED, "Unauthorized balance access.")
                 return context
 

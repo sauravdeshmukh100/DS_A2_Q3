@@ -1,32 +1,23 @@
 {
     "users": [
-        {
-            "username": "alice",
-            "password": "alice123",
-            "bank_name": "HDFC",
-            "account_number": "1001"
-        },
-        {
-            "username" : "charlie",
-            "password" : "charlie123",
-            "bank_name" : "HDFC",
-            "account_number" : "1002"
-
-        },
-
-        {
-            "username": "bob",
-            "password": "bob123",
-            "bank_name": "ICICI",
-            "account_number": "2001"
-        },
-        {
-            "username": "eve",
-            "password": "eve123",
-            "bank_name": "ICICI",
-            "account_number": "2002"
-        }
-        
-
+      {
+        "username": "alice",
+        "password": "alice123",
+        "bank_name": "HDFC",
+        "account_number": "1001"
+      },
+      {
+        "username": "alice",
+        "password": "alice123",
+        "bank_name": "SBI",
+        "account_number": "3001"
+      },
+      {
+        "username": "bob",
+        "password": "bob123",
+        "bank_name": "ICICI",
+        "account_number": "2001"
+      }
     ]
-}
+  }
+  

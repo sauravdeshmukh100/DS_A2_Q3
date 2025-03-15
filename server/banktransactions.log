@@ -1,0 +1,53 @@
+2025-03-13 22:48:10 - INFO - port=60051
+2025-03-13 22:48:10 - INFO - 🚀 Secure Bank Server 'HDFC' started on port 60051 with 2PC support
+2025-03-13 22:48:12 - INFO - port=60052
+2025-03-13 22:48:12 - INFO - 🚀 Secure Bank Server 'ICICI' started on port 60052 with 2PC support
+2025-03-13 22:49:47 - INFO - 🔒 Preparing transaction f6603803-6f7e-45b2-bfd6-fb8b71661faf: debit from 2001 for $3000.0
+2025-03-13 22:49:47 - INFO - 🔒 Preparing transaction f6603803-6f7e-45b2-bfd6-fb8b71661faf: credit to 1001 for $3000.0
+2025-03-13 22:49:47 - INFO - ✅ Committing transaction f6603803-6f7e-45b2-bfd6-fb8b71661faf for debit operation
+2025-03-13 22:49:47 - INFO - ✅ Committing transaction f6603803-6f7e-45b2-bfd6-fb8b71661faf for credit operation
+2025-03-13 23:27:55 - INFO - 🔒 Preparing transaction d8a6b2a9-f97a-41e3-bd6b-f7c1544b2dc0: debit from 2001 for $995.0
+2025-03-13 23:27:55 - INFO - 🔒 Preparing transaction d8a6b2a9-f97a-41e3-bd6b-f7c1544b2dc0: credit to 1001 for $995.0
+2025-03-13 23:27:55 - INFO - ✅ Committing transaction d8a6b2a9-f97a-41e3-bd6b-f7c1544b2dc0 for debit operation
+2025-03-13 23:27:55 - INFO - ✅ Committing transaction d8a6b2a9-f97a-41e3-bd6b-f7c1544b2dc0 for credit operation
+2025-03-14 22:17:14 - INFO - port=60051
+2025-03-14 22:17:14 - INFO - 🚀 Secure Bank Server 'HDFC' started on port 60051 with 2PC support
+2025-03-14 22:17:19 - INFO - port=60052
+2025-03-14 22:17:19 - INFO - 🚀 Secure Bank Server 'ICICI' started on port 60052 with 2PC support
+2025-03-14 22:49:01 - INFO - port=60053
+2025-03-14 22:49:01 - INFO - 🚀 Secure Bank Server 'HDFC' started on port 60053 with 2PC support
+2025-03-14 22:49:19 - INFO - port=60053
+2025-03-14 22:49:19 - INFO - 🚀 Secure Bank Server 'HDFC' started on port 60053 with 2PC support
+2025-03-14 22:49:33 - INFO - port=60053
+2025-03-14 22:49:33 - INFO - 🚀 Secure Bank Server 'SBI' started on port 60053 with 2PC support
+2025-03-14 23:32:51 - INFO - ❌ Aborting transaction 00acac74-9231-41e6-b3f7-35aaec19c147 for debit operation
+2025-03-14 23:48:15 - INFO - 🔒 Preparing transaction b43a8d62-faa2-4c80-b1d6-338e193455bf: debit from 1001 for $100.0
+2025-03-14 23:48:15 - INFO - 🔒 Preparing transaction b43a8d62-faa2-4c80-b1d6-338e193455bf: credit to 2001 for $100.0
+2025-03-14 23:48:15 - INFO - ✅ Committing transaction b43a8d62-faa2-4c80-b1d6-338e193455bf for debit operation
+2025-03-14 23:48:15 - INFO - ✅ Committing transaction b43a8d62-faa2-4c80-b1d6-338e193455bf for credit operation
+2025-03-15 13:33:10 - INFO - port=60051
+2025-03-15 13:33:10 - INFO - 🚀 Secure Bank Server 'HDFC' started on port 60051 with 2PC support
+2025-03-15 13:33:35 - INFO - port=60052
+2025-03-15 13:33:35 - INFO - 🚀 Secure Bank Server 'ICICI' started on port 60052 with 2PC support
+2025-03-15 13:36:25 - INFO - port=60053
+2025-03-15 13:36:25 - INFO - 🚀 Secure Bank Server 'SBI' started on port 60053 with 2PC support
+2025-03-15 13:37:06 - INFO - 🔒 Preparing transaction eb913175-9424-469b-8fbf-b013a43e438f: debit from 1001 for $900.0
+2025-03-15 13:37:06 - INFO - 🔒 Preparing transaction eb913175-9424-469b-8fbf-b013a43e438f: credit to 2001 for $900.0
+2025-03-15 13:37:06 - INFO - ✅ Committing transaction eb913175-9424-469b-8fbf-b013a43e438f for debit operation
+2025-03-15 13:37:06 - INFO - ✅ Committing transaction eb913175-9424-469b-8fbf-b013a43e438f for credit operation
+2025-03-15 13:40:37 - INFO - 🔒 Preparing transaction 0216b931-16c4-4546-8b05-ac55cd9c14a8: debit from 1001 for $1000.0
+2025-03-15 13:40:37 - INFO - 🔒 Preparing transaction 0216b931-16c4-4546-8b05-ac55cd9c14a8: credit to 3001 for $1000.0
+2025-03-15 13:40:37 - INFO - ✅ Committing transaction 0216b931-16c4-4546-8b05-ac55cd9c14a8 for debit operation
+2025-03-15 13:40:37 - INFO - ✅ Committing transaction 0216b931-16c4-4546-8b05-ac55cd9c14a8 for credit operation
+2025-03-15 13:41:17 - INFO - 🔒 Preparing transaction 738caa9a-cf07-46f1-b30f-547e4a1e2c11: debit from 1001 for $2000.0
+2025-03-15 13:41:17 - INFO - 🔒 Preparing transaction 738caa9a-cf07-46f1-b30f-547e4a1e2c11: credit to 1001 for $2000.0
+2025-03-15 13:41:17 - INFO - ✅ Committing transaction 738caa9a-cf07-46f1-b30f-547e4a1e2c11 for debit operation
+2025-03-15 13:41:17 - INFO - ✅ Committing transaction 738caa9a-cf07-46f1-b30f-547e4a1e2c11 for credit operation
+2025-03-15 14:07:15 - INFO - 🔒 Preparing transaction e589464c-f347-46b5-a9bb-b7d4bddc6584: debit from 1001 for $1.0
+2025-03-15 14:07:15 - INFO - 🔒 Preparing transaction e589464c-f347-46b5-a9bb-b7d4bddc6584: credit to 2001 for $1.0
+2025-03-15 14:07:15 - INFO - ✅ Committing transaction e589464c-f347-46b5-a9bb-b7d4bddc6584 for debit operation
+2025-03-15 14:07:15 - INFO - ✅ Committing transaction e589464c-f347-46b5-a9bb-b7d4bddc6584 for credit operation
+2025-03-15 14:07:15 - INFO - 🔒 Preparing transaction 88adb0f7-4a1b-4777-8753-9fdc28e4657a: debit from 1001 for $1.0
+2025-03-15 14:07:15 - INFO - 🔒 Preparing transaction 88adb0f7-4a1b-4777-8753-9fdc28e4657a: credit to 2001 for $1.0
+2025-03-15 14:07:15 - INFO - ✅ Committing transaction 88adb0f7-4a1b-4777-8753-9fdc28e4657a for debit operation
+2025-03-15 14:07:15 - INFO - ✅ Committing transaction 88adb0f7-4a1b-4777-8753-9fdc28e4657a for credit operation

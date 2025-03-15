@@ -64,19 +64,37 @@ def load_bank_ports():
 
 # Load users from JSON file at startup
 def load_users():
+    """Load users from JSON file and support multiple bank accounts per user."""
     try:
         with open("users.json", "r") as file:
             data = json.load(file)
             users = {}
-            for user in data["users"]:
-                users[user["username"]] = {
-                    "password": user["password"],
-                    "bank_name": user["bank_name"],
-                    "account_number": user["account_number"]
-                }
+
+            for user in data.get("users", []):  # ✅ Ensure "users" key exists
+                username = user.get("username")
+                password = user.get("password")
+                bank_name = user.get("bank_name")
+                account_number = user.get("account_number")
+
+                if not username or not password or not bank_name or not account_number:
+                    print(f"⚠️ Skipping invalid user entry: {user}")
+                    continue  # ✅ Skip invalid entries
+
+                if username not in users:
+                    users[username] = {
+                        "password": password,
+                        "accounts": []  # ✅ Store multiple accounts per user
+                    }
+
+                # ✅ Append new bank account details to the user's account list
+                users[username]["accounts"].append({
+                    "bank_name": bank_name,
+                    "account_number": account_number
+                })
+
             return users
-    except FileNotFoundError:
-        print("Error: users.json not found!")
+    except (FileNotFoundError, json.JSONDecodeError):
+        print("❌ Error: users.json not found or invalid JSON format!")
         return {}
 
 BANK_PORTS = load_bank_ports()
@@ -176,7 +194,7 @@ def verify_jwt(token):
         return payload["username"]
     except jwt.ExpiredSignatureError:
         logging.warning("❌ Token expired. User must re-authenticate.")
-        return "EXPIRED"
+        return None
     except jwt.InvalidTokenError:
         return None
     
@@ -189,35 +207,33 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
         """Authenticates user and returns a JWT token."""
         print("Authenticating client is called")
         logging.info(f"🔑 Authentication attempt for user: {request.username} from {context.peer()}")
+
         user = clients_db.get(request.username)
+        
+        # ✅ Check if user exists and password matches
         if not user or user["password"] != request.password:
             logging.warning(f"❌ Failed login attempt for user: {request.username} from {context.peer()}")
-            return payment_gateway_pb2.AuthResponse(authenticated=False, token="")
-        
-        # Check if user already has a valid token
+            return payment_gateway_pb2.AuthResponse(authenticated=False, token="", message="Invalid username or password.")
 
-        # Extract token from metadata (if provided)
+        # ✅ Extract token from metadata (if provided)
         metadata = dict(context.invocation_metadata())
         existing_token = metadata.get("authorization", None)
-        if existing_token:
-            print("Existing token found in metadata")
-            username = verify_jwt(existing_token)
-        if verify_jwt(existing_token):   
-            print("User already has a valid token")
-            
-        # If the user already has a valid token, deny new login
-        if existing_token and verify_jwt(existing_token):
-            print("User already has a valid token")
-            logging.warning(f"⚠️ {request.username} attempted login with active session (rejected)")
-            return payment_gateway_pb2.AuthResponse(
-                authenticated=False, 
-                token="", 
-                message="Already logged in. Please log out first or wait for token expiration."
-            )
-        print("User does not have a valid token")
 
+        if existing_token:
+            token_status = verify_jwt(existing_token)
+            if token_status and token_status != "EXPIRED":
+                print("User already has a valid token")
+                logging.warning(f"⚠️ {request.username} attempted login with active session (rejected)")
+                return payment_gateway_pb2.AuthResponse(
+                    authenticated=False, 
+                    token="", 
+                    message="Already logged in. Please log out first or wait for token expiration."
+                )
+
+        # ✅ Check if user already has an active (non-expired) token
         username = request.username
         current_time = datetime.datetime.utcnow()
+        
         if username in active_tokens:
             for token, expiry in active_tokens[username].items():
                 if expiry > current_time:
@@ -227,11 +243,12 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
                         token="", 
                         message="Already logged in. Please log out first or wait for token expiration."
                     )
-        
-        # If no active token, generate a new one
+
+        # ✅ Generate a new token if no active session
         token = generate_jwt(username)
         logging.info(f"✅ {username} successfully authenticated from {context.peer()}")
         return payment_gateway_pb2.AuthResponse(authenticated=True, token=token)
+
     
 
 
@@ -239,21 +256,51 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
         """Logs out the user by invalidating their active token."""
         metadata = dict(context.invocation_metadata())
         token = metadata.get("authorization", None)
+        client_ip = context.peer()
 
-        if not token or not verify_jwt(token):
-            logging.warning(f"❌ Logout attempt with invalid token from {context.peer()}")
-            context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or expired token.")
+        # ✅ Check if token is provided
+        if not token:
+            logging.warning(f"❌ Logout attempt without a token from {client_ip}")
+            context.abort(grpc.StatusCode.UNAUTHENTICATED, "Missing token.")
 
-        # Extract username from token
+        # ✅ Verify if the token is valid
         username = verify_jwt(token)
+        print("username",username)
+        if username is None or username == "EXPIRED":
+            logging.warning(f"❌ Logout attempt with invalid/expired token from {client_ip}")
+            context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or expired token.")
         
-        if username in active_tokens and token in active_tokens[username]:
-            del active_tokens[username][token]  # Invalidate token
-            logging.info(f"✅ {username} logged out successfully.")
-            return payment_gateway_pb2.LogoutResponse(success=True, message="Logout successful.")
+        # # ✅ Check if the token exists in active_tokens and invalidate it
+        # if username in active_tokens or token in active_tokens[username]:   # written or not and 
+        #     del active_tokens[username][token]  # Invalidate token
+        #     logging.info(f"✅ {username} logged out successfully from {client_ip}.")
+            
+        #     # ✅ Store logout attempt in transactions.log
+        #     transaction_entry = {
+        #         "transaction_id": f"logout_{datetime.datetime.utcnow().timestamp()}",
+        #         "username": username,
+        #         "action": "logout",
+        #         "timestamp": datetime.datetime.utcnow().isoformat(),
+        #         "status": "Success"
+        #     }
+        #     # save_transaction(transaction_entry)
 
-        logging.warning(f"⚠️ {username} attempted to log out but was already logged out.")
+        return payment_gateway_pb2.LogoutResponse(success=True, message="Logout successful.")
+
+        # # ✅ Handle case where user tries to log out but already logged out
+        # logging.warning(f"⚠️ {username} attempted to log out but was already logged out from {client_ip}.")
+
+        # transaction_entry = {
+        #     "transaction_id": f"logout_{datetime.datetime.utcnow().timestamp()}",
+        #     "username": username,
+        #     "action": "logout",
+        #     "timestamp": datetime.datetime.utcnow().isoformat(),
+        #     "status": "Failed - Already logged out"
+        # }
+        # save_transaction(transaction_entry)
+
         return payment_gateway_pb2.LogoutResponse(success=False, message="Already logged out.")
+
 
     
 
@@ -364,13 +411,24 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
         if token:
             username = verify_jwt(token)  # Extract username from JWT
 
-
         if not username or username not in clients_db:
             logging.warning(f"❌ Unauthorized payment attempt by unknown user")
             context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or missing token")
 
         transaction_id = request.transaction_id if request.transaction_id else str(uuid.uuid4())
-        logging.info(f"🔄 [TXN: {transaction_id}] {username} (IP: {client_ip}) initiated payment of ₹{request.amount} to {request.to_account}")
+        # logging.info(f"🔄 [TXN: {transaction_id}] {username} (IP: {client_ip}) initiated payment of ₹{request.amount} to {request.to_account}")
+        
+        sender_bank = request.sender_bank_name
+        receiver_username = request.receiver_username
+        receiver_bank = request.receiver_bank_name
+        amount = request.amount
+
+        if username == receiver_username and sender_bank == receiver_bank:
+            logging.warning(f"❌ [TXN: {transaction_id}] {username} attempted self-transfer within the same bank.")
+            context.abort(grpc.StatusCode.INVALID_ARGUMENT, "Cannot transfer money to your own account within the same bank.")
+
+
+        logging.info(f"🔄 [TXN: {transaction_id}] {username} (IP: {client_ip}) initiated payment of ₹{amount} to {receiver_username} at {receiver_bank}")
         
         
         # Step 2: Check if the transaction has already been processed.
@@ -379,51 +437,55 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             logging.info(f"⚠️ [TXN: {transaction_id}] Duplicate transaction detected. Skipping processing.")
             context.abort(grpc.StatusCode.ALREADY_EXISTS, "Transaction already processed")
         
-        # Initialize transaction state
+         # Initialize transaction state
         transaction_states[transaction_id] = {
-            "status": "initiated",
-            "sender_prepared": False,
-            "receiver_prepared": False,
-            "sender_committed": False,
-            "receiver_committed": False,
-            "sender_bank": None,
-            "receiver_bank": None,
-            "sender_account": None,
-            "receiver_account": None,
-            "amount": request.amount,
-            "timestamp": datetime.datetime.utcnow().isoformat(),  # ✅ Convert datetime to string
-            "username": username
-        }
+        "status": "initiated",
+        "sender_prepared": False,
+        "receiver_prepared": False,
+        "sender_committed": False,
+        "receiver_committed": False,
+        "sender_bank": sender_bank,
+        "receiver_bank": receiver_bank,
+        "sender_account": None,
+        "receiver_account": None,
+        "amount": amount,
+        "timestamp": datetime.datetime.utcnow().isoformat(),
+        "sender_username": username,
+        "receiver_username": receiver_username,
+    }
 
         save_transaction_state()  # ✅ Persist state    
         
         try:
-            # ✅ Retrieve sender details
+           # ✅ **Retrieve sender's account based on selected bank**
             sender_details = clients_db.get(username, None)
             if not sender_details:
                 logging.warning(f"❌ [TXN: {transaction_id}] {username} attempted payment, but account not found.")
                 transaction_states[transaction_id]["status"] = "failed_sender_not_found"
                 save_transaction_state()
                 context.abort(grpc.StatusCode.NOT_FOUND, "User account not found")
-                    
-                    
-            sender_bank = sender_details["bank_name"]
-            sender_account = sender_details["account_number"]
-            receiver_account = request.to_account
-            amount = request.amount
-            
-            # Update transaction state
-            transaction_states[transaction_id]["sender_bank"] = sender_bank
-            transaction_states[transaction_id]["sender_account"] = sender_account
-            transaction_states[transaction_id]["receiver_account"] = receiver_account
-            
-            # Verify sender's bank connection
+
+            sender_accounts = sender_details["accounts"]
+            sender_account = None
+            for account in sender_accounts:
+                if account["bank_name"] == sender_bank:
+                    sender_account = account["account_number"]
+                    break
+
+            if not sender_account:
+                logging.warning(f"❌ [TXN: {transaction_id}] {username} attempted payment from an unauthorized bank {sender_bank}.")
+                transaction_states[transaction_id]["status"] = "failed_sender_invalid_bank"
+                save_transaction_state()
+                context.abort(grpc.StatusCode.PERMISSION_DENIED, "Bank not linked to your account")
+
+            transaction_states[transaction_id]["sender_account"] = sender_account  # ✅ Update sender account
+
+            # ✅ **Verify sender's bank connection**
             if sender_bank not in bank_stubs:
                 bank_stubs[sender_bank] = create_bank_stub(sender_bank)
                 logging.info(f"✅ Secure connection established with sender's bank: {sender_bank}")
-            
+
             sender_bank_stub = bank_stubs[sender_bank]
-            
             # Check if sender has sufficient balance
             balance_response = sender_bank_stub.GetBalance(
                 bank_pb2.BalanceRequest(account_number=sender_account)
@@ -435,22 +497,24 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
                 logging.warning(f"❌ [TXN: {transaction_id}] {username} attempted payment of ₹{amount} (Insufficient Funds)")
                 context.abort(grpc.StatusCode.FAILED_PRECONDITION, "Insufficient funds")
             
-            # Identify receiver's bank
-            receiver_bank = None
-            for user, details in clients_db.items():
-                if details["account_number"] == receiver_account:
-                    receiver_bank = details["bank_name"]
-                    break
-            
-            if not receiver_bank:
+           
+             # ✅ **Retrieve receiver's account number based on username & bank**
+            receiver_details = clients_db.get(receiver_username, None)
+            receiver_account = None
+            if receiver_details:
+                for account in receiver_details["accounts"]:
+                    if account["bank_name"] == receiver_bank:
+                        receiver_account = account["account_number"]
+                        break
+
+            if not receiver_account:
+                logging.warning(f"❌ [TXN: {transaction_id}] {username} attempted payment to non-existent user {receiver_username} at {receiver_bank}")
                 transaction_states[transaction_id]["status"] = "failed_receiver_not_found"
                 save_transaction_state()
-                logging.warning(f"❌ [TXN: {transaction_id}] {username} attempted payment to non-existent account {receiver_account}")
                 context.abort(grpc.StatusCode.NOT_FOUND, "Receiver account not found")
-            
-            # Update transaction state
-            transaction_states[transaction_id]["receiver_bank"] = receiver_bank
-            
+
+            transaction_states[transaction_id]["receiver_account"] = receiver_account  # ✅ Update receiver account
+    
             # Verify receiver's bank connection
             if receiver_bank not in bank_stubs:
                 bank_stubs[receiver_bank] = create_bank_stub(receiver_bank)
@@ -670,33 +734,53 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
     
     def CheckBalance(self, request, context):
         """Returns the client's account balance securely using JWT authentication."""
-        print("check balance is called")
         metadata = dict(context.invocation_metadata())
         token = metadata.get("authorization", None)
         client_ip = context.peer()
-        
+        print("CheckBalance is called")
         username = verify_jwt(token) if token else None
+       
         if not username or username not in clients_db:
-            logging.warning(f"❌ Unauthorized balance check attempt from {client_ip}")
+            logging.warning(f"❌ [BALANCE CHECK] Unauthorized attempt from {client_ip}")
             context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or missing token")
 
-        user_details = clients_db[username]
-        bank_name = user_details["bank_name"]
-        account_number = user_details["account_number"]
+
         
+        user_details = clients_db[username]
+        sender_accounts = user_details["accounts"]  # ✅ Get all accounts
+        bank_name = request.bank_name  # ✅ Get bank name from request
+
+        # ✅ Step 1: Verify that the selected bank exists for the user
+        sender_account = None
+        for account in sender_accounts:
+            if account["bank_name"] == bank_name:
+                sender_account = account["account_number"]
+                break
+
+        if not sender_account:
+            logging.warning(f"❌ [BALANCE CHECK] {username} attempted balance check from an unauthorized bank {bank_name}.")
+            context.abort(grpc.StatusCode.PERMISSION_DENIED, "Bank not linked to your account")
+
+
+
+        if bank_name not in BANK_PORTS:
+            logging.warning(f"❌ [BALANCE CHECK] {username} attempted balance check (Failed: Bank {bank_name} not found)")
+            context.abort(grpc.StatusCode.NOT_FOUND, "Bank not found")
+
+        # ✅ Step 2: Ensure the selected bank is available
         if bank_name not in BANK_PORTS:
             logging.warning(f"❌ {username} attempted balance check (Failed: Bank {bank_name} not found)")
             context.abort(grpc.StatusCode.NOT_FOUND, "Bank not found")
 
         if bank_name not in bank_stubs:
-            print("calling create bank stub")
+            print("🔄 Calling create_bank_stub")
             bank_stubs[bank_name] = create_bank_stub(bank_name)
             logging.info(f"✅ Secure connection established with sender's bank: {bank_name}")
-            
 
+        # ✅ Step 3: Request balance from the correct bank
         try:
             response = bank_stubs[bank_name].GetBalance(
-                bank_pb2.BalanceRequest(account_number=account_number)
+                bank_pb2.BalanceRequest(account_number=sender_account)
             )
             logging.info(f"✅ {username} from {client_ip} checked balance: ₹{response.balance}")
             return payment_gateway_pb2.BalanceResponse(balance=response.balance)
@@ -705,29 +789,47 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
             context.abort(grpc.StatusCode.UNAVAILABLE, "Bank service unavailable")
 
 
+
     def ViewTransactionHistory(self, request, context):
-       """Returns all past transactions for an authenticated user."""
-       print("view transaction history is called")
-       metadata = dict(context.invocation_metadata())
-       token = metadata.get("authorization", None)
-       username = verify_jwt(token) if token else None
+        """Returns all past transactions for an authenticated user."""
+        print("ViewTransactionHistory is called")
+        metadata = dict(context.invocation_metadata())
+        token = metadata.get("authorization", None)
+        username = verify_jwt(token) if token else None
 
-       if not username:
-        context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or missing token")
+        if not username or username not in clients_db:
+            context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid or missing token")
 
-       # ✅ Fetch transactions belonging to the user
-       user_transactions = [txn for txn in transaction_states.values() if txn["username"] == username]
-       print
-       return payment_gateway_pb2.TransactionHistoryResponse(
-    transactions=[payment_gateway_pb2.Transaction(  # ✅ Use correct message name
-        transaction_id=txn_id,
-        from_account=txn["sender_account"],  # ✅ Ensure the correct field names match the proto file
-        to_account=txn["receiver_account"],
-        amount=txn["amount"],
-        status=txn["status"],
-        timestamp=txn["timestamp"]
-    ) for txn_id, txn in transaction_states.items() if txn["username"] == username]
-)
+        user_history = []
+
+        # ✅ Fetch transactions where user is sender OR receiver
+        for txn_id, txn_details in transaction_states.items():
+            if txn_details.get("sender_username") == username:
+                # Sender's view: Hide receiver's account number
+                user_history.append({
+                    "transaction_id": txn_id,
+                    "from_bank": txn_details["sender_bank"],
+                    "to_bank": txn_details["receiver_bank"],
+                    "from_account_no": txn_details["sender_account"],
+                    "to_user_id": txn_details["receiver_username"],
+                    "amount": txn_details["amount"],
+                    "timestamp": txn_details["timestamp"],
+                    "status": txn_details["status"]
+                })
+            elif txn_details.get("receiver_username") == username:
+                # Receiver's view: Hide sender's account number
+                user_history.append({
+                    "transaction_id": txn_id,
+                    "from_bank": txn_details["sender_bank"],
+                    "to_bank": txn_details["receiver_bank"],
+                    "from_user_id": txn_details["sender_username"],
+                    "amount": txn_details["amount"],
+                    "timestamp": txn_details["timestamp"],
+                    "status": txn_details["status"]
+                })
+
+        logging.info(f"✅ {username} viewed transaction history. {len(user_history)} records found.")
+        return payment_gateway_pb2.TransactionHistoryResponse(transactions=user_history)
 
         
 
