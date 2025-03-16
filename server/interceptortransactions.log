@@ -1,6 +1,0 @@
-2025-03-16 18:00:11,639 - 🚀 Secure Payment Gateway started on port 50052 (TLS & Interceptors Enabled)
-2025-03-16 18:00:14,291 - 🏦 Bank registration attempt: Unknown Bank
-2025-03-16 18:00:14,291 - ✅ Request from Unknown - Method: /PaymentGateway/RegisterBank
-2025-03-16 18:00:14,291 - ✅ Success: /PaymentGateway/RegisterBank completed
-2025-03-16 18:00:14,291 - ✅ Successfully registered bank: Unknown Bank
-2025-03-16 18:00:14,292 - ✅ HDFC is already registered on port 60059.

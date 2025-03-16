@@ -25,7 +25,10 @@ logging.basicConfig(
 PAYMENT_GATEWAY_ADDRESS = "localhost:50052"
 
 def register_bank(bank_name, port):
-    """Registers the bank with the Payment Gateway."""
+    """Registers the bank with the Payment Gateway with retries until successful."""
+    RETRY_DELAY = 5  # Delay between retry attempts in seconds
+
+    # Load SSL/TLS certificates (done once, outside the retry loop)
     try:
         bank_key_path = f"../certs/bank/{bank_name.lower()}.key"  # Example: hdfc.key
         bank_cert_path = f"../certs/bank/{bank_name.lower()}.crt"  # Example: hdfc.crt
@@ -37,51 +40,67 @@ def register_bank(bank_name, port):
             certificate_chain = f.read()
         with open(ca_cert_path, "rb") as f:
             root_certificates = f.read()
-    
-    
-        bank_port = int(port)  # ✅ Ensure it's stored as an integer
-        type(bank_port)  # Ensure it's an integer
-
-        # ✅ Establish secure gRPC connection with Payment Gateway
-        credentials = grpc.ssl_channel_credentials(
-            root_certificates=root_certificates,
-            private_key=private_key,
-            certificate_chain=certificate_chain
-        )
-
-        options = [
-            ('grpc.max_receive_message_length', 10 * 1024 * 1024),
-            ('grpc.max_send_message_length', 10 * 1024 * 1024),
-            ('grpc.keepalive_time_ms', 30000),
-            ('grpc.keepalive_timeout_ms', 10000)
-        ]
-
-        channel = grpc.secure_channel("localhost:50052", credentials, options=options)
-        print("channel created")
-        stub = payment_gateway_pb2_grpc.PaymentGatewayStub(channel)
-        try:
-            grpc.channel_ready_future(channel).result(timeout=3)  # Wait for connection
-            print("🔄 Secure gRPC connection established.")
-            logging.info("Secure gRPC connection established.")
-
-            # ✅ Send registration request
-            request = payment_gateway_pb2.RegisterBankRequest(bank_name=bank_name, bank_port=bank_port)
-            print("🔄 Request sent")
-            response = stub.RegisterBank(request)
-            print("✅ Response received")
-            if response.success:
-                print(f"✅ Successfully registered {bank_name} on port {bank_port} with Payment Gateway.")
-            else:
-                print(f"⚠️ {bank_name} registration failed: {response.message}")
-
-
-        except grpc.FutureTimeoutError:
-            print("❌ Failed to connect: Payment Gateway is down.")
-            logging.error("Failed to connect: Payment Gateway is down.")
     except Exception as e:
-        print(f"❌ Failed to initialize connection: {str(e)}")
-        logging.error(f"Failed to initialize connection: {str(e)}")
-        
+        print(f"❌ Failed to load certificates: {str(e)}")
+        logging.error(f"Failed to load certificates: {str(e)}")
+        raise  # Exit if certificates cannot be loaded, as this is a fatal error
+
+    bank_port = int(port)  # Ensure it's stored as an integer
+
+    # Establish credentials (done once, outside the retry loop)
+    credentials = grpc.ssl_channel_credentials(
+        root_certificates=root_certificates,
+        private_key=private_key,
+        certificate_chain=certificate_chain
+    )
+
+    options = [
+        ('grpc.max_receive_message_length', 10 * 1024 * 1024),
+        ('grpc.max_send_message_length', 10 * 1024 * 1024),
+        ('grpc.keepalive_time_ms', 30000),
+        ('grpc.keepalive_timeout_ms', 10000)
+    ]
+
+    # Retry loop for gRPC connection and registration
+    while True:
+        try:
+            # Create a new channel for each attempt
+            channel = grpc.secure_channel("localhost:50052", credentials, options=options)
+            print("channel created")
+            stub = payment_gateway_pb2_grpc.PaymentGatewayStub(channel)
+
+            try:
+                grpc.channel_ready_future(channel).result(timeout=3)  # Wait for connection
+                print("🔄 Secure gRPC connection established.")
+                logging.info("Secure gRPC connection established.")
+
+                # Send registration request
+                request = payment_gateway_pb2.RegisterBankRequest(bank_name=bank_name, bank_port=bank_port)
+                print("🔄 Request sent")
+                response = stub.RegisterBank(request)
+                print("✅ Response received")
+
+                if response.success:
+                    print(f"✅ Successfully registered {bank_name} on port {bank_port} with Payment Gateway.")
+                    logging.info(f"Successfully registered {bank_name} on port {bank_port} with Payment Gateway.")
+                    channel.close()  # Clean up the channel
+                    return  # Exit on successful registration
+                else:
+                    print(f"⚠️ {bank_name} registration failed: {response.message}")
+                    logging.warning(f"{bank_name} registration failed: {response.message}")
+
+            except grpc.FutureTimeoutError:
+                print("❌ Failed to connect: Payment Gateway is down.")
+                logging.error("Failed to connect: Payment Gateway is down.")
+            
+            channel.close()  # Clean up the channel before retrying
+            print(f"🔄 Retrying registration for {bank_name} in {RETRY_DELAY} seconds...")
+            time.sleep(RETRY_DELAY)  # Wait before retrying
+
+        except Exception as e:
+            print(f"❌ Registration attempt failed: {str(e)}")
+            logging.error(f"Registration attempt failed: {str(e)}")
+            time.sleep(RETRY_DELAY)  # Wait before retrying
         
 
 
@@ -118,6 +137,7 @@ class BankService(bank_pb2_grpc.BankServicer):
     def GetBalance(self, request, context):
         """Returns the balance of an account."""
         account = request.account_number
+        print("account", account)
         balance = self.accounts.get(account, 0.0)
         return bank_pb2.BalanceResponse(balance=balance)
     

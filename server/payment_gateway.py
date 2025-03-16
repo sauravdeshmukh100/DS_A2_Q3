@@ -200,7 +200,7 @@ def generate_jwt(username):
                 return token
     
     # Generate new token
-    expiration_time = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+    expiration_time = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
     payload = {
         "username": username,
         "exp": expiration_time
@@ -850,6 +850,7 @@ class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
 
         # ✅ Step 3: Request balance from the correct bank
         try:
+
             response = bank_stubs[bank_name].GetBalance(
                 bank_pb2.BalanceRequest(account_number=sender_account)
             )
