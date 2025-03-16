@@ -9,7 +9,9 @@ import bank_pb2
 import bank_pb2_grpc
 import time
 import logging
-
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'protofiles')))
+import payment_gateway_pb2
+import payment_gateway_pb2_grpc
 
 # Configure logging
 logging.basicConfig(
@@ -20,10 +22,77 @@ logging.basicConfig(
 )
 
 
+PAYMENT_GATEWAY_ADDRESS = "localhost:50052"
+
+def register_bank(bank_name, port):
+    """Registers the bank with the Payment Gateway."""
+    try:
+        bank_key_path = f"../certs/bank/{bank_name.lower()}.key"  # Example: hdfc.key
+        bank_cert_path = f"../certs/bank/{bank_name.lower()}.crt"  # Example: hdfc.crt
+        ca_cert_path = "../certs/ca/ca.crt"
+
+        with open(bank_key_path, "rb") as f:
+            private_key = f.read()
+        with open(bank_cert_path, "rb") as f:
+            certificate_chain = f.read()
+        with open(ca_cert_path, "rb") as f:
+            root_certificates = f.read()
+    
+    
+        bank_port = int(port)  # ✅ Ensure it's stored as an integer
+        type(bank_port)  # Ensure it's an integer
+
+        # ✅ Establish secure gRPC connection with Payment Gateway
+        credentials = grpc.ssl_channel_credentials(
+            root_certificates=root_certificates,
+            private_key=private_key,
+            certificate_chain=certificate_chain
+        )
+
+        options = [
+            ('grpc.max_receive_message_length', 10 * 1024 * 1024),
+            ('grpc.max_send_message_length', 10 * 1024 * 1024),
+            ('grpc.keepalive_time_ms', 30000),
+            ('grpc.keepalive_timeout_ms', 10000)
+        ]
+
+        channel = grpc.secure_channel("localhost:50052", credentials, options=options)
+        print("channel created")
+        stub = payment_gateway_pb2_grpc.PaymentGatewayStub(channel)
+        try:
+            grpc.channel_ready_future(channel).result(timeout=3)  # Wait for connection
+            print("🔄 Secure gRPC connection established.")
+            logging.info("Secure gRPC connection established.")
+
+            # ✅ Send registration request
+            request = payment_gateway_pb2.RegisterBankRequest(bank_name=bank_name, bank_port=bank_port)
+            print("🔄 Request sent")
+            response = stub.RegisterBank(request)
+            print("✅ Response received")
+            if response.success:
+                print(f"✅ Successfully registered {bank_name} on port {bank_port} with Payment Gateway.")
+            else:
+                print(f"⚠️ {bank_name} registration failed: {response.message}")
+
+
+        except grpc.FutureTimeoutError:
+            print("❌ Failed to connect: Payment Gateway is down.")
+            logging.error("Failed to connect: Payment Gateway is down.")
+    except Exception as e:
+        print(f"❌ Failed to initialize connection: {str(e)}")
+        logging.error(f"Failed to initialize connection: {str(e)}")
+        
+        
+
+
+
 class BankService(bank_pb2_grpc.BankServicer):
     def __init__(self, bank_name):
         self.bank_name = bank_name
         self.accounts = self.load_bank_data()
+        # ✅ Register the bank with Payment Gateway at startup
+        print("before register_bank")
+        register_bank(bank_name, port)
         # Dictionary to store pending transactions
         self.pending_transactions = {}
         # Track account locks
@@ -266,4 +335,6 @@ if __name__ == "__main__":
 
     bank_name = sys.argv[1]
     port = sys.argv[2]
+    # ✅ Register the bank before starting the server
+    # register_bank(bank_name,port)
     serve(bank_name, port)

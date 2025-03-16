@@ -9,10 +9,49 @@ logging.basicConfig(filename="interceptortransactions.log", level=logging.INFO, 
 # Secret key for JWT verification (must match the one used in `payment_gateway.py`)
 JWT_SECRET = "supersecretkey"
 
+
+class RegisterBankInterceptor(grpc.ServerInterceptor):
+    def intercept_service(self, continuation, handler_call_details):
+        """Interceptor specifically for bank registration requests."""
+        method = handler_call_details.method
+        
+        # Only apply logic to RegisterBank method
+        if "/PaymentGateway/RegisterBank" in method:
+            print(f"Processing bank registration request for method: {method}")
+            
+            # Extract metadata
+            metadata = dict(handler_call_details.invocation_metadata)
+            bank_name = metadata.get("bank_name", "Unknown Bank")
+            
+            # Log the bank registration attempt
+            logging.info(f"🏦 Bank registration attempt: {bank_name}")
+            
+            try:
+                # Execute the original method
+                response = continuation(handler_call_details)
+                
+                # Log successful registration
+                logging.info(f"✅ Successfully registered bank: {bank_name}")
+                return response
+            except grpc.RpcError as e:
+                # Log registration failure
+                logging.error(f"❌ Bank registration failed for {bank_name}: {e.code()} - {e.details()}")
+                raise e
+        else:
+            # For non-bank registration methods, just pass through
+            return continuation(handler_call_details)
+
 class AuthorizationInterceptor(grpc.ServerInterceptor):
     def intercept_service(self, continuation, handler_call_details):
         """Intercepts gRPC requests to enforce authorization checks."""
         method = handler_call_details.method
+
+        # Skip auth check for the exempt methods
+        exempt_methods = ["/PaymentGateway/AuthenticateClient", "/PaymentGateway/RegisterBank"]
+        if any(exempt_method in method for exempt_method in exempt_methods):
+            return continuation(handler_call_details)
+
+        # method = handler_call_details.method
 
         # Extract JWT from metadata
         metadata = dict(handler_call_details.invocation_metadata)

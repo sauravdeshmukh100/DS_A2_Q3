@@ -14,7 +14,7 @@ import payment_gateway_pb2
 import payment_gateway_pb2_grpc
 import bank_pb2
 import bank_pb2_grpc
-from interceptor import AuthorizationInterceptor, LoggingInterceptor, TransactionLoggingInterceptor
+from interceptor import RegisterBankInterceptor , AuthorizationInterceptor, LoggingInterceptor, TransactionLoggingInterceptor
 
 import logging
 
@@ -32,6 +32,39 @@ TRANSACTION_FILE = "transactions.json"  # JSON file to store transaction history
 
 # Store transaction states for 2PC
 transaction_states = {}  # {transaction_id: {status, sender_prepared, receiver_prepared, etc.}}
+
+
+
+BANKS_FILE = "banks.json"
+
+def RegisterBank(self, request, context):
+    """Handles bank registration from bank servers."""
+    bank_name = request.bank_name
+    port = request.port
+
+    # Load existing banks.json (if exists)
+    if os.path.exists(BANKS_FILE):
+        with open(BANKS_FILE, "r") as file:
+            try:
+                banks = json.load(file)
+            except json.JSONDecodeError:
+                banks = {}
+    else:
+        banks = {}
+
+    # Check if the bank is already registered
+    if bank_name in banks:
+        return bank_pb2.RegisterBankResponse(message="Bank already registered.")
+
+    # Register the new bank
+    banks[bank_name] = port
+    with open(BANKS_FILE, "w") as file:
+        json.dump(banks, file, indent=4)
+
+    return bank_pb2.RegisterBankResponse(message="Bank registered successfully.")
+
+
+
 # ✅ Load past transactions from file
 try:
     with open(TRANSACTION_FILE, "r") as file:
@@ -200,7 +233,45 @@ def verify_jwt(token):
     
 
 class PaymentGatewayService(payment_gateway_pb2_grpc.PaymentGatewayServicer):
-   
+
+    def RegisterBank(self, request, context):
+        """Registers a bank with the Payment Gateway and updates banks.json."""
+        print("inside register_bank")
+        bank_name = request.bank_name
+        bank_port = request.bank_port
+
+        global BANK_PORTS  # Ensure we are modifying the global dictionary
+
+        # Load the existing bank mappings
+        try:
+            with open("banks.json", "r") as file:
+                BANK_PORTS = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            BANK_PORTS = {}  # Initialize if file is missing or corrupted
+
+        # ✅ If bank is already registered, update its port
+        if bank_name in BANK_PORTS:
+            if BANK_PORTS[bank_name] == bank_port:
+                logging.info(f"✅ {bank_name} is already registered on port {bank_port}.")
+                return payment_gateway_pb2.RegisterBankResponse(success=True, message="Bank already registered.")
+            else:
+                logging.info(f"🔄 Updating port for {bank_name} from {BANK_PORTS[bank_name]} to {bank_port}.")
+        
+        # ✅ Register or update bank's port
+        BANK_PORTS[bank_name] = bank_port
+
+        # ✅ Save updated mappings to banks.json
+        try:
+            with open("banks.json", "w") as file:
+                json.dump(BANK_PORTS, file, indent=4)
+        except Exception as e:
+            logging.error(f"❌ Failed to update banks.json: {str(e)}")
+            context.abort(grpc.StatusCode.INTERNAL, "Failed to update bank records.")
+
+        logging.info(f"✅ Registered/Updated bank: {bank_name} on port {bank_port}")
+        return payment_gateway_pb2.RegisterBankResponse(success=True, message="Bank registered successfully.")
+
+
 
     # Modify AuthenticateClient method in PaymentGatewayService
     def AuthenticateClient(self, request, context):
@@ -854,12 +925,16 @@ def serve():
         server = grpc.server(
             futures.ThreadPoolExecutor(max_workers=10),
             interceptors=[
+                RegisterBankInterceptor(),  # Add this new interceptor first
                 AuthorizationInterceptor(),
                 LoggingInterceptor(),
                 TransactionLoggingInterceptor()
             ]
         )
         
+        # Try temporarily removing interceptors to see if they're causing the issue
+        # server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+        #   Add interceptors back one by one after confirming basic functionality
         # Add the service to the server
         payment_gateway_pb2_grpc.add_PaymentGatewayServicer_to_server(PaymentGatewayService(), server)
         # Add secure port with TLS

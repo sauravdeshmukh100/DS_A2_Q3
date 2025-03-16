@@ -2,6 +2,7 @@ syntax = "proto3";
 package bank;
 
 service Bank {
+  
   rpc ProcessTransaction(TransactionRequest) returns (TransactionResponse);
   rpc GetBalance(BalanceRequest) returns (BalanceResponse);
   

@@ -17,7 +17,14 @@
         "password": "bob123",
         "bank_name": "ICICI",
         "account_number": "2001"
+      },
+      {
+        "username": "jack",
+        "password": "jack123",
+        "bank_name": "ICICI",
+        "account_number": "4001"
       }
+
     ]
   }
   

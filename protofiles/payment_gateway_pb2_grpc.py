@@ -34,6 +34,11 @@ class PaymentGatewayStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.RegisterBank = channel.unary_unary(
+                '/PaymentGateway/RegisterBank',
+                request_serializer=payment__gateway__pb2.RegisterBankRequest.SerializeToString,
+                response_deserializer=payment__gateway__pb2.RegisterBankResponse.FromString,
+                _registered_method=True)
         self.AuthenticateClient = channel.unary_unary(
                 '/PaymentGateway/AuthenticateClient',
                 request_serializer=payment__gateway__pb2.AuthRequest.SerializeToString,
@@ -63,6 +68,12 @@ class PaymentGatewayStub(object):
 
 class PaymentGatewayServicer(object):
     """Missing associated documentation comment in .proto file."""
+
+    def RegisterBank(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
     def AuthenticateClient(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -97,6 +108,11 @@ class PaymentGatewayServicer(object):
 
 def add_PaymentGatewayServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'RegisterBank': grpc.unary_unary_rpc_method_handler(
+                    servicer.RegisterBank,
+                    request_deserializer=payment__gateway__pb2.RegisterBankRequest.FromString,
+                    response_serializer=payment__gateway__pb2.RegisterBankResponse.SerializeToString,
+            ),
             'AuthenticateClient': grpc.unary_unary_rpc_method_handler(
                     servicer.AuthenticateClient,
                     request_deserializer=payment__gateway__pb2.AuthRequest.FromString,
@@ -132,6 +148,33 @@ def add_PaymentGatewayServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class PaymentGateway(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def RegisterBank(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/PaymentGateway/RegisterBank',
+            payment__gateway__pb2.RegisterBankRequest.SerializeToString,
+            payment__gateway__pb2.RegisterBankResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
 
     @staticmethod
     def AuthenticateClient(request,
